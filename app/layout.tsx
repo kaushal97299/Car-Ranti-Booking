@@ -12,7 +12,7 @@ export default function RootLayout({
         <body className="bg-gray-50">
         <UserSidebar />
         
-        <main className="md:ml-64 p-4 pb-20 min-h-screen">
+        <main className="  md:ml-56">
           {children}
         </main>
       </body>
