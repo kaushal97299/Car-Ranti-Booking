@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState } from "react";
-// import "./home.css"
 
 /* ================== DATA ================== */
 const carsData = [
@@ -15,12 +14,6 @@ const carsData = [
 
   { id: 7, name: "Nexon", brand: "Tata", model: "Nexon", fuel: "Petrol", gear: "Manual", class: "SUV", price: 2000, rating: 4.6, reviews: 250, image: "../nex1.png" },
   { id: 8, name: "Punch", brand: "Tata", model: "Punch", fuel: "Petrol", gear: "Manual", class: "SUV", price: 1700, rating: 4.3, reviews: 110, image: "../pun1.png" },
-
-  { id: 9, name: "Thar", brand: "Mahindra", model: "Thar", fuel: "Diesel", gear: "Manual", class: "SUV", price: 2800, rating: 4.8, reviews: 500, image: "/car.png" },
-  { id: 10, name: "Scorpio", brand: "Mahindra", model: "Scorpio", fuel: "Diesel", gear: "Manual", class: "SUV", price: 3000, rating: 4.7, reviews: 420, image: "/car.png" },
-
-  { id: 11, name: "City", brand: "Honda", model: "City", fuel: "Petrol", gear: "Manual", class: "Sedan", price: 2200, rating: 4.6, reviews: 210, image: "/car.png" },
-  { id: 12, name: "Amaze", brand: "Honda", model: "Amaze", fuel: "Petrol", gear: "Manual", class: "Sedan", price: 1700, rating: 4.4, reviews: 140, image: "/car.png" },
 ];
 
 /* ================== COMPONENT ================== */
@@ -38,14 +31,7 @@ export default function CarsPage() {
   const [vehicleClass, setVehicleClass] = useState("");
   const [sort, setSort] = useState("");
 
-  const [favorites, setFavorites] = useState([]);
   const [search, setSearch] = useState("");
-
-  const toggleFav = (id) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
-  };
 
   const modelsByBrand = [...new Set(
     carsData.filter(c => !brand || c.brand === brand).map(c => c.model)
@@ -78,11 +64,11 @@ export default function CarsPage() {
   return (
     <div className="min-h-screen w-full p-6 bg-gradient-to-br from-indigo-900 via-purple-900 to-fuchsia-900 relative overflow-hidden">
 
-  
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 animate-gradient" />
 
       <div className="relative z-10">
 
+        {/* SEARCH */}
         <input
           placeholder="Search car, brand or model..."
           className="mb-4 border p-2 rounded w-full bg-white/10 text-white placeholder-gray-300"
@@ -97,7 +83,7 @@ export default function CarsPage() {
           <input type="time" className="border p-2 rounded bg-transparent" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} />
           <input type="date" className="border p-2 rounded bg-transparent" value={returnDate} onChange={(e) => setReturnDate(e.target.value)} />
           <input type="time" className="border p-2 rounded bg-transparent" value={returnTime} onChange={(e) => setReturnTime(e.target.value)} />
-          <button className="bg-blue-600 text-white rounded px-4">🔍</button>
+          <button className="bg-blue-600 text-white rounded px-4">Search</button>
         </div>
 
         {/* FILTER BAR */}
@@ -124,17 +110,13 @@ export default function CarsPage() {
           {filteredCars.map((car) => (
             <div
               key={car.id}
-              className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-3 relative
+              className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-3
                 transform transition duration-500 hover:scale-105 hover:shadow-2xl hover:rotate-1"
             >
-              <button onClick={() => toggleFav(car.id)} className="absolute top-2 right-2">
-                {favorites.includes(car.id) ? "❤️" : "🤍"}
-              </button>
-
               <img src={car.image} className="h-32 w-full object-contain" />
               <div className="mt-2 font-semibold text-white text-sm">{car.name}</div>
               <div className="text-xs text-gray-300">{car.brand} • {car.model}</div>
-              <div className="text-xs text-yellow-400">⭐ {car.rating} ({car.reviews})</div>
+              <div className="text-xs text-yellow-400">Rating {car.rating} ({car.reviews})</div>
 
               <div className="flex justify-between items-center mt-3">
                 <div className="text-lg font-bold text-blue-300">{car.price} TL</div>
@@ -143,9 +125,8 @@ export default function CarsPage() {
             </div>
           ))}
         </div>
-      </div>
 
-    
+      </div>
     </div>
   );
 }
