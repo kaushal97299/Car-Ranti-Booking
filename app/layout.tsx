@@ -1,7 +1,6 @@
 import "./globals.css";
 import UserSidebar from "./components/SideNavbar";
-
-
+import Footer from "./Footer/page";
 export default function RootLayout({
   children,
 }: {
@@ -12,8 +11,9 @@ export default function RootLayout({
         <body className="bg-gray-50">
         <UserSidebar />
         
-        <main className="  md:ml-56">
+        <main className=" h-[calc(100vh-4rem)] md:ml-50">
           {children}
+        <Footer/>
         </main>
       </body>
     </html>

@@ -32,7 +32,7 @@ export default function UserSidebar() {
     <>
       {/* DESKTOP SIDEBAR */}
       <aside
-        className={`fixed top-0 left-0 h-screen w-56 bg-[#0f172a] text-gray-200 border-r border-[#1e293b] transition-transform duration-300 hidden md:block
+        className={`fixed top-0 left-0 h-screen w-50 bg-[#0f172a] text-gray-200 border-r border-[#1e293b] transition-transform duration-300 hidden md:block 
         ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="px-6 py-4 text-lg font-semibold border-b border-[#1e293b] flex justify-between items-center text-white">
