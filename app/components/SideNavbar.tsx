@@ -2,7 +2,6 @@
 
 import { useState, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import authPage from "../auth/login";
 import {
   Home,
   Car,
@@ -45,13 +44,13 @@ export default function UserSidebar() {
 
         <nav className="px-3 py-4 space-y-1">
           <NavItem router={router} path="/" label="Dashboard" icon={<Home size={18} />} active={pathname === "/"} />
-          <NavItem router={router} path="/cars" label="Browse Cars" icon={<Car size={18} />} active={pathname === "/cars"} />
+          <NavItem router={router} path="/dashboard" label="Browse Cars" icon={<Car size={18} />} active={pathname === "/dashboard"} />
           <NavItem router={router} path="/cart" label="Cart" icon={<ShoppingCart size={18} />} active={pathname === "/cart"} />
           <NavItem router={router} path="/my-bookings" label="My Bookings" icon={<CalendarCheck size={18} />} active={pathname === "/my-bookings"} />
           <NavItem router={router} path="/wishlist" label="Wishlist" icon={<Heart size={18} />} active={pathname === "/wishlist"} />
           <NavItem router={router} path="/notifications" label="Notifications" icon={<Bell size={18} />} active={pathname === "/notifications"} />
           <NavItem router={router} path="/profile" label="Profile" icon={<User size={18} />} active={pathname === "/profile"} />
-          <NavItem router={router} path="/AuthPage" label="Login" icon={<LogIn size={18} />} active={pathname === "/AuthPage"} />
+          <NavItem router={router} path="/auth" label="Login" icon={<LogIn size={18} />} active={pathname === "/auth"} />
         </nav>
       </aside>
 
@@ -99,7 +98,7 @@ export default function UserSidebar() {
               <NavItem router={router} path="/wishlist" label="Wishlist" icon={<Heart size={18} />} active={pathname === "/wishlist"} close={() => setOpen(false)} />
               <NavItem router={router} path="/notifications" label="Notifications" icon={<Bell size={18} />} active={pathname === "/notifications"} close={() => setOpen(false)} />
               <NavItem router={router} path="/profile" label="Profile" icon={<User size={18} />} active={pathname === "/profile"} close={() => setOpen(false)} />
-              <NavItem router={router} path="/login" label="Login" icon={<LogIn size={18} />} active={pathname === "/login"} close={() => setOpen(false)} />
+              <NavItem router={router} path="/auth" label="Login" icon={<LogIn size={18} />} active={pathname === "/auth"} close={() => setOpen(false)} />
             </nav>
           </aside>
         </div>
