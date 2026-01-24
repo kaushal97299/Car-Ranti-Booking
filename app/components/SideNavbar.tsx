@@ -32,14 +32,11 @@ export default function UserSidebar() {
     <>
       {/* DESKTOP SIDEBAR */}
       <aside
-        className={`fixed top-0 left-0 h-screen w-50 bg-[#0f172a] text-gray-200 border-r border-[#1e293b] transition-transform duration-300 hidden md:block 
-        ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className="fixed top-0 left-0 h-screen w-50 bg-[#0f172a] text-gray-200 border-r border-[#1e293b] transition-transform duration-300 hidden md:block translate-x-0"
       >
         <div className="px-6 py-4 text-lg font-semibold border-b border-[#1e293b] flex justify-between items-center text-white">
           <span>Car Booking</span>
-          <button onClick={() => setOpen(false)}>
-            <X size={18} />
-          </button>
+          {/* ❌ Desktop close button removed */}
         </div>
 
         <nav className="px-3 py-4 space-y-1">
@@ -54,15 +51,7 @@ export default function UserSidebar() {
         </nav>
       </aside>
 
-      {/* DESKTOP OPEN BUTTON */}
-      {!open && (
-        <button
-          onClick={() => setOpen(true)}
-          className="hidden md:flex fixed top-4 left-4 z-50 bg-[#0f172a] text-white p-2 rounded-md"
-        >
-          <Menu size={20} />
-        </button>
-      )}
+      {/* ❌ DESKTOP OPEN BUTTON REMOVED */}
 
       {/* MOBILE BOTTOM NAV */}
       <nav className="fixed bottom-0 left-0 right-0 bg-[#0f172a] text-gray-200 border-t border-[#1e293b] flex justify-around py-2 md:hidden z-40">
