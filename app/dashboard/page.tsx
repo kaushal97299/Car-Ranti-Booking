@@ -2,16 +2,18 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 /* ================== DATA ================== */
-const carsData = [
+
+export const carsData = [
   { id: 1, name: "Swift", brand: "Maruti", model: "Swift", fuel: "Petrol", gear: "Manual", class: "Hatchback", price: 1200, rating: 4.5, reviews: 120, image: "../swift.png" },
   { id: 2, name: "Baleno", brand: "Maruti", model: "Baleno", fuel: "Petrol", gear: "Manual", class: "Hatchback", price: 1400, rating: 4.4, reviews: 90, image: "../be1.png" },
   { id: 3, name: "Brezza", brand: "Maruti", model: "Brezza", fuel: "Petrol", gear: "Manual", class: "SUV", price: 1800, rating: 4.6, reviews: 200, image: "../br1.png" },
   { id: 4, name: "i20", brand: "Hyundai", model: "i20", fuel: "Petrol", gear: "Manual", class: "Hatchback", price: 1500, rating: 4.3, reviews: 150, image: "../hu1.png" },
   { id: 5, name: "Creta", brand: "Hyundai", model: "Creta", fuel: "Diesel", gear: "Manual", class: "SUV", price: 2200, rating: 4.7, reviews: 300, image: "../cr1.png" },
   { id: 6, name: "Venue", brand: "Hyundai", model: "Venue", fuel: "Petrol", gear: "Manual", class: "SUV", price: 1900, rating: 4.4, reviews: 180, image: "../va1.png" },
-  { id: 7, name: "Nexon", brand: "Tata", model: "Nexon", fuel: "Petrol", gear: "Manual", class: "SUV", price: 2000, rating: 4.6, reviews: 250, image: "../nex1.png" },
+  { id: 7, name: "Nexon", brand: "Tata", model: "Nexon", fuel: "Petrol", gear: "Manual", class: "SUV", price: 2000, rating: 4.6, reviews: 250, image: "../nex2.png" },
   { id: 8, name: "Punch", brand: "Tata", model: "Punch", fuel: "Petrol", gear: "Manual", class: "SUV", price: 1700, rating: 4.3, reviews: 110, image: "../pun1.png" },
 ];
 
@@ -23,15 +25,12 @@ export default function CarsPage() {
   const [model, setModel] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-
+  
   /* ❤️ WISHLIST */
   const [wishlist, setWishlist] = useState<number[]>([]);
-
-  /* LOAD WISHLIST */
-  // useEffect(() => {
-  //   const saved = localStorage.getItem("wishlist");
-  //   if (saved) setWishlist(JSON.parse(saved));
-  // }, []);
+  const router = useRouter();
+  
+  
 
   /* SAVE WISHLIST */
   useEffect(() => {
@@ -119,7 +118,12 @@ export default function CarsPage() {
 
             <div className="flex justify-between items-center mt-3">
               <span className="font-bold text-indigo-600">₹{car.price}/day</span>
-              <button className="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Book</button>
+              <button
+  onClick={() => router.push(`/dashboard/${car.id}`)}
+  className="bg-indigo-600 text-white px-3 py-1 rounded text-xs"
+>
+  Book
+</button>
             </div>
           </div>
         ))}
