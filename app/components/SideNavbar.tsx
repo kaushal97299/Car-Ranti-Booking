@@ -2,6 +2,7 @@
 
 import { useState, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import {
   Home,
   Car,

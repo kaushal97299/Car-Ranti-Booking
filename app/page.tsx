@@ -18,7 +18,7 @@ const featuredCar = {
   fuel: "Diesel",
   gear: "Manual",
   price: 2800,
-  
+
 };
 
 export default function DashboardPage() {
@@ -122,7 +122,7 @@ export default function DashboardPage() {
             </button>
 
             <button
-              onClick={() => router.push("/wishlist")}
+              onClick={() => router.push("#")}
               className="w-full bg-purple-100 text-purple-700 p-3 rounded-lg"
             >
               ❤️ Wishlist
