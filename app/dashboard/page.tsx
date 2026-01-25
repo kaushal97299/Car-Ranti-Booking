@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 /* ================== DATA ================== */
-
 export const carsData = [
   { id: 1, name: "Swift", brand: "Maruti", model: "Swift", fuel: "Petrol", gear: "Manual", class: "Hatchback", price: 1200, rating: 4.5, reviews: 120, image: "../swift.png" },
   { id: 2, name: "Baleno", brand: "Maruti", model: "Baleno", fuel: "Petrol", gear: "Manual", class: "Hatchback", price: 1400, rating: 4.4, reviews: 90, image: "../be1.png" },
@@ -25,22 +24,38 @@ export default function CarsPage() {
   const [model, setModel] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  
-  /* ❤️ WISHLIST */
-  const [wishlist, setWishlist] = useState<number[]>([]);
-  const router = useRouter();
-  
-  
 
-  /* SAVE WISHLIST */
+  /* ❤️ WISHLIST */
+  const [wishlist, setWishlist] = useState<number[]>(() => {
+  if (typeof window !== "undefined") {
+    return JSON.parse(localStorage.getItem("wishlist") || "[]");
+  }
+  return [];
+});
+
+  const router = useRouter();
+
+  // load wishlist on page load
+ useEffect(() => {
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}, [wishlist]);
+
+
+  // save wishlist
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
+  // ❤️ HEART CLICK → SAVE + REDIRECT
   const toggleWishlist = (id: number) => {
-    setWishlist(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
+    setWishlist(prev => {
+      const updated = prev.includes(id) ? prev : [...prev, id];
+      localStorage.setItem("wishlist", JSON.stringify(updated));
+      return updated;
+    });
+
+    // ✅ redirect to wishlist page
+    router.push("/wishlist");
   };
 
   const modelsByBrand = [...new Set(
@@ -56,8 +71,6 @@ export default function CarsPage() {
     (!minPrice || c.price >= Number(minPrice)) &&
     (!maxPrice || c.price <= Number(maxPrice))
   );
-
-  const wishlistCars = carsData.filter(c => wishlist.includes(c.id));
 
   const clearFilters = () => {
     setSearch(""); setGear(""); setFuel(""); setBrand("");
@@ -80,13 +93,16 @@ export default function CarsPage() {
         <select className="border p-2 rounded" value={gear} onChange={(e) => setGear(e.target.value)}>
           <option value="">Gear</option><option>Manual</option><option>Automatic</option>
         </select>
+
         <select className="border p-2 rounded" value={fuel} onChange={(e) => setFuel(e.target.value)}>
           <option value="">Fuel</option><option>Petrol</option><option>Diesel</option>
         </select>
+
         <select className="border p-2 rounded" value={brand} onChange={(e) => { setBrand(e.target.value); setModel(""); }}>
           <option value="">Brand</option>
           {[...new Set(carsData.map(c => c.brand))].map(b => <option key={b}>{b}</option>)}
         </select>
+
         <select className="border p-2 rounded" value={model} onChange={(e) => setModel(e.target.value)} disabled={!brand}>
           <option value="">Model</option>
           {modelsByBrand.map(m => <option key={m}>{m}</option>)}
@@ -119,30 +135,15 @@ export default function CarsPage() {
             <div className="flex justify-between items-center mt-3">
               <span className="font-bold text-indigo-600">₹{car.price}/day</span>
               <button
-  onClick={() => router.push(`/dashboard/${car.id}`)}
-  className="bg-indigo-600 text-white px-3 py-1 rounded text-xs"
->
-  Book
-</button>
+                onClick={() => router.push(`/dashboard/${car.id}`)}
+                className="bg-indigo-600 text-white px-3 py-1 rounded text-xs"
+              >
+                Book
+              </button>
             </div>
           </div>
         ))}
       </div>
-
-      {/* ❤️ WISHLIST SECTION */}
-      {wishlistCars.length > 0 && (
-        <>
-          <h2 className="mt-10 mb-4 text-xl font-semibold text-slate-800">❤️ Wishlist</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {wishlistCars.map(car => (
-              <div key={car.id} className="bg-white rounded-lg p-3 shadow">
-                <img src={car.image} className="h-24 w-full object-contain" />
-                <div className="text-sm font-semibold mt-1">{car.name}</div>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
     </div>
   );
 }
