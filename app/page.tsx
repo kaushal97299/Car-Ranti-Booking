@@ -18,6 +18,7 @@ const featuredCar = {
   fuel: "Diesel",
   gear: "Manual",
   price: 2800,
+  
 };
 
 export default function DashboardPage() {
