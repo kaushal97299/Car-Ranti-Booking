@@ -57,7 +57,7 @@ export default function UserSidebar() {
       {/* MOBILE BOTTOM NAV */}
       <nav className="fixed bottom-0 left-0 right-0 bg-[#0f172a] text-gray-200 border-t border-[#1e293b] flex justify-around py-2 md:hidden z-40">
         <BottomItem router={router} path="/" icon={<Home size={20} />} label="Home" />
-        <BottomItem router={router} path="/cars" icon={<Car size={20} />} label="Cars" />
+        <BottomItem router={router} path="/dashboard" icon={<Car size={20} />} label="Cars" />
         <BottomItem router={router} path="/cart" icon={<ShoppingCart size={20} />} label="Cart" />
         <BottomItem router={router} path="/profile" icon={<User size={20} />} label="Profile" />
         <button onClick={() => setOpen(true)} className="flex flex-col items-center text-xs">
@@ -82,7 +82,7 @@ export default function UserSidebar() {
 
             <nav className="space-y-1 overflow-y-auto">
               <NavItem router={router} path="/" label="Dashboard" icon={<Home size={18} />} active={pathname === "/"} close={() => setOpen(false)} />
-              <NavItem router={router} path="/cars" label="Browse Cars" icon={<Car size={18} />} active={pathname === "/cars"} close={() => setOpen(false)} />
+              <NavItem router={router} path="/dashboard" label="Browse Cars" icon={<Car size={18} />} active={pathname === "/dashboard"} close={() => setOpen(false)} />
               <NavItem router={router} path="/cart" label="Cart" icon={<ShoppingCart size={18} />} active={pathname === "/cart"} close={() => setOpen(false)} />
               <NavItem router={router} path="/my-bookings" label="My Bookings" icon={<CalendarCheck size={18} />} active={pathname === "/my-bookings"} close={() => setOpen(false)} />
               <NavItem router={router} path="/wishlist" label="Wishlist" icon={<Heart size={18} />} active={pathname === "/wishlist"} close={() => setOpen(false)} />
