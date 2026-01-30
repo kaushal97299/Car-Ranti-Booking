@@ -36,6 +36,7 @@ export default function CarDetailPage() {
 
           {/* IMAGE */}
           <div className="flex justify-center">
+             {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
             <img
               src={car.image}
               className="w-full max-h-96 object-contain"

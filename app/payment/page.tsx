@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { CreditCard, Smartphone, Wallet, CheckCircle2 } from "lucide-react";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default function PaymentPage() {
   const params = useSearchParams();
