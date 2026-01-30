@@ -153,6 +153,7 @@ const router = useRouter();
   router.push(`/payment?fullName=${fullName}&phone=${phone}&email=${email}&license=${licenseNo}&car=${car.name}&fuel=${car.fuel}&gear=${car.gear}&pickupDate=${pickupDate}&pickupTime=${pickupTime}&dropDate=${dropDate}&dropTime=${dropTime}&days=${days}&total=${totalPrice}`
   );
 }}
+
               className="flex-1 bg-indigo-600 text-white rounded-xl py-2 font-bold"
             >
               Proceed to Payment
