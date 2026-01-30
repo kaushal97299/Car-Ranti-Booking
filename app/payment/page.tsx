@@ -1,11 +1,11 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { CreditCard, Smartphone, Wallet, CheckCircle2 } from "lucide-react";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default function PaymentPage() {
   const params = useSearchParams();
@@ -42,7 +42,6 @@ export default function PaymentPage() {
 
         {/* PAYMENT METHODS */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
-
           <PayOption
             icon={<Smartphone size={28} />}
             label="UPI Payment"
@@ -88,7 +87,6 @@ export default function PaymentPage() {
             {method ? "Pay Now" : "Select Payment Method"}
           </button>
         </div>
-
       </div>
     </div>
   );
@@ -101,7 +99,6 @@ function PayOption({
   label,
   active,
   onClick,
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: any) {
   return (
     <button
