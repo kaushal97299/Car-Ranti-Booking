@@ -1,5 +1,8 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { CreditCard, Smartphone, Wallet, CheckCircle2 } from "lucide-react";
@@ -40,7 +43,6 @@ export default function PaymentPage() {
         {/* PAYMENT METHODS */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
 
-          {/* UPI */}
           <PayOption
             icon={<Smartphone size={28} />}
             label="UPI Payment"
@@ -48,7 +50,6 @@ export default function PaymentPage() {
             onClick={() => setMethod("UPI")}
           />
 
-          {/* CARD */}
           <PayOption
             icon={<CreditCard size={28} />}
             label="Card Payment"
@@ -56,7 +57,6 @@ export default function PaymentPage() {
             onClick={() => setMethod("CARD")}
           />
 
-          {/* CASH */}
           <PayOption
             icon={<Wallet size={28} />}
             label="Cash on Pickup"
