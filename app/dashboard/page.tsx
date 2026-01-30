@@ -16,7 +16,12 @@ export const carsData = [
   { id: 8, name: "Punch", brand: "Tata", model: "Punch", fuel: "Petrol", gear: "Manual", class: "SUV", price: 1700, rating: 4.3, reviews: 110, image: "../pun1.png" },
 ];
 
+/* ================== PAGINATION ================== */
+const ITEMS_PER_PAGE = 8;
+
 export default function CarsPage() {
+  const router = useRouter();
+
   const [search, setSearch] = useState("");
   const [gear, setGear] = useState("");
   const [fuel, setFuel] = useState("");
@@ -24,37 +29,26 @@ export default function CarsPage() {
   const [model, setModel] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  /* ❤️ WISHLIST */
+  /* ❤️ Wishlist */
   const [wishlist, setWishlist] = useState<number[]>(() => {
-  if (typeof window !== "undefined") {
-    return JSON.parse(localStorage.getItem("wishlist") || "[]");
-  }
-  return [];
-});
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("wishlist") || "[]");
+    }
+    return [];
+  });
 
-  const router = useRouter();
-
-  // load wishlist on page load
- useEffect(() => {
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-}, [wishlist]);
-
-
-  // save wishlist
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
-  // ❤️ HEART CLICK → SAVE + REDIRECT
   const toggleWishlist = (id: number) => {
     setWishlist(prev => {
       const updated = prev.includes(id) ? prev : [...prev, id];
       localStorage.setItem("wishlist", JSON.stringify(updated));
       return updated;
     });
-
-    // ✅ redirect to wishlist page
     router.push("/wishlist");
   };
 
@@ -72,78 +66,107 @@ export default function CarsPage() {
     (!maxPrice || c.price <= Number(maxPrice))
   );
 
-  const clearFilters = () => {
-    setSearch(""); setGear(""); setFuel(""); setBrand("");
-    setModel(""); setMinPrice(""); setMaxPrice("");
-  };
+  /* PAGINATION */
+  const totalPages = Math.ceil(filteredCars.length / ITEMS_PER_PAGE);
+  const paginatedCars = filteredCars.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
-    <div className="min-h-screen w-full p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100">
+    <div className="min-h-screen p-4 md:p-6 bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200">
 
       {/* SEARCH */}
       <input
         placeholder="Search car, brand or model..."
-        className="mb-4 w-full p-2 rounded border"
+        className="w-full mb-4 p-3 rounded-xl bg-white/80 backdrop-blur shadow"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
       {/* FILTER BAR */}
-      <div className="bg-white p-4 rounded-xl shadow flex flex-wrap gap-3">
-        <select className="border p-2 rounded" value={gear} onChange={(e) => setGear(e.target.value)}>
+      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl p-4 rounded-2xl shadow-lg flex flex-wrap gap-3 mb-6">
+        <select className="p-2 rounded-lg border" value={gear} onChange={(e) => setGear(e.target.value)}>
           <option value="">Gear</option><option>Manual</option><option>Automatic</option>
         </select>
-
-        <select className="border p-2 rounded" value={fuel} onChange={(e) => setFuel(e.target.value)}>
+        <select className="p-2 rounded-lg border" value={fuel} onChange={(e) => setFuel(e.target.value)}>
           <option value="">Fuel</option><option>Petrol</option><option>Diesel</option>
         </select>
-
-        <select className="border p-2 rounded" value={brand} onChange={(e) => { setBrand(e.target.value); setModel(""); }}>
+        <select className="p-2 rounded-lg border" value={brand} onChange={(e) => { setBrand(e.target.value); setModel(""); }}>
           <option value="">Brand</option>
           {[...new Set(carsData.map(c => c.brand))].map(b => <option key={b}>{b}</option>)}
         </select>
-
-        <select className="border p-2 rounded" value={model} onChange={(e) => setModel(e.target.value)} disabled={!brand}>
+        <select className="p-2 rounded-lg border" value={model} onChange={(e) => setModel(e.target.value)} disabled={!brand}>
           <option value="">Model</option>
           {modelsByBrand.map(m => <option key={m}>{m}</option>)}
         </select>
-
-        <input type="number" placeholder="Min ₹" className="border p-2 rounded w-24" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
-        <input type="number" placeholder="Max ₹" className="border p-2 rounded w-24" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
-
-        <button onClick={clearFilters} className="ml-auto text-indigo-600">Clear All</button>
+        <input type="number" placeholder="Min ₹" className="p-2 w-24 rounded-lg border" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+        <input type="number" placeholder="Max ₹" className="p-2 w-24 rounded-lg border" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
       </div>
 
-      {/* CAR GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-        {filteredCars.map(car => (
-          <div key={car.id} className="bg-white rounded-xl shadow p-3 relative">
-
-            {/* ❤️ FAVORITE */}
-            <button
-              onClick={() => toggleWishlist(car.id)}
-              className="absolute top-2 right-2 text-xl"
-            >
-              {wishlist.includes(car.id) ? "❤️" : "🤍"}
-            </button>
-
-            <img src={car.image} className="h-32 w-full object-contain" />
-            <div className="font-semibold mt-2">{car.name}</div>
-            <div className="text-xs text-gray-500">{car.brand} • {car.model}</div>
-            <div className="text-xs text-amber-500">⭐ {car.rating}</div>
-
-            <div className="flex justify-between items-center mt-3">
-              <span className="font-bold text-indigo-600">₹{car.price}/day</span>
+      {/* GRID */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {paginatedCars.map(car => (
+          <div
+            key={car.id}
+            className="
+              bg-white/80 backdrop-blur rounded-2xl shadow
+              transition-all duration-300
+              hover:bg-white
+              hover:shadow-xl
+              border border-white/60
+            "
+          >
+            <div className="relative">
+              <img src={car.image} className="h-40 w-full object-contain" />
               <button
-                onClick={() => router.push(`/dashboard/${car.id}`)}
-                className="bg-indigo-600 text-white px-3 py-1 rounded text-xs"
+                onClick={() => toggleWishlist(car.id)}
+                className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow"
               >
-                Book
+                {wishlist.includes(car.id) ? "❤️" : "🤍"}
               </button>
+            </div>
+
+            <div className="p-4">
+              <h3 className="font-semibold">{car.name}</h3>
+              <p className="text-xs text-gray-500">{car.brand} • {car.model}</p>
+              <p className="text-xs text-amber-500 mt-1">⭐ {car.rating} ({car.reviews})</p>
+
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  ₹{car.price}/day
+                </span>
+                <button
+                  onClick={() => router.push(`/dashboard/${car.id}`)}
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-1.5 rounded-lg text-sm shadow"
+                >
+                  Book
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* PAGINATION */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-8 gap-2">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                currentPage === i + 1
+                  ? "bg-indigo-600 text-white shadow"
+                  : "bg-white/80 hover:bg-white shadow"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
+
     </div>
   );
 }
