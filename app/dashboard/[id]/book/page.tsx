@@ -86,7 +86,6 @@ const router = useRouter();
           onClick={() => setPreviewImg(false)}
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
         >
-          {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
           <img
             src={URL.createObjectURL(licenseImg)}
             className="max-h-[90%] max-w-[90%] rounded-xl"
@@ -117,7 +116,6 @@ const router = useRouter();
               <GlassCard title="License">
                 <p>{licenseNo}</p>
                 {licenseImg && (
-                  // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
                   <img src={URL.createObjectURL(licenseImg)} className="h-24 rounded-xl mt-2" />
                 )}
               </GlassCard>
@@ -152,26 +150,10 @@ const router = useRouter();
             </button>
             <button
               onClick={() => {
-  const query = new URLSearchParams({
-    fullName,
-    phone,
-    email,
-    license: licenseNo,
-    car: car.name,
-    fuel: car.fuel,
-    gear: car.gear,
-    pickupDate,
-    pickupTime,
-    dropDate,
-    dropTime,
-    days: String(days),
-    total: String(totalPrice),
-  }).toString();
-
-  router.push(`/payment?${query}`);
+  router.push(
+    `/payment?fullName=${fullName}&phone=${phone}&email=${email}&license=${licenseNo}&car=${car.name}&fuel=${car.fuel}&gear=${car.gear}&pickupDate=${pickupDate}&pickupTime=${pickupTime}&dropDate=${dropDate}&dropTime=${dropTime}&days=${days}&total=${totalPrice}`
+  );
 }}
-
-
               className="flex-1 bg-indigo-600 text-white rounded-xl py-2 font-bold"
             >
               Proceed to Payment

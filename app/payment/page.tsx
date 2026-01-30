@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { CreditCard, Smartphone, Wallet, CheckCircle2 } from "lucide-react";
-
-export const dynamic = "force-dynamic";
 
 export default function PaymentPage() {
   const params = useSearchParams();
@@ -42,6 +39,8 @@ export default function PaymentPage() {
 
         {/* PAYMENT METHODS */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
+
+          {/* UPI */}
           <PayOption
             icon={<Smartphone size={28} />}
             label="UPI Payment"
@@ -49,6 +48,7 @@ export default function PaymentPage() {
             onClick={() => setMethod("UPI")}
           />
 
+          {/* CARD */}
           <PayOption
             icon={<CreditCard size={28} />}
             label="Card Payment"
@@ -56,6 +56,7 @@ export default function PaymentPage() {
             onClick={() => setMethod("CARD")}
           />
 
+          {/* CASH */}
           <PayOption
             icon={<Wallet size={28} />}
             label="Cash on Pickup"
@@ -87,6 +88,7 @@ export default function PaymentPage() {
             {method ? "Pay Now" : "Select Payment Method"}
           </button>
         </div>
+
       </div>
     </div>
   );
@@ -99,6 +101,7 @@ function PayOption({
   label,
   active,
   onClick,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: any) {
   return (
     <button
