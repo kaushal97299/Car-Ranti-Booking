@@ -1,6 +1,7 @@
 import "./globals.css";
 import UserSidebar from "./components/SideNavbar";
 import Footer from "./Footer/page";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 export default function RootLayout({
   children,
 }: {
