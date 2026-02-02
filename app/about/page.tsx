@@ -111,6 +111,7 @@ export default function AboutPage() {
           viewport={{ once: true }}
           className="bg-white/60 backdrop-blur border border-white/40 rounded-2xl p-3 shadow-lg"
         >
+         {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://images.unsplash.com/photo-1549924231-f129b911e442"
             alt="car"

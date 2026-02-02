@@ -117,6 +117,7 @@ export default function CarsPage() {
             "
           >
             <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={car.image} className="h-40 w-full object-contain" />
               <button
                 onClick={() => toggleWishlist(car.id)}

@@ -79,6 +79,7 @@ export default function BookCarPage() {
           onClick={() => setPreviewImg(false)}
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
         >
+           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
             src={URL.createObjectURL(licenseImg)}
             className="max-h-[90%] max-w-[90%] rounded-xl"

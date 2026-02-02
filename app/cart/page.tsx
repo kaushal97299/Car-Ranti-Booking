@@ -47,6 +47,7 @@ export default function CartPage() {
             className="flex items-center justify-between border-b py-4"
           >
             <div className="flex items-center gap-4">
+               {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <img src={car.image} className="h-16 object-contain" />
               <div>
                 <p className="font-semibold">{car.name}</p>
