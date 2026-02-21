@@ -1,8 +1,9 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
+
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 
@@ -26,16 +27,45 @@ export default function DashboardPage() {
   const [active2, setActive2] = useState(0); // second carousel
   const router = useRouter();
 
+  // ✅ AUTH CHECK (ADDED)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/auth");
+    }
+  }, [router]);
+
+  // ✅ LOGOUT (ADDED)
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push("/auth");
+  };
+
   return (
     <div className="min-h-screen p-4 md:p-6 bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200">
 
       {/* HEADER */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-800">Welcome Back 👋</h1>
-        <p className="text-slate-600 text-sm">Find the perfect car for your next journey</p>
+      <div className="mb-6 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800">
+            Welcome Back 👋
+          </h1>
+          <p className="text-slate-600 text-sm">
+            Find the perfect car for your next journey
+          </p>
+        </div>
+
+        {/* LOGOUT BUTTON */}
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-1.5 rounded-lg text-sm shadow"
+        >
+          Logout
+        </button>
       </div>
 
-      {/* ================= FIRST CAROUSEL (UNCHANGED) ================= */}
+      {/* ================= FIRST CAROUSEL ================= */}
       <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-4 shadow mb-8">
         <h2 className="font-semibold text-slate-700 mb-3">Popular Cars</h2>
 
@@ -73,7 +103,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ================= SECOND CAROUSEL (ADDED) ================= */}
+      {/* ================= SECOND CAROUSEL ================= */}
       <div className="mb-10">
         <h2 className="font-semibold text-slate-700 mb-4">Luxury Picks</h2>
 
@@ -186,22 +216,24 @@ export default function DashboardPage() {
 
       {/* ================= STATS ================= */}
       <div className="flex md:grid md:grid-cols-3 gap-4 overflow-x-auto pb-2">
+
         <div className="min-w-[200px] bg-white rounded-xl p-4 shadow">
           <h4 className="text-sm text-slate-500">Total Cars</h4>
           <p className="text-xl font-bold text-indigo-600">120+</p>
         </div>
+
         <div className="min-w-[200px] bg-white rounded-xl p-4 shadow">
           <h4 className="text-sm text-slate-500">Active Bookings</h4>
           <p className="text-xl font-bold text-purple-600">3</p>
         </div>
+
         <div className="min-w-[200px] bg-white rounded-xl p-4 shadow">
           <h4 className="text-sm text-slate-500">Wishlist</h4>
           <p className="text-xl font-bold text-pink-600">5</p>
         </div>
+
       </div>
 
     </div>
   );
 }
-
-
