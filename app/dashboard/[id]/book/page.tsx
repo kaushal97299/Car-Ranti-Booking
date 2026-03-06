@@ -1,225 +1,617 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
-import { carsData } from "../../page"; // ✅ FIXED IMPORT
+import { SetStateAction, useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
+/* ================= STRIPE ================= */
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);
 
 export default function BookCarPage() {
-  const { id } = useParams();
-  const car = carsData.find((c) => c.id === Number(id));
 
-  // ================= STATES =================
+  const { id } = useParams();
+
+  /* ================= CAR ================= */
+  const [car, setCar] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  /* ================= USER ================= */
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [licenseNo, setLicenseNo] = useState("");
 
-  const [licenseImg, setLicenseImg] = useState<File | null>(null);
-  const [previewImg, setPreviewImg] = useState(false);
+  /* ================= ADDRESS ================= */
+  const [address, setAddress] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [city, setCity] = useState("");
+  const [stateName, setStateName] = useState("");
+  const [villages, setVillages] = useState<string[]>([]);
+  const [selectedVillage, setSelectedVillage] = useState("");
+  const [loadingPin, setLoadingPin] = useState(false);
 
-  const [pickupDate, setPickupDate] = useState("");
-  const [pickupTime, setPickupTime] = useState("");
-  const [dropDate, setDropDate] = useState("");
+  /* ================= FILE ================= */
+  const [licenseImg, setLicenseImg] = useState<File | null>(null);
+
+  /* ================= DATE ================= */
+const [pickupDate, setPickupDate] = useState<Date | null>(null);
+const [pickupTime, setPickupTime] = useState("");
+
+const [dropDate, setDropDate] = useState<Date | null>(null);
   const [dropTime, setDropTime] = useState("");
 
+  /* ================= UI ================= */
   const [openPayment, setOpenPayment] = useState(false);
   const [errorPopup, setErrorPopup] = useState("");
+  const [blockedRanges, setBlockedRanges] = useState<any[]>([]);
 
-  if (!car) return null;
+const blockedDates = blockedRanges.flatMap(range => {
 
-  // ================= HELPERS =================
+  const dates = [];
+
+  // eslint-disable-next-line prefer-const
+  let current = new Date(range.from);
+  const end = new Date(range.to);
+
+  current.setHours(0,0,0,0);
+  end.setHours(0,0,0,0);
+
+  while (current <= end) {
+    dates.push(new Date(current));
+    current.setDate(current.getDate() + 1);
+  }
+
+  return dates;
+
+});
+const blockedIntervals = blockedRanges.map(range => {
+
+  const start = new Date(range.from);
+  const end = new Date(range.to);
+
+  start.setHours(0,0,0,0);
+  end.setHours(0,0,0,0);
+
+  return { start, end };
+
+});
+
+  useEffect(() => {
+
+  const fetchUnavailable = async () => {
+    
+    try {
+      
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/booking/unavailable/${id}`
+      );
+      
+      const data = await res.json();
+      console.log("block range,", data);
+      setBlockedRanges(data);
+
+    } catch (err) {
+      console.log("Unavailable fetch error", err);
+    }
+
+  };
+
+  if(id) fetchUnavailable();
+
+}, [id]);
+
+const isDateBlocked = (date:string) => {
+
+  return blockedRanges.some(range => {
+
+    const from = new Date(range.from);
+    const to = new Date(range.to);
+    const check = new Date(date);
+
+    return check >= from && check <= to;
+
+  });
+
+};
+
+const isRangeBlocked = () => {
+
+  if (!pickupDate || !dropDate) return false;
+
+  const start = new Date(pickupDate);
+  const end = new Date(dropDate);
+
+  start.setHours(0,0,0,0);
+  end.setHours(0,0,0,0);
+
+  for (const range of blockedRanges) {
+
+    const blockedStart = new Date(range.from);
+    const blockedEnd = new Date(range.to);
+
+    blockedStart.setHours(0,0,0,0);
+    blockedEnd.setHours(0,0,0,0);
+
+    if (start <= blockedEnd && end >= blockedStart) {
+      return true;
+    }
+
+  }
+
+  return false;
+};
+
+useEffect(() => {
+
+  if (!pickupDate || !dropDate) return;
+
+  if (isRangeBlocked()) {
+
+    setErrorPopup("Car already booked between selected dates");
+
+    setDropDate(null);
+
+  }
+
+}, [pickupDate, dropDate]);
+
+  /* ================= FETCH CAR ================= */
+  useEffect(() => {
+
+    const fetchCar = async () => {
+      try {
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/inventory/public/${id}`
+        );
+
+        const data = await res.json();
+
+        setCar(data);
+        setLoading(false);
+
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
+
+    if (id) fetchCar();
+
+  }, [id]);
+  /* ================= PINCODE FETCH ================= */
+  const fetchPincodeData = async (pin: string) => {
+
+  if (pin.length !== 6) return;
+
+  try {
+
+    setLoadingPin(true);
+
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/booking/pincode/${pin}`
+    );
+
+    const data = res.data;
+
+    setCity(data.city || "");
+    setStateName(data.state || "");
+    setVillages(data.villages || []);
+
+  } catch (err:any) {
+
+    console.error("Pincode error:", err);
+
+    setCity("");
+    setStateName("");
+    setVillages([]);
+
+  } finally {
+
+    setLoadingPin(false);
+
+  }
+};
+  /* ================= HELPERS ================= */
   const today = new Date().toISOString().split("T")[0];
 
   const calculateDays = () => {
+
     if (!pickupDate || !dropDate) return 1;
-    const start = new Date(`${pickupDate}T${pickupTime || "00:00"}`);
-    const end = new Date(`${dropDate}T${dropTime || "00:00"}`);
-    const diff = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+
+   const start = new Date(pickupDate);
+const end = new Date(dropDate);
+
+if (pickupTime) {
+  const [h,m] = pickupTime.split(":");
+  start.setHours(Number(h),Number(m));
+}
+
+if (dropTime) {
+  const [h,m] = dropTime.split(":");
+  end.setHours(Number(h),Number(m));
+}
+
+    const diff =
+      (end.getTime() - start.getTime()) /
+      (1000 * 60 * 60 * 24);
+
     return diff > 0 ? Math.ceil(diff) : 1;
   };
 
   const days = calculateDays();
-  const totalPrice = days * car.price;
+  const totalPrice = days * (car?.price || 0);
 
+  /* ================= VALIDATION ================= */
   const validateForm = () => {
-    if (!fullName) return "Please enter your full name";
-    if (!phone) return "Please enter phone number";
-    if (!email) return "Please enter email";
-    if (!licenseNo) return "Please enter license number";
-    if (!licenseImg) return "Please upload license image";
-    if (!pickupDate) return "Please select pickup date";
-    if (!pickupTime) return "Please select pickup time";
-    if (!dropDate) return "Please select drop date";
-    if (!dropTime) return "Please select drop time";
+
+    if (!fullName) return "Enter name";
+    if (!phone) return "Enter phone";
+    if (!email) return "Enter email";
+    if (!licenseNo) return "Enter license";
+
+    if (!address) return "Enter address";
+    if (!pincode) return "Enter pincode";
+    if (!city) return "Invalid pincode";
+    if (!selectedVillage) return "Select village";
+
+    if (!licenseImg) return "Upload license";
+
+    if (!pickupDate) return "Pickup date required";
+    if (!pickupTime) return "Pickup time required";
+    if (!dropDate) return "Drop date required";
+    if (!dropTime) return "Drop time required";
+
     return "";
   };
 
+  /* ================= SUBMIT ================= */
+  const submitBooking = async () => {
+
+  const err = validateForm();
+  if (err) {
+    setErrorPopup(err);
+    return;
+  }
+
+  if (isRangeBlocked()) {
+    console.log("Blocked range", blockedRanges);
+    setErrorPopup("Car already booked between selected dates");
+    return;
+  }
+
+  try {
+
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("token")
+        : null;
+
+   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/booking/create`,{
+  method:"POST",
+  headers:{
+    "Content-Type":"application/json",
+    Authorization:`Bearer ${token}`
+  },
+        body: JSON.stringify({
+          carId: car._id,
+          name: car.name,
+
+          days,
+          amount: totalPrice,
+
+          fullName,
+          phone,
+          email,
+          licenseNo,
+
+          address,
+          pincode,
+          city,
+          state: stateName,
+          village: selectedVillage,
+
+         pickupDate: pickupDate?.toISOString().split("T")[0],
+  pickupTime,
+  dropDate: dropDate?.toISOString().split("T")[0],
+  dropTime,
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+if (!res.ok) {
+  setErrorPopup(data.message || "Booking error");
+  return;
+}
+
+window.location.href = data.checkoutUrl;
+
+  } catch (err) {
+    console.error(err);
+    alert("Payment failed");
+  }
+};
+
+  /* ================= LOADING ================= */
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!car) return null;
+
+  /* ================= UI ================= */
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-indigo-300 via-purple-300 to-fuchsia-300 p-4">
 
-      {/* ================= ERROR POPUP ================= */}
+      {/* ERROR */}
       {errorPopup && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-2xl shadow-2xl w-[90%] max-w-sm">
-            <h3 className="text-lg font-bold text-red-600 mb-2">Error</h3>
-            <p className="text-sm">{errorPopup}</p>
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-xl">
+
+            <p>{errorPopup}</p>
+
             <button
-              onClick={() => setErrorPopup("")}
-              className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-xl font-bold"
+              onClick={()=>setErrorPopup("")}
+              className="mt-3 w-full bg-indigo-600 text-white py-2 rounded"
             >
               OK
             </button>
+
           </div>
         </div>
       )}
 
-      {/* ================= IMAGE PREVIEW ================= */}
-      {previewImg && licenseImg && (
-        <div
-          onClick={() => setPreviewImg(false)}
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
-        >
-           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-          <img
-            src={URL.createObjectURL(licenseImg)}
-            className="max-h-[90%] max-w-[90%] rounded-xl"
-          />
-        </div>
-      )}
-
-      {/* ================= PAYMENT MODAL ================= */}
-      {openPayment && (
-        <Modal>
-          <h2 className="text-xl font-bold mb-4">Payment</h2>
-          <p className="mb-4">
-            Pay <b>₹{totalPrice}</b> for <b>{car.name}</b>
-          </p>
-
-          <div className="space-y-3">
-            <button className="w-full border py-2 rounded-xl">UPI</button>
-            <button className="w-full border py-2 rounded-xl">Card</button>
-            <button className="w-full border py-2 rounded-xl">Cash</button>
-          </div>
-
-          <button
-            onClick={() => {
-              setOpenPayment(false);
-              alert("Booking Confirmed 🎉");
-            }}
-            className="w-full bg-green-600 text-white py-2 rounded-xl mt-5 font-bold"
-          >
-            Pay Now
-          </button>
-        </Modal>
-      )}
-
-      {/* ================= MAIN UI ================= */}
-      <div className="max-w-6xl mx-auto bg-white/20 backdrop-blur-xl rounded-3xl shadow-xl p-5 grid lg:grid-cols-[1fr_300px] gap-6">
+      <div className="max-w-6xl mx-auto bg-white/20 rounded-3xl p-5 grid lg:grid-cols-[1fr_320px] gap-6">
 
         {/* LEFT */}
         <div className="space-y-5">
-          <div className="bg-white/40 backdrop-blur rounded-2xl p-5">
-            <h3 className="font-bold text-indigo-700 mb-4">Personal Information</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <Input label="Full Name" value={fullName} onChange={(e:any)=>setFullName(e.target.value)} />
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <Input label="Phone Number" value={phone} onChange={(e:any)=>setPhone(e.target.value)} />
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+
+          {/* PERSONAL */}
+          <div className="bg-white/40 p-5 rounded-xl">
+
+            <h3 className="font-bold mb-3">Personal Info</h3>
+
+            <div className="grid md:grid-cols-2 gap-3">
+
+              <Input label="Name" value={fullName} onChange={(e:any)=>setFullName(e.target.value)} />
+              <Input label="Phone" value={phone} onChange={(e:any)=>setPhone(e.target.value)} />
               <Input label="Email" full value={email} onChange={(e:any)=>setEmail(e.target.value)} />
+
             </div>
+
           </div>
 
-          <div className="bg-white/40 backdrop-blur rounded-2xl p-5">
-            <h3 className="font-bold text-purple-700 mb-4">License Verification</h3>
-            <div className="grid md:grid-cols-2 gap-4 items-center">
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <Input label="License Number" value={licenseNo} onChange={(e:any)=>setLicenseNo(e.target.value.toUpperCase())} />
-              <input type="file" accept="image/*" onChange={(e)=>setLicenseImg(e.target.files?.[0] || null)} />
-              {licenseImg && (
-                <button onClick={() => setPreviewImg(true)} className="text-xs underline text-indigo-700">
-                  Preview Image
-                </button>
+          {/* ADDRESS */}
+          <div className="bg-white/40 p-5 rounded-xl">
+
+            <h3 className="font-bold mb-3">Address</h3>
+
+            <div className="grid md:grid-cols-2 gap-3">
+
+              <Input label="Full Address" full value={address} onChange={(e:any)=>setAddress(e.target.value)} />
+
+              <Input
+                label="Pincode"
+                value={pincode}
+                onChange={(e:any)=>{
+                  const val = e.target.value.replace(/\D/g,"");
+                  setPincode(val);
+if(val.length===6){
+  fetchPincodeData(val);
+}else{
+  setCity("");
+  setStateName("");
+  setVillages([]);
+  setSelectedVillage("");
+}                }}
+              />
+
+              <Input label="City" value={city} readOnly />
+              <Input label="State" value={stateName} readOnly />
+
+              {villages.length > 0 && (
+                <div className="md:col-span-2">
+
+                  <label className="text-sm">Village / Town</label>
+
+                  <select
+                    value={selectedVillage}
+                    onChange={(e)=>setSelectedVillage(e.target.value)}
+                    className="w-full p-3 rounded border"
+                  >
+                    <option value="">Select</option>
+                    {villages.map((v,i)=>(
+                      <option key={i}>{v}</option>
+                    ))}
+                  </select>
+
+                </div>
               )}
+
             </div>
+
           </div>
+
+          {/* LICENSE */}
+          <div className="bg-white/40 p-5 rounded-xl">
+
+            <h3 className="font-bold mb-3">License</h3>
+
+            <div className="grid md:grid-cols-2 gap-3">
+
+              <Input label="License No" value={licenseNo} onChange={(e:any)=>setLicenseNo(e.target.value)} />
+              <input type="file" onChange={(e)=>setLicenseImg(e.target.files?.[0] || null)} />
+
+            </div>
+
+          </div>
+
         </div>
 
-        {/* RIGHT */}
-        <div className="bg-gradient-to-br from-indigo-700 via-purple-700 to-fuchsia-700 text-white rounded-2xl p-5 h-fit shadow-xl">
-          <h2 className="text-lg font-bold">{car.name}</h2>
-          <p className="text-xs opacity-80 mb-3">{car.brand} • {car.model}</p>
+        {/* RIGHT CARD */}
+        <div className="
+          bg-gradient-to-br from-indigo-700 via-purple-700 to-fuchsia-700
+          text-white rounded-[28px] p-6 h-fit shadow-2xl
+        ">
 
-          <div className="grid grid-cols-2 gap-2 text-xs mb-4">
+          <h2 className="text-2xl font-bold mb-3">
+            {car.name}
+          </h2>
+
+          <div className="grid grid-cols-2 gap-y-2 text-xs mb-5 opacity-90">
+
             <span>⛽ {car.fuel}</span>
             <span>⚙ {car.gear}</span>
-            <span>⭐ {car.rating}</span>
-            <span>🚗 {car.class}</span>
+            <span>⭐ {car.rating || 5}</span>
+            <span>🚗 {car.class || "SUV"}</span>
+
           </div>
 
-          <div className="bg-white/20 rounded-xl p-3 mb-4">
-            <div className="grid grid-cols-2 gap-2">
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <InputSmall label="Pickup Date" type="date" min={today} value={pickupDate} onChange={(e:any)=>{setPickupDate(e.target.value);setDropDate("");}} />
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <InputSmall label="Pickup Time" type="time" value={pickupTime} onChange={(e:any)=>setPickupTime(e.target.value)} />
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <InputSmall label="Drop Date" type="date" value={dropDate} min={pickupDate ? new Date(new Date(pickupDate).getTime() + 86400000).toISOString().split("T")[0] : today} onChange={(e:any)=>setDropDate(e.target.value)} />
-               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              <InputSmall label="Drop Time" type="time" value={dropTime} onChange={(e:any)=>setDropTime(e.target.value)} />
+          <div className="
+            bg-white/25 backdrop-blur-xl rounded-2xl p-4 mb-5
+            border border-white/20
+          ">
+
+            <div className="grid grid-cols-2 gap-3">
+
+           <DatePicker
+  selected={pickupDate}
+  onChange={(date: SetStateAction<Date | null>)=>{
+
+    setPickupDate(date);
+
+    if(dropDate && date && date > dropDate){
+      setDropDate(null);
+    }
+
+  }}
+  excludeDates={blockedDates}
+  excludeDateIntervals={blockedIntervals}
+  minDate={new Date()}
+  placeholderText="Pickup Date"
+  className="w-full px-3 py-2 text-xs rounded-xl bg-white/30"
+/>
+
+              <InputSmall label="Pickup Time" type="time" value={pickupTime}
+                onChange={(e:any)=>setPickupTime(e.target.value)} />
+
+             <DatePicker
+  selected={dropDate}
+  onChange={(date: SetStateAction<Date | null>)=>setDropDate(date)}
+  excludeDates={blockedDates}
+  excludeDateIntervals={blockedIntervals}
+  minDate={pickupDate || new Date()}
+  placeholderText="Drop Date"
+  className="w-full px-3 py-2 text-xs rounded-xl bg-white/30"
+/>
+
+              <InputSmall label="Drop Time" type="time" value={dropTime}
+                onChange={(e:any)=>setDropTime(e.target.value)} />
+
             </div>
+
           </div>
 
-          <div className="mt-4 border-t border-white/30 pt-4">
-            <p className="text-xs opacity-80">Total ({days} days)</p>
-            <p className="text-2xl font-extrabold">₹{totalPrice}</p>
+          <div className="border-t border-white/30 pt-4 mb-5">
+
+            <p className="text-xs opacity-80 mb-1">
+              Total ({days} days)
+            </p>
+
+            <p className="text-[28px] font-extrabold tracking-wide">
+              ₹{totalPrice}
+            </p>
+
           </div>
 
           <button
-            onClick={() => {
-              const err = validateForm();
-              if (err) {
-                setErrorPopup(err);
-                return;
-              }
-              setOpenPayment(true);
-            }}
-            className="w-full mt-4 bg-white text-indigo-700 py-2.5 rounded-xl font-bold"
+            onClick={()=>setOpenPayment(true)}
+            className="
+              w-full bg-white text-indigo-700 py-3 rounded-2xl
+              font-bold text-lg shadow-xl hover:scale-[1.02] transition
+            "
           >
             Confirm Booking
           </button>
+
         </div>
+
       </div>
+
+      {/* PAYMENT MODAL */}
+      {openPayment && (
+        <Modal>
+
+          <h3 className="font-bold mb-3">Payment</h3>
+          <p className="mb-3">₹{totalPrice}</p>
+
+          <button
+            onClick={submitBooking}
+            className="w-full bg-green-600 text-white py-2 rounded"
+          >
+            Pay Now
+          </button>
+
+        </Modal>
+      )}
+
     </div>
   );
 }
 
-/* ================= COMPONENTS ================= */
+/* ================= UI COMPONENTS ================= */
 
-function Modal({ children }:{ children: React.ReactNode }) {
+function Modal({ children }:{ children:React.ReactNode }) {
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-      <div className="bg-white/80 backdrop-blur-2xl border border-white/30 rounded-3xl shadow-2xl w-full max-w-5xl max-h-[85vh] overflow-hidden p-6 flex flex-col">
+    <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-xl w-full max-w-md">
         {children}
       </div>
     </div>
   );
 }
- {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-function Input({ label, type = "text", full, ...props }: any) {
+
+function Input({ label, full, ...props }:any) {
   return (
     <div className={full ? "md:col-span-2" : ""}>
-      <label className="text-sm font-medium text-slate-700">{label}</label>
-      <input type={type} {...props} className="w-full mt-1 p-3 rounded-xl bg-white/30 border" />
+      <label className="text-sm">{label}</label>
+      <input {...props} className="w-full p-2 border rounded" />
     </div>
   );
 }
- {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-function InputSmall({ label, type = "text", full, ...props }: any) {
+
+function InputSmall({ label, ...props }:any) {
   return (
-    <div className={full ? "col-span-2" : ""}>
-      <label className="text-[11px] opacity-80">{label}</label>
-      <input type={type} {...props} className="w-full mt-1 p-2 text-xs rounded-lg bg-white/20 border" />
+    <div>
+
+      <label className="text-[11px] opacity-80 mb-1 block">
+        {label}
+      </label>
+
+      <input
+        {...props}
+        className="
+        w-full px-3 py-2 text-xs rounded-xl
+        bg-white/30 border border-white/20
+        backdrop-blur
+        focus:outline-none focus:ring-2 focus:ring-white/40
+      "
+      />
+
     </div>
   );
 }
