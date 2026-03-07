@@ -9,25 +9,20 @@ import {
   MessageCircle,
   CheckCircle,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function ContactPage() {
 
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-    category: "other"
+  const [form,setForm] = useState({
+    name:"",
+    email:"",
+    message:"",
+    category:"other"
   });
 
   const [attachment,setAttachment] = useState<File | null>(null);
-
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [messages,setMessages] = useState<any[]>([]);
-
-  /* ================= LOAD USER ================= */
+  const [loading,setLoading] = useState(false);
+  const [success,setSuccess] = useState(false);
 
   useEffect(()=>{
 
@@ -45,67 +40,26 @@ export default function ContactPage() {
       });
     }
 
-    loadMessages();
-
   },[]);
 
 
-  /* ================= LOAD USER CONTACTS ================= */
-
-  const loadMessages = async ()=>{
-
-    try{
-
-      const token =
-        typeof window !== "undefined"
-          ? localStorage.getItem("token")
-          : null;
-
-      if(!token) return;
-
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/contact/my`,
-        {
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-        }
-      );
-
-      const data = await res.json();
-
-      setMessages(data);
-
-    }catch(err){
-      console.log(err);
-    }
-
-  };
-
-
-  /* ================= FORM CHANGE ================= */
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-
-    setForm({ ...form, [e.target.name]: e.target.value });
-
+  )=>{
+    setForm({...form,[e.target.name]:e.target.value});
   };
 
 
-  /* ================= SUBMIT ================= */
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e:React.FormEvent)=>{
 
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.message) {
+    if(!form.name || !form.email || !form.message){
       alert("Please fill all fields");
       return;
     }
 
-    try {
+    try{
 
       setLoading(true);
 
@@ -114,45 +68,31 @@ export default function ContactPage() {
           ? localStorage.getItem("token")
           : null;
 
-      let attachmentUrl = "";
+      const formData = new FormData();
+
+      formData.append("name",form.name);
+      formData.append("email",form.email);
+      formData.append("message",form.message);
+      formData.append("category",form.category);
 
       if(attachment){
-
-        const data = new FormData();
-        data.append("file",attachment);
-
-        const upload = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
-          {
-            method:"POST",
-            body:data
-          }
-        );
-
-        const uploadData = await upload.json();
-
-        attachmentUrl = uploadData.url;
-
+        formData.append("attachment",attachment);
       }
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/contact`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
+          method:"POST",
+          headers:{
+            Authorization: token ? `Bearer ${token}` : ""
           },
-          body: JSON.stringify({
-            ...form,
-            attachment:attachmentUrl
-          }),
+          body:formData
         }
       );
 
       const data = await res.json();
 
-      if (!res.ok) {
+      if(!res.ok){
         alert(data.message || "Failed to send message");
         return;
       }
@@ -166,14 +106,12 @@ export default function ContactPage() {
 
       setAttachment(null);
 
-      loadMessages();
-
-    } catch (err) {
+    }catch(err){
 
       console.log(err);
       alert("Server error");
 
-    } finally {
+    }finally{
 
       setLoading(false);
 
@@ -182,20 +120,23 @@ export default function ContactPage() {
   };
 
 
-  return (
+  return(
 
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 text-slate-700">
+
 
       {/* HERO */}
 
       <section className="py-20 text-center px-6">
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{opacity:0,y:30}}
+          animate={{opacity:1,y:0}}
           className="text-4xl md:text-5xl font-bold text-slate-900"
         >
+
           Contact Support
+
         </motion.h1>
 
         <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
@@ -205,16 +146,17 @@ export default function ContactPage() {
       </section>
 
 
+
       <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 pb-24">
 
 
-        {/* ================= FORM ================= */}
+        {/* FORM */}
 
         <motion.form
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          initial={{opacity:0,x:-40}}
+          whileInView={{opacity:1,x:0}}
+          viewport={{once:true}}
           className="bg-white/70 backdrop-blur border border-white/40 rounded-2xl p-8 shadow-xl"
         >
 
@@ -241,8 +183,6 @@ export default function ContactPage() {
               className="w-full p-3 rounded-lg border border-slate-300"
             />
 
-            {/* CATEGORY */}
-
             <select
               name="category"
               value={form.category}
@@ -267,8 +207,6 @@ export default function ContactPage() {
               className="w-full p-3 rounded-lg border border-slate-300"
             />
 
-            {/* FILE */}
-
             <input
               type="file"
               onChange={(e)=>setAttachment(e.target.files?.[0] || null)}
@@ -279,18 +217,14 @@ export default function ContactPage() {
               disabled={loading}
               className="w-full bg-indigo-600 text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-indigo-700 transition"
             >
-              {loading ? "Sending..." : <>Send Message <Send size={18} /></>}
+              {loading ? "Sending..." : <>Send Message <Send size={18}/></>}
             </button>
 
-
-            {success && (
+            {success &&(
 
               <div className="text-green-600 text-sm flex items-center gap-2">
-
-                <CheckCircle size={18} />
-
-                Message sent. Our car dealer will contact you shortly.
-
+                <CheckCircle size={18}/>
+                Message sent successfully.
               </div>
 
             )}
@@ -301,14 +235,16 @@ export default function ContactPage() {
 
 
 
-        {/* ================= CONTACT INFO ================= */}
+        {/* RIGHT SIDE */}
 
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          initial={{opacity:0,x:40}}
+          whileInView={{opacity:1,x:0}}
+          viewport={{once:true}}
           className="space-y-6"
         >
+
+          {/* CONTACT INFO */}
 
           <div className="bg-white/70 backdrop-blur border border-white/40 rounded-2xl p-6 shadow-lg">
 
@@ -319,11 +255,11 @@ export default function ContactPage() {
             <div className="space-y-4 text-slate-700">
 
               <p className="flex items-center gap-3">
-                <Mail className="text-indigo-600" /> support@carbooking.com
+                <Mail className="text-indigo-600"/> support@carbooking.com
               </p>
 
               <p className="flex items-center gap-3">
-                <MapPin className="text-indigo-600" /> India (All Cities)
+                <MapPin className="text-indigo-600"/> India (All Cities)
               </p>
 
             </div>
@@ -339,7 +275,7 @@ export default function ContactPage() {
               href="mailto:support@carbooking.com"
               className="bg-white/70 backdrop-blur border rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
             >
-              <Mail className="text-indigo-600" /> Email
+              <Mail className="text-indigo-600"/> Email
             </a>
 
             <a
@@ -347,65 +283,24 @@ export default function ContactPage() {
               target="_blank"
               className="bg-white/70 backdrop-blur border rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
             >
-              <MessageCircle className="text-green-600" /> WhatsApp
+              <MessageCircle className="text-green-600"/> WhatsApp
             </a>
 
           </div>
 
 
+          {/* VIEW SUPPORT MESSAGES */}
 
-          {/* ================= USER MESSAGES ================= */}
+          <Link
+            href="/supportmessages"
+            className="bg-white/70 backdrop-blur border border-white/40 rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
+          >
 
-          {messages.length > 0 && (
+            <MessageCircle className="text-indigo-600"/>
 
-            <div className="bg-white rounded-xl p-6 shadow">
+            View Your Support Messages
 
-              <h3 className="font-semibold mb-4">
-                Your Support Messages
-              </h3>
-
-              <div className="space-y-4">
-
-                {messages.map((msg)=>(
-                  
-                  <div
-                    key={msg._id}
-                    className="border p-4 rounded-lg"
-                  >
-
-                    <p className="text-sm text-gray-500">
-                      {new Date(msg.createdAt).toLocaleDateString()}
-                    </p>
-
-                    <p className="text-xs text-indigo-600">
-                      Category: {msg.category}
-                    </p>
-
-                    <p className="mt-1">{msg.message}</p>
-
-                    <p className="text-xs mt-2 text-indigo-600">
-                      Status: {msg.status}
-                    </p>
-
-                    {msg.adminReply && (
-
-                      <div className="mt-2 bg-indigo-50 p-2 rounded text-sm">
-
-                        <b>Admin:</b> {msg.adminReply}
-
-                      </div>
-
-                    )}
-
-                  </div>
-
-                ))}
-
-              </div>
-
-            </div>
-
-          )}
+          </Link>
 
         </motion.div>
 
