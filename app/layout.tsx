@@ -6,31 +6,46 @@ import Footer from "./Footer/page";
 import { usePathname } from "next/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+/* GOOGLE PROVIDER */
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   const pathname = usePathname();
 
-  // ✅ Hide layout elements on auth page
-  const hideLayout = pathname === "/auth";
+  /* AUTH PAGES WHERE LAYOUT SHOULD HIDE */
+  const hideLayout =
+    pathname === "/auth" ||
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/forgot-password");
 
   return (
     <html lang="en">
       <body className="bg-gray-50">
 
-        {/* Sidebar only if not auth */}
-        {!hideLayout && <UserSidebar />}
+        {/* GOOGLE PROVIDER */}
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
 
-        <main className={`${!hideLayout ? "h-[calc(100vh-4rem)] md:ml-50" : ""}`}>
-          {children}
+          {/* Sidebar */}
+          {!hideLayout && <UserSidebar />}
 
-          {/* Footer only if not auth */}
-          {!hideLayout && <Footer />}
-        </main>
+          <main className={`${!hideLayout ? "h-[calc(100vh-4rem)] md:ml-50" : ""}`}>
+            
+            {children}
 
-        <SpeedInsights />
+            {/* Footer */}
+            {!hideLayout && <Footer />}
+
+          </main>
+
+          <SpeedInsights />
+
+        </GoogleOAuthProvider>
+
       </body>
     </html>
   );
