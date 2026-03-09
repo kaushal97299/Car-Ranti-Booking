@@ -43,7 +43,7 @@ return (
     </div>
 
   </div>
-  
+
 
   {/* MOBILE */}
   <div className="md:hidden h-screen flex flex-col">
@@ -75,6 +75,7 @@ return (
     <div className="flex-1 overflow-y-auto px-3 py-4 flex items-start justify-center">
       <Form isLogin={isLogin} setIsLogin={setIsLogin} mobile />
     </div>
+
 
   </div>
 
