@@ -186,7 +186,7 @@ export default function UserSidebar() {
   return (
     <>
       {/* ================= MOBILE BOTTOM NAVBAR ================= */}
-      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg z-50">
+      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 shadow-lg z-50 border-t border-white/40">
         <nav className="flex justify-around items-center px-2 py-1">
           {bottomNavItems.map((item) => (
             <MobileNavItem
@@ -202,9 +202,9 @@ export default function UserSidebar() {
           
           <button
             onClick={() => setOpen(true)}
-            className="flex flex-col items-center text-xs text-white/80 hover:text-yellow-300 transition"
+            className="flex flex-col items-center text-xs text-slate-800 hover:text-indigo-900 transition"
           >
-            <Menu size={20} />
+            <Menu size={20} className="text-indigo-700" />
             <span>More</span>
           </button>
         </nav>
@@ -408,17 +408,19 @@ function MobileNavItem({
     <button
       onClick={() => router.push(path)}
       className={`flex flex-col items-center text-xs relative py-1 px-2 rounded-lg transition
-      ${active ? "text-yellow-300" : "text-white/80 hover:text-yellow-300"}`}
+      ${active ? "text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg" : "text-slate-800 hover:text-indigo-900"}`}
     >
       <div className="relative">
-        {icon}
+        <span className={active ? "text-yellow-300" : "text-indigo-700"}>
+          {icon}
+        </span>
         {badge && badge > 0 && (
           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
             {badge > 9 ? '9+' : badge}
           </span>
         )}
       </div>
-      <span className="text-[10px] mt-0.5">{label}</span>
+      <span className="text-[10px] mt-0.5 text-slate-800">{label}</span>
     </button>
   );
 }
