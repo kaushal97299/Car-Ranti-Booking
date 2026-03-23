@@ -177,16 +177,20 @@ export default function CarsPage() {
   ];
 
   const filteredCars = carsData.filter(
-    (c) =>
-      (!search ||
-        c.name?.toLowerCase().includes(search.toLowerCase())) &&
-      (!gear || c.gear === gear) &&
-      (!fuel || c.fuel === fuel) &&
-      (!brand || c.brand === brand) &&
-      (!model || c.model === model) &&
-      (!minPrice || c.price >= Number(minPrice)) &&
-      (!maxPrice || c.price <= Number(maxPrice))
-  );
+  (c) =>
+    (
+      !search ||
+      c.name?.toLowerCase().includes(search.toLowerCase()) ||
+      c.brand?.toLowerCase().includes(search.toLowerCase()) ||
+      c.model?.toLowerCase().includes(search.toLowerCase())
+    ) &&
+    (!gear || c.gear === gear) &&
+    (!fuel || c.fuel === fuel) &&
+    (!brand || c.brand === brand) &&
+    (!model || c.model === model) &&
+    (!minPrice || c.price >= Number(minPrice)) &&
+    (!maxPrice || c.price <= Number(maxPrice))
+);
 
   /* ================= PAGINATION ================= */
 
@@ -300,9 +304,11 @@ export default function CarsPage() {
 
               {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
               <img
-                src={`${process.env.NEXT_PUBLIC_API_URL}${car.image}`}
-                className="h-40 w-full object-contain"
-              />
+  src={car.image?.startsWith("http") 
+    ? car.image 
+    : `${process.env.NEXT_PUBLIC_API_URL}${car.image}`}
+  className="h-40 w-full object-contain"
+/>
 
               {/* ❤️ Wishlist */}
               <button

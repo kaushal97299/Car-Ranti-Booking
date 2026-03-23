@@ -178,16 +178,20 @@ export default function SupportMessagesPage() {
 
               {msg.attachment && (
 
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_API_URL}/uploads/contact/${msg.attachment}`}
-                  target="_blank"
-                  className="inline-flex items-center gap-2 mt-3 text-sm text-indigo-600 hover:underline"
-                >
-                  <Paperclip size={16}/>
-                  View Attachment
-                </Link>
+                 <Link
+    href={
+      msg.attachment.startsWith("http")
+        ? msg.attachment
+        : `${process.env.NEXT_PUBLIC_API_URL}/uploads/contact/${msg.attachment}`
+    }
+    target="_blank"
+    className="inline-flex items-center gap-2 mt-3 text-sm text-indigo-600 hover:underline"
+  >
+    <Paperclip size={16}/>
+    View Attachment
+  </Link>
 
-              )}
+)}
 
 
 

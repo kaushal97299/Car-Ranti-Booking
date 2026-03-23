@@ -210,8 +210,10 @@ export default function CarDetailPage() {
 
           {/* IMAGE */}
           <div className="flex justify-center">
-            <img
-              src={`${process.env.NEXT_PUBLIC_API_URL}${car.image}`}
+           <img
+  src={car.image?.startsWith("http") 
+    ? car.image 
+    : `${process.env.NEXT_PUBLIC_API_URL}${car.image}`}
               className="w-full max-h-96 object-contain"
               alt={car.name}
             />

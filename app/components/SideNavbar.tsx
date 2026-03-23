@@ -157,8 +157,134 @@ export default function UserSidebar() {
     router.push("/auth");
   };
 
+  // Navigation items
+  const navItems = [
+    { path: "/", label: "Dashboard", icon: <Home size={18} />, mobileIcon: <Home size={20} /> },
+    { path: "/dashboard", label: "Browse Cars", icon: <Car size={18} />, mobileIcon: <Car size={20} /> },
+    { 
+      path: "/cart", 
+      label: `Cart ${cartCount > 0 ? `(${cartCount})` : ""}`, 
+      icon: <ShoppingCart size={18} />, 
+      mobileIcon: <ShoppingCart size={20} />,
+      badge: cartCount > 0 ? cartCount : null
+    },
+    { path: "/my-booking", label: "Bookings", icon: <CalendarCheck size={18} />, mobileIcon: <CalendarCheck size={20} /> },
+    { 
+      path: "/wishlist", 
+      label: `Wishlist ${wishlistCount > 0 ? `(${wishlistCount})` : ""}`, 
+      icon: <Heart size={18} />, 
+      mobileIcon: <Heart size={20} />,
+      badge: wishlistCount > 0 ? wishlistCount : null
+    },
+    { path: "/notifications", label: "Notifications", icon: <Bell size={18} />, mobileIcon: <Bell size={20} /> },
+    { path: "/profile", label: "Profile", icon: <User size={18} />, mobileIcon: <User size={20} /> },
+  ];
+
+  // Items for bottom navbar (without wishlist)
+  const bottomNavItems = navItems.filter(item => item.path !== "/wishlist").slice(0, 4);
+
   return (
     <>
+      {/* ================= MOBILE BOTTOM NAVBAR ================= */}
+      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg z-50">
+        <nav className="flex justify-around items-center px-2 py-1">
+          {bottomNavItems.map((item) => (
+            <MobileNavItem
+              key={item.path}
+              router={router}
+              path={item.path}
+              icon={item.mobileIcon}
+              label={item.label.split(' ')[0]}
+              active={pathname === item.path}
+              badge={item.badge}
+            />
+          ))}
+          
+          <button
+            onClick={() => setOpen(true)}
+            className="flex flex-col items-center text-xs text-white/80 hover:text-yellow-300 transition"
+          >
+            <Menu size={20} />
+            <span>More</span>
+          </button>
+        </nav>
+      </div>
+
+      {/* ================= MOBILE MORE MENU ================= */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/50 z-50 md:hidden flex items-end justify-center"
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="w-full bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 rounded-t-xl shadow-2xl max-h-[70vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-white/40">
+              <div className="text-lg font-bold text-slate-900">
+                More Options
+              </div>
+              <button
+                onClick={() => setOpen(false)}
+                className="p-1 hover:bg-white/30 rounded"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {user && (
+              <div
+                onClick={() => {
+                  router.push("/userprofile");
+                  setOpen(false);
+                }}
+                className="px-4 py-3 border-b border-white/40 cursor-pointer hover:bg-white/30"
+              >
+                <p className="font-semibold text-slate-900">{user.name}</p>
+                <p className="text-xs text-slate-600 truncate">{user.email}</p>
+              </div>
+            )}
+
+            <nav className="px-3 py-4 space-y-1">
+              {/* Sirf wohi items jo bottom navbar mein nahi hain */}
+              {navItems.filter(item => !bottomNavItems.includes(item)).map((item) => (
+                <NavItem
+                  key={item.path}
+                  router={router}
+                  path={item.path}
+                  label={item.label}
+                  icon={item.icon}
+                  close={() => setOpen(false)}
+                  active={pathname === item.path}
+                />
+              ))}
+
+              {!user ? (
+                <NavItem
+                  router={router}
+                  path="/auth"
+                  label="Login"
+                  icon={<LogIn size={18} />}
+                  close={() => setOpen(false)}
+                  active={pathname === "/auth"}
+                />
+              ) : (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-100/50 transition"
+                >
+                  <LogOut size={18} />
+                  Logout
+                </button>
+              )}
+            </nav>
+          </div>
+        </div>
+      )}
+
       {/* ================= DESKTOP SIDEBAR ================= */}
       <aside
         className="
@@ -168,8 +294,6 @@ export default function UserSidebar() {
           text-slate-800 hidden md:block
         "
       >
-
-        {/* BRAND */}
         <div
           onClick={() => router.push("/")}
           className="px-6 py-4 text-lg font-bold border-b border-white/40 text-slate-900
@@ -178,7 +302,6 @@ export default function UserSidebar() {
           🚗 Car Booking
         </div>
 
-        {/* USER INFO */}
         {user && (
           <div
             onClick={() => router.push("/userprofile")}
@@ -194,36 +317,17 @@ export default function UserSidebar() {
         )}
 
         <nav className="px-3 py-4 space-y-1">
+          {navItems.map((item) => (
+            <NavItem
+              key={item.path}
+              router={router}
+              path={item.path}
+              label={item.label}
+              icon={item.icon}
+              active={pathname === item.path}
+            />
+          ))}
 
-          <NavItem router={router} path="/" label="Dashboard" icon={<Home size={18} />} active={pathname === "/"} />
-
-          <NavItem router={router} path="/dashboard" label="Browse Cars" icon={<Car size={18} />} active={pathname === "/dashboard"} />
-
-          {/* 🛒 Cart With Counter */}
-          <NavItem
-            router={router}
-            path="/cart"
-            label={`Cart ${cartCount > 0 ? `(${cartCount})` : ""}`}
-            icon={<ShoppingCart size={18} />}
-            active={pathname === "/cart"}
-          />
-
-          <NavItem router={router} path="/my-booking" label="My Bookings" icon={<CalendarCheck size={18} />} active={pathname === "/my-booking"} />
-
-          {/* ❤️ Wishlist With Counter */}
-          <NavItem
-            router={router}
-            path="/wishlist"
-            label={`Wishlist ${wishlistCount > 0 ? `(${wishlistCount})` : ""}`}
-            icon={<Heart size={18} />}
-            active={pathname === "/wishlist"}
-          />
-
-          <NavItem router={router} path="/notifications" label="Notifications" icon={<Bell size={18} />} active={pathname === "/notifications"} />
-
-          <NavItem router={router} path="/profile" label="Profile" icon={<User size={18} />} active={pathname === "/profile"} />
-
-          {/* LOGIN / LOGOUT */}
           {!user ? (
             <NavItem
               router={router}
@@ -241,7 +345,6 @@ export default function UserSidebar() {
               Logout
             </button>
           )}
-
         </nav>
       </aside>
     </>
@@ -286,24 +389,36 @@ function NavItem({
   );
 }
 
-function BottomItem({
+function MobileNavItem({
   router,
   path,
   icon,
   label,
+  active,
+  badge,
 }: {
   router: ReturnType<typeof useRouter>;
   path: string;
   icon: ReactNode;
   label: string;
+  active: boolean;
+  badge?: number | null;
 }) {
   return (
     <button
       onClick={() => router.push(path)}
-      className="flex flex-col items-center text-xs text-white/80 hover:text-yellow-300 transition"
+      className={`flex flex-col items-center text-xs relative py-1 px-2 rounded-lg transition
+      ${active ? "text-yellow-300" : "text-white/80 hover:text-yellow-300"}`}
     >
-      {icon}
-      {label}
+      <div className="relative">
+        {icon}
+        {badge && badge > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+            {badge > 9 ? '9+' : badge}
+          </span>
+        )}
+      </div>
+      <span className="text-[10px] mt-0.5">{label}</span>
     </button>
   );
 }

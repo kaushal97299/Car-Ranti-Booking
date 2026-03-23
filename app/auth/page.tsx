@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
@@ -31,51 +32,51 @@ if (token) {
 if (checking) return null;
 
 return (
-<div className="fixed inset-0 h-screen w-screen overflow-y-auto md:overflow-hidden bg-gradient-to-br from-[#1a0638] via-[#2b0f55] to-[#3a1570]">
+<div className="min-h-screen w-full bg-gradient-to-br from-[#1a0638] via-[#2b0f55] to-[#3a1570]">
 
   {/* DESKTOP */}
-  <div className="hidden md:grid grid-cols-2 h-full">
+  <div className="hidden md:grid grid-cols-2 min-h-screen">
 
     <DesktopLeft isLogin={isLogin} />
 
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center py-10 px-6">
       <Form isLogin={isLogin} setIsLogin={setIsLogin} />
     </div>
 
   </div>
 
-
   {/* MOBILE */}
-  <div className="md:hidden h-screen flex flex-col">
+  <div className="md:hidden flex flex-col min-h-screen">
 
-    <div className="flex-1 relative px-5 pt-8 pb-4 flex items-end">
+    {/* Top Section */}
+    <div className="relative pt-10 pb-6 px-5 text-center overflow-hidden">
+      <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-blue-500/30 blur-3xl animate-pulse" />
+      <div className="absolute top-8 right-0 w-32 h-32 rounded-full bg-purple-400/30 blur-2xl animate-pulse" />
 
-      <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-blue-500/40 blur-3xl animate-pulse" />
-      <div className="absolute top-10 right-0 w-36 h-36 rounded-full bg-purple-400/40 blur-2xl animate-pulse" />
-
-      <div className="relative z-10 text-white -translate-y-6">
-
-        <h1 className="text-2xl font-bold leading-tight">
-          {isLogin ? "Start Your Next Journey" : "Create Your Account"}
+      <div className="relative z-10 text-white">
+        <p className="text-purple-300 text-sm mb-1">
+          {isLogin ? "Welcome Back" : "Create Your Account"}
+        </p>
+        <h1 className="text-2xl font-bold">
+          {isLogin ? "Sign In to Continue" : "Drive Smarter"}
         </h1>
 
-        <h2 className="text-3xl font-extrabold text-purple-300 mt-1">
-          {isLogin ? "With Confidence" : "Drive Smarter"}
-        </h2>
+        <div className="flex justify-center gap-6 mt-3">
+          <div><span className="text-base font-bold">500+</span><span className="text-gray-300 text-xs block">Cars</span></div>
+          <div><span className="text-base font-bold">50+</span><span className="text-gray-300 text-xs block">Users</span></div>
+          <div><span className="text-base font-bold">24/7</span><span className="text-gray-300 text-xs block">Support</span></div>
+        </div>
 
-        <p className="text-gray-300 text-xs mt-3 max-w-sm">
-          Luxury cars, instant booking, transparent pricing, and 24/7 support —
-          all in one premium platform.
+        <p className="text-gray-300 text-xs mt-3 max-w-xs mx-auto">
+          Luxury cars, instant booking, transparent pricing, and 24/7 support — all in one premium platform.
         </p>
-
       </div>
-
     </div>
 
-    <div className="flex-1 overflow-y-auto px-3 py-4 flex items-start justify-center">
+    {/* Form Section */}
+    <div className="flex-1 px-4 pb-8">
       <Form isLogin={isLogin} setIsLogin={setIsLogin} mobile />
     </div>
-
 
   </div>
 
@@ -103,6 +104,22 @@ return (
     <h2 className="text-5xl font-extrabold text-purple-300">
       {isLogin ? "With Confidence" : "Drive Smarter"}
     </h2>
+
+    {/* STATS ADDED */}
+    <div className="flex gap-6 mt-4">
+      <div>
+        <span className="text-xl font-bold text-white">500+</span>
+        <span className="text-gray-300 text-sm block">Cars</span>
+      </div>
+      <div>
+        <span className="text-xl font-bold text-white">50+</span>
+        <span className="text-gray-300 text-sm block">Users</span>
+      </div>
+      <div>
+        <span className="text-xl font-bold text-white">24/7</span>
+        <span className="text-gray-300 text-sm block">Support</span>
+      </div>
+    </div>
 
     <p className="text-gray-300 mt-6 max-w-md">
       Luxury cars, instant booking, transparent pricing, and 24/7 support —
@@ -133,12 +150,68 @@ const router = useRouter();
 const [name, setName] = useState<string>("");
 const [email, setEmail] = useState<string>("");
 const [password, setPassword] = useState<string>("");
+const [confirmPassword, setConfirmPassword] = useState<string>("");
 
 const [loading, setLoading] = useState<boolean>(false);
 const [error, setError] = useState<string>("");
 
 const [showForgot, setShowForgot] = useState<boolean>(false);
 const [forgotEmail, setForgotEmail] = useState<string>("");
+
+/* ================= VALIDATION FUNCTIONS ================= */
+
+const validateName = (name: string): { isValid: boolean; message: string } => {
+  const trimmed = name.trim();
+  if (!trimmed) return { isValid: false, message: "Full name is required" };
+  if (trimmed.length < 2) return { isValid: false, message: "Name must be at least 2 characters" };
+  if (trimmed.length > 50) return { isValid: false, message: "Name cannot exceed 50 characters" };
+  if (!/^[a-zA-Z\s\-']+$/.test(trimmed)) {
+    return { isValid: false, message: "Name can only contain letters, spaces, hyphens and apostrophes" };
+  }
+  return { isValid: true, message: "" };
+};
+
+const validateEmail = (email: string): { isValid: boolean; message: string } => {
+  const trimmed = email.trim();
+  if (!trimmed) return { isValid: false, message: "Email is required" };
+  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (!emailRegex.test(trimmed)) {
+    return { isValid: false, message: "Please enter a valid email address" };
+  }
+  if (trimmed.length > 100) return { isValid: false, message: "Email is too long" };
+  return { isValid: true, message: "" };
+};
+
+const validatePassword = (password: string): { isValid: boolean; message: string } => {
+  if (!password) return { isValid: false, message: "Password is required" };
+  if (password.length < 8) return { isValid: false, message: "Password must be at least 8 characters" };
+  if (password.length > 100) return { isValid: false, message: "Password is too long" };
+  
+  if (!/[A-Z]/.test(password)) {
+    return { isValid: false, message: "Password must contain at least one uppercase letter" };
+  }
+  if (!/[a-z]/.test(password)) {
+    return { isValid: false, message: "Password must contain at least one lowercase letter" };
+  }
+  if (!/[0-9]/.test(password)) {
+    return { isValid: false, message: "Password must contain at least one number" };
+  }
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return { isValid: false, message: "Password must contain at least one special character" };
+  }
+  
+  return { isValid: true, message: "" };
+};
+
+const validateConfirmPassword = (password: string, confirm: string): { isValid: boolean; message: string } => {
+  if (!isLogin && !confirm) {
+    return { isValid: false, message: "Please confirm your password" };
+  }
+  if (password !== confirm) {
+    return { isValid: false, message: "Passwords do not match" };
+  }
+  return { isValid: true, message: "" };
+};
 
 /* GOOGLE LOGIN */
 
@@ -169,13 +242,47 @@ try {
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
 e.preventDefault();
-
-setLoading(true);
 setError("");
 
+if (!isLogin) {
+  const nameValidation = validateName(name);
+  if (!nameValidation.isValid) {
+    setError(nameValidation.message);
+    return;
+  }
+}
+
+const emailValidation = validateEmail(email);
+if (!emailValidation.isValid) {
+  setError(emailValidation.message);
+  return;
+}
+
+const passwordValidation = validatePassword(password);
+if (!passwordValidation.isValid) {
+  setError(passwordValidation.message);
+  return;
+}
+
+if (!isLogin) {
+  const confirmValidation = validateConfirmPassword(password, confirmPassword);
+  if (!confirmValidation.isValid) {
+    setError(confirmValidation.message);
+    return;
+  }
+}
+
+setLoading(true);
+
+// ✅ FIXED: Added confirmPassword in payload
 const payload = isLogin
-  ? { email, password }
-  : { name, email, password };
+  ? { email: email.trim(), password }
+  : { 
+      name: name.trim(), 
+      email: email.trim(), 
+      password,
+      confirmPassword  // 👈 IMPORTANT: yeh add karo
+    };
 
 const url = isLogin
   ? `${API}/api/login`
@@ -192,15 +299,18 @@ try {
   const data = await res.json();
 
   if (!res.ok) {
-    setError(data.msg || "Something went wrong");
+    setError(data.msg || data.error || "Something went wrong");
     return;
   }
 
   if (!isLogin) {
 
-    alert("Signup successful! Please login.");
+    alert("Registration successful! Please login with your credentials.");
     setIsLogin(true);
+    setName("");
+    setEmail("");
     setPassword("");
+    setConfirmPassword("");
     return;
 
   }
@@ -210,9 +320,9 @@ try {
 
   router.replace("/");
 
-} catch {
+} catch (err) {
 
-  setError("Server error");
+  setError("Network error. Please try again.");
 
 } finally {
 
@@ -226,24 +336,33 @@ try {
 
 const handleForgotPassword = async () => {
 
-if (!forgotEmail) {
-  setError("Enter your email");
+setError("");
+
+const emailValidation = validateEmail(forgotEmail);
+if (!emailValidation.isValid) {
+  setError(emailValidation.message);
   return;
 }
+
+setLoading(true);
 
 try {
 
   await axios.post(`${API}/api/forgot-password`, {
-    email: forgotEmail
+    email: forgotEmail.trim()
   });
 
-  alert("Password reset link sent to your email");
+  alert("Password reset link has been sent to your email");
   setShowForgot(false);
   setForgotEmail("");
 
-} catch {
+} catch (err: any) {
 
-  setError("Failed to send reset email");
+  setError(err.response?.data?.msg || "Failed to send reset email");
+
+} finally {
+
+  setLoading(false);
 
 }
 
@@ -251,11 +370,17 @@ try {
 
 return (
 
-<div className={`w-full max-w-md mx-auto rounded-2xl text-white bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.45)] ${mobile ? "p-4 sm:p-6" : "p-8"}`}>
+<div className={`w-full max-w-md mx-auto rounded-2xl text-white bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.45)] ${mobile ? "p-5" : "p-8"}`}>
 
-  <h2 className="text-2xl sm:text-3xl font-bold mb-2">
+  <h2 className="text-2xl font-bold mb-2">
     {isLogin ? "Sign In" : "Sign Up"}
   </h2>
+
+  {!isLogin && (
+    <p className="text-gray-300 text-sm mb-4">
+      Create your account to get started
+    </p>
+  )}
 
   {error && (
     <p className="bg-red-500/20 border border-red-500/40 text-red-200 px-3 py-2 rounded mb-3 text-sm">
@@ -280,35 +405,65 @@ return (
 
   </div>
 
+  <div className="relative my-4">
+    <div className="absolute inset-0 flex items-center">
+      <div className="w-full border-t border-white/20"></div>
+    </div>
+    <div className="relative flex justify-center text-xs">
+      <span className="bg-[#2b0f55] px-2 text-gray-300">or continue with email</span>
+    </div>
+  </div>
+
   <form onSubmit={handleSubmit} className="space-y-3">
 
     {!isLogin && (
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none"
-        placeholder="Full Name"
-        required
-      />
+      <div>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="Full Name"
+        />
+        <p className="text-xs text-gray-400 mt-1">Min 2 characters, letters only</p>
+      </div>
     )}
 
-    <input
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none"
-      placeholder="Email"
-      type="email"
-      required
-    />
+    <div>
+      <input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+        placeholder="Email"
+        type="email"
+      />
+    </div>
 
-    <input
-      type="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none"
-      placeholder="Password"
-      required
-    />
+    <div>
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+        placeholder="Password"
+      />
+      {!isLogin && (
+        <p className="text-xs text-gray-400 mt-1">
+          Min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char
+        </p>
+      )}
+    </div>
+
+    {!isLogin && (
+      <div>
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="Confirm Password"
+        />
+      </div>
+    )}
 
     {isLogin && (
       <div className="text-right">
@@ -323,8 +478,9 @@ return (
     )}
 
     <button
+      type="submit"
       disabled={loading}
-      className="w-full py-2 rounded-md bg-gradient-to-r from-purple-600 to-blue-500 font-semibold shadow disabled:opacity-50"
+      className="w-full py-2 rounded-md bg-gradient-to-r from-purple-600 to-blue-500 font-semibold shadow disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {loading ? "Please wait..." : isLogin ? "Sign In" : "Sign Up"}
     </button>
@@ -345,23 +501,30 @@ return (
           value={forgotEmail}
           onChange={(e) => setForgotEmail(e.target.value)}
           placeholder="Enter your email"
-          className="w-full px-3 py-2 rounded-md bg-white/10 mb-3 outline-none"
+          className="w-full px-3 py-2 rounded-md bg-white/10 mb-3 outline-none focus:ring-2 focus:ring-purple-500"
         />
 
         <div className="flex justify-end gap-2">
 
           <button
-            onClick={() => setShowForgot(false)}
-            className="px-3 py-1 text-sm bg-gray-500/40 rounded"
+            type="button"
+            onClick={() => {
+              setShowForgot(false);
+              setForgotEmail("");
+              setError("");
+            }}
+            className="px-3 py-1 text-sm bg-gray-500/40 rounded hover:bg-gray-500/60"
           >
             Cancel
           </button>
 
           <button
+            type="button"
             onClick={handleForgotPassword}
-            className="px-3 py-1 text-sm bg-purple-600 rounded"
+            disabled={loading}
+            className="px-3 py-1 text-sm bg-purple-600 rounded hover:bg-purple-700 disabled:opacity-50"
           >
-            Send Reset Link
+            {loading ? "Sending..." : "Send Reset Link"}
           </button>
 
         </div>
@@ -375,10 +538,18 @@ return (
 
     {isLogin ? (
       <>
-        Don’t have an account?{" "}
+        Dont have an account?{" "}
         <button
-          onClick={() => setIsLogin(false)}
-          className="text-purple-300 font-semibold"
+          type="button"
+          onClick={() => {
+            setIsLogin(false);
+            setError("");
+            setName("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+          }}
+          className="text-purple-300 font-semibold hover:underline"
         >
           Sign up
         </button>
@@ -387,8 +558,15 @@ return (
       <>
         Already have an account?{" "}
         <button
-          onClick={() => setIsLogin(true)}
-          className="text-purple-300 font-semibold"
+          type="button"
+          onClick={() => {
+            setIsLogin(true);
+            setError("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+          }}
+          className="text-purple-300 font-semibold hover:underline"
         >
           Sign in
         </button>

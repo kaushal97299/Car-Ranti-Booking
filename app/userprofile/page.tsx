@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -42,6 +43,9 @@ export default function MyProfile() {
     })
       .then(res => res.json())
       .then(data => {
+
+          console.log("Avatar:", data.user.avatar); // 👈 YAHAN ADD KARO
+
 
         if (!data.user) {
           router.push("/auth");
@@ -125,46 +129,65 @@ export default function MyProfile() {
   };
 
   /* ================= IMAGE ================= */
-  const handleImage = (e: any) => {
+ const handleImage = (e: any) => {
 
-    const file = e.target.files[0];
-    if (!file) return;
+  const file = e.target.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
+  const previewUrl = URL.createObjectURL(file);
 
-    reader.onload = () => {
-      setPreview(reader.result);
-      setUser({ ...user, avatar: reader.result });
-    };
+  setPreview(previewUrl);
 
-    reader.readAsDataURL(file);
-  };
+  setUser((prev: any) => ({
+    ...prev,
+    avatarFile: file
+  }));
 
+};
   /* ================= SAVE ================= */
   const handleSave = async () => {
 
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    const res = await fetch(`${API}/api/profile`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(user),
-    });
+  const formData = new FormData();
 
-    const data = await res.json();
+  formData.append("name", user.name);
+  formData.append("phone", user.phone);
+  formData.append("bio", user.bio);
+  formData.append("emergency", user.emergency);
+  formData.append("pincode", user.pincode);
+  formData.append("village", user.village);
+  formData.append("district", user.district);
+  formData.append("state", user.state);
+  formData.append("dob", user.dob);
+  formData.append("gender", user.gender);
+  formData.append("address", user.address);
 
-    if (!data.success) {
-      alert("Update failed");
-      return;
-    }
+  if (user.avatarFile) {
+    formData.append("avatar", user.avatarFile);
+  }
 
-    setUser(data.user);
-    setEditing(false);
-    alert("Profile Updated Successfully ✅");
-  };
+  const res = await fetch(`${API}/api/profile`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("Update failed");
+    return;
+  }
+
+  setUser(data.user);
+  setEditing(false);
+
+  alert("Profile Updated Successfully ✅");
+
+};
 
   if (!user) return null;
 
@@ -179,7 +202,10 @@ export default function MyProfile() {
           <div className="relative">
 
             <img
-              src={preview || user.avatar || "/avatar.png"}
+              src={
+  preview ||
+  (user.avatar || "/avatar.png")
+}
               className="w-28 h-28 rounded-full object-cover border-4 border-indigo-200"
             />
 
