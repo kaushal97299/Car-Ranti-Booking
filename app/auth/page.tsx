@@ -3,6 +3,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { isTokenExpired, logoutUser } from "../utils/auth";
 import { useRouter } from "next/navigation";
 import { Github } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
@@ -19,13 +20,19 @@ const router = useRouter();
 
 useEffect(() => {
 
-const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-if (token) {
-  router.replace("/");
-} else {
-  setChecking(false);
-}
+  if (token) {
+
+    if (isTokenExpired(token)) {
+      logoutUser();
+    } else {
+      router.replace("/");
+    }
+
+  } else {
+    setChecking(false);
+  }
 
 }, [router]);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, ReactNode, useEffect } from "react";
+import { isTokenExpired, logoutUser } from "../utils/auth";
 import { useRouter, usePathname } from "next/navigation";
 import {
   Home,
@@ -29,6 +30,7 @@ export default function UserSidebar() {
   const [cartCount, setCartCount] = useState(0);
 
   const router = useRouter();
+  const [loadingRoute,setLoadingRoute] = useState(false);
   const pathname = usePathname();
 
   /* ================= TOKEN ================= */
@@ -37,6 +39,29 @@ export default function UserSidebar() {
     typeof window !== "undefined"
       ? localStorage.getItem("token")
       : null;
+
+
+      /* ================= TOKEN EXPIRY WATCHER ================= */
+
+useEffect(() => {
+  const checkToken = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    if (isTokenExpired(token)) {
+      logoutUser();
+    }
+  };
+
+  // page load check
+  checkToken();
+
+  // auto check every 30 seconds
+  const interval = setInterval(checkToken, 30000);
+
+  return () => clearInterval(interval);
+}, []);
 
   /* ================= GET USER ================= */
 
@@ -66,11 +91,16 @@ export default function UserSidebar() {
         }
       );
 
-      if (!res.ok) return;
+     if (res.status === 401) {
+  logoutUser();
+  return;
+}
 
-      const data = await res.json();
+if (!res.ok) return;
 
-      setWishlistCount(data.count || 0);
+const data = await res.json();
+
+setWishlistCount(data.count || 0);
 
     } catch (err) {
       console.log("Wishlist count error:", err);
@@ -95,11 +125,16 @@ export default function UserSidebar() {
         }
       );
 
-      if (!res.ok) return;
+     if (res.status === 401) {
+  logoutUser();
+  return;
+}
 
-      const data = await res.json();
+if (!res.ok) return;
 
-      setCartCount(data.count || 0);
+const data = await res.json();
+
+setCartCount(data.count || 0);
 
     } catch (err) {
       console.log("Cart count error:", err);
@@ -147,15 +182,14 @@ export default function UserSidebar() {
   }, [token]);
 
   /* ================= LOGOUT ================= */
+const handleLogout = () => {
+  logoutUser();
 
-  const handleLogout = () => {
-    localStorage.clear();
+  setWishlistCount(0);
+  setCartCount(0);
 
-    setWishlistCount(0);
-    setCartCount(0);
-
-    router.push("/auth");
-  };
+  router.push("/auth");
+};
 
   // Navigation items
   const navItems = [
@@ -185,6 +219,16 @@ export default function UserSidebar() {
 
   return (
     <>
+{loadingRoute && (
+
+<div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999]">
+
+<div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent"></div>
+
+</div>
+
+)}
+
       {/* ================= MOBILE BOTTOM NAVBAR ================= */}
       <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 shadow-lg z-50 border-t border-white/40">
         <nav className="flex justify-around items-center px-2 py-1">
@@ -202,7 +246,7 @@ export default function UserSidebar() {
           
           <button
             onClick={() => setOpen(true)}
-            className="flex flex-col items-center text-xs text-slate-800 hover:text-indigo-900 transition"
+            className="flex flex-col items-center text-xs text-slate-800 hover:text-indigo-900 transition course-pointer"
           >
             <Menu size={20} className="text-indigo-700" />
             <span>More</span>
@@ -238,7 +282,7 @@ export default function UserSidebar() {
                   router.push("/userprofile");
                   setOpen(false);
                 }}
-                className="px-4 py-3 border-b border-white/40 cursor-pointer hover:bg-white/30"
+                className="px-4 py-3 border-b border-white/40 cursor-pointer hover:bg-white/30 cursor-pointer"
               >
                 <p className="font-semibold text-slate-900">{user.name}</p>
                 <p className="text-xs text-slate-600 truncate">{user.email}</p>
@@ -256,6 +300,7 @@ export default function UserSidebar() {
                   icon={item.icon}
                   close={() => setOpen(false)}
                   active={pathname === item.path}
+                  
                 />
               ))}
 
@@ -274,7 +319,7 @@ export default function UserSidebar() {
                     handleLogout();
                     setOpen(false);
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-100/50 transition"
+                  className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-100/50 transition cursor-pointer"
                 >
                   <LogOut size={18} />
                   Logout
@@ -291,7 +336,7 @@ export default function UserSidebar() {
           fixed top-0 left-0 h-screen w-50
           bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200
           border-r border-white/40
-          text-slate-800 hidden md:block
+          text-slate-800 hidden md:block 
         "
       >
         <div
@@ -371,6 +416,7 @@ function NavItem({
   return (
     <button
       onClick={() => {
+        
         router.push(path);
         close?.();
       }}

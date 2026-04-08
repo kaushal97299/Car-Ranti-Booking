@@ -15,6 +15,10 @@ export default function MyBookingPage() {
   const [loading,  setLoading]  = useState(true);
   const [page,     setPage]     = useState(1);
   const PER_PAGE = 5;
+const [cancelId,setCancelId] = useState<string|null>(null);
+const [cancelReason,setCancelReason] = useState("");
+const [showCancelModal,setShowCancelModal] = useState(false);
+
 
   /* ================= FETCH ================= */
   const fetchBookings = async () => {
@@ -52,25 +56,80 @@ export default function MyBookingPage() {
       "_blank"
     );
   };
+  /* ================= CANCEL BOOKING ================= */
 
+const cancelBooking = async () => {
+
+if(!cancelReason){
+alert("Enter cancel reason");
+return;
+}
+
+try{
+
+const token = localStorage.getItem("token");
+
+const res = await fetch(
+`${API}/api/booking/cancel/${cancelId}`,
+{
+method:"PATCH",
+headers:{
+Authorization:`Bearer ${token}`,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+reason:cancelReason
+})
+}
+);
+
+const data = await res.json();
+
+alert(
+`Booking cancelled successfully.\nRefund: ₹${data.refundAmount} (${data.refundPercentage}%)`
+);
+
+setShowCancelModal(false);
+setCancelReason("");
+setCancelId(null);
+
+fetchBookings();
+
+}catch(err){
+
+console.log(err);
+
+}
+
+};
   /* ================= STATUS CONFIG ================= */
   const statusConfig: Record<string, { label: string; icon: React.ReactNode; pill: string }> = {
-    accepted: {
-      label: "Accepted",
-      icon:  <CheckCircle size={14} />,
-      pill:  "bg-green-100 text-green-600",
-    },
-    rejected: {
-      label: "Rejected",
-      icon:  <XCircle size={14} />,
-      pill:  "bg-red-100 text-red-600",
-    },
-    pending: {
-      label: "Pending",
-      icon:  <Clock size={14} />,
-      pill:  "bg-yellow-100 text-yellow-600",
-    },
-  };
+
+accepted:{
+label:"Accepted",
+icon:<CheckCircle size={14}/>,
+pill:"bg-green-100 text-green-600"
+},
+
+rejected:{
+label:"Rejected",
+icon:<XCircle size={14}/>,
+pill:"bg-red-100 text-red-600"
+},
+
+pending:{
+label:"Pending",
+icon:<Clock size={14}/>,
+pill:"bg-yellow-100 text-yellow-600"
+},
+
+cancelled:{
+label:"Cancelled",
+icon:<XCircle size={14}/>,
+pill:"bg-gray-200 text-gray-600"
+}
+
+};
 
   /* ================= LOADING ================= */
   if (loading) {
@@ -163,6 +222,25 @@ export default function MyBookingPage() {
                       {b.paymentIntentId && (
                         <p className="text-[10px] text-slate-400 truncate">ID: {b.paymentIntentId}</p>
                       )}
+                      {b.bookingStatus==="cancelled" && b.cancelReason && (
+
+                         <p className="text-xs text-red-500 mt-2">
+                         Reason: {b.cancelReason}
+                          </p>
+                          )}
+                          {b.bookingStatus==="cancelled" && b.refundAmount>0 && (
+                           <p className="text-xs text-green-600 mt-1">
+                            Refund: ₹{b.refundAmount}
+                            </p>
+                          )}
+                          {b.autoCancelled && (
+                          <p className="text-xs text-gray-500 mt-1">
+
+Auto cancelled by system
+
+                             </p>
+
+                              )}
                     </div>
                   </div>
 
@@ -188,14 +266,50 @@ export default function MyBookingPage() {
                 </div>
 
                 {/* row 3 — invoice button */}
-                {b.bookingStatus === "accepted" && (
-                  <button
-                    onClick={() => downloadInvoice(b._id)}
-                    className="mt-4 w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md shadow-indigo-200 hover:shadow-indigo-300 transition"
-                  >
-                    <Download size={15} /> Download Invoice
-                  </button>
-                )}
+              {/* row 3 — actions */}
+
+<div className="flex gap-3 mt-4 flex-wrap">
+
+{b.bookingStatus === "accepted" &&
+b.tripStatus === "upcoming" && (
+
+<button
+onClick={() => downloadInvoice(b._id)}
+className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md shadow-indigo-200 hover:shadow-indigo-300 transition"
+>
+
+<Download size={15}/> Download Invoice
+
+</button>
+
+)}
+
+{(b.bookingStatus==="pending" ||
+
+(b.bookingStatus==="accepted" && b.tripStatus==="upcoming")
+
+) && (
+
+<button
+
+onClick={()=>{
+
+setCancelId(b._id);
+setShowCancelModal(true);
+
+}}
+
+className="flex items-center justify-center gap-2 bg-red-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow hover:bg-red-600 transition"
+
+>
+
+Cancel Booking
+
+</button>
+
+)}
+
+</div>
 
               </div>
             </div>
@@ -243,6 +357,65 @@ export default function MyBookingPage() {
         </div>
       )}
 
+{/* CANCEL MODAL */}
+
+{showCancelModal && (
+
+<div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+
+<div className="bg-white p-6 rounded-xl w-[350px]">
+
+<h3 className="font-bold mb-3">
+
+Cancel Booking
+
+</h3>
+
+<textarea
+
+placeholder="Enter cancel reason"
+
+value={cancelReason}
+
+onChange={(e)=>setCancelReason(e.target.value)}
+
+className="w-full border rounded p-2 mb-4"
+
+/>
+
+<div className="flex gap-2">
+
+<button
+
+onClick={cancelBooking}
+
+className="flex-1 bg-red-500 text-white py-2 rounded"
+
+>
+
+Submit
+
+</button>
+
+<button
+
+onClick={()=>setShowCancelModal(false)}
+
+className="flex-1 bg-gray-300 py-2 rounded"
+
+>
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+)}
     </div>
   );
 }
