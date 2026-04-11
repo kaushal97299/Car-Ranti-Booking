@@ -97,7 +97,7 @@ export default function WishlistPage() {
   /* ================= LOADING ================= */
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-lg">
+      <div className="min-h-screen flex items-center justify-center text-lg text-gray-300 bg-[#020b0a]">
         Loading wishlist...
       </div>
     );
@@ -106,9 +106,9 @@ export default function WishlistPage() {
   /* ================= EMPTY ================= */
   if (wishlist.length === 0) {
     return (
-      <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100">
+      <div className="min-h-screen p-6 bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
 
-        <h1 className="text-2xl font-bold mb-6">
+        <h1 className="text-2xl font-bold mb-6 text-white">
           ❤️ My Wishlist
         </h1>
 
@@ -116,7 +116,7 @@ export default function WishlistPage() {
 
         <button
           onClick={() => router.push("/dashboard")}
-          className="mt-6 text-indigo-600"
+          className="mt-6 text-emerald-300"
         >
           ← Back to Cars
         </button>
@@ -126,9 +126,9 @@ export default function WishlistPage() {
 
   /* ================= MAIN UI ================= */
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100">
+    <div className="min-h-screen p-6 bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
 
-      <h1 className="text-2xl font-bold mb-6">
+      <h1 className="text-2xl font-bold mb-6 text-white">
         ❤️ My Wishlist
       </h1>
 
@@ -139,9 +139,9 @@ export default function WishlistPage() {
           <div
             key={item._id}
             className="
-              bg-white rounded-xl shadow p-3
+              bg-white/10 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-3
               cursor-pointer
-              hover:shadow-lg transition
+              hover:shadow-emerald-500/20 hover:scale-[1.02] transition-all duration-300
             "
             onClick={() =>
               router.push(`/dashboard/${item.car._id}`)
@@ -160,14 +160,14 @@ export default function WishlistPage() {
             </div>
 
             {/* BRAND */}
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-400">
               {item.car.brand}
             </div>
 
             <div className="flex justify-between items-center mt-3">
 
               {/* PRICE */}
-              <span className="font-bold text-indigo-600">
+              <span className="font-bold text-emerald-300">
                 ₹{item.car.price}/day
               </span>
 
@@ -177,7 +177,7 @@ export default function WishlistPage() {
                   e.stopPropagation(); // 🔴 Stop card click
                   removeFromWishlist(item._id);
                 }}
-                className="text-red-500 text-sm hover:underline"
+                className="text-red-400 text-sm hover:text-red-300 transition"
               >
                 Remove
               </button>
@@ -192,7 +192,7 @@ export default function WishlistPage() {
       {/* BACK */}
       <button
         onClick={() => router.push("/dashboard")}
-        className="mt-6 text-indigo-600"
+        className="mt-6 text-emerald-300"
       >
         ← Back to Cars
       </button>

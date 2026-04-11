@@ -122,7 +122,7 @@ export default function ContactPage() {
 
   return(
 
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 text-slate-700">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white text-gray-400">
 
 
       {/* HERO */}
@@ -132,14 +132,14 @@ export default function ContactPage() {
         <motion.h1
           initial={{opacity:0,y:30}}
           animate={{opacity:1,y:0}}
-          className="text-4xl md:text-5xl font-bold text-slate-900"
+          className="text-4xl md:text-5xl font-bold text-white"
         >
 
           Contact Support
 
         </motion.h1>
 
-        <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
+        <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
           Need help with booking a car? Our dealer team will contact you shortly.
         </p>
 
@@ -157,10 +157,10 @@ export default function ContactPage() {
           initial={{opacity:0,x:-40}}
           whileInView={{opacity:1,x:0}}
           viewport={{once:true}}
-          className="bg-white/70 backdrop-blur border border-white/40 rounded-2xl p-8 shadow-xl"
+          className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-xl"
         >
 
-          <h2 className="text-2xl font-semibold text-slate-900 mb-6">
+          <h2 className="text-2xl font-semibold text-white mb-6">
             Send us a message
           </h2>
 
@@ -171,7 +171,7 @@ export default function ContactPage() {
               value={form.name}
               onChange={handleChange}
               placeholder="Your Name"
-              className="w-full p-3 rounded-lg border border-slate-300"
+              className="w-full p-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder:text-gray-400"
             />
 
             <input
@@ -180,14 +180,14 @@ export default function ContactPage() {
               value={form.email}
               onChange={handleChange}
               placeholder="Your Email"
-              className="w-full p-3 rounded-lg border border-slate-300"
+              className="w-full p-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder:text-gray-400"
             />
 
             <select
               name="category"
               value={form.category}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg border border-slate-300"
+              className="w-full p-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder:text-gray-400"
             >
 
               <option value="other">Select Issue Type</option>
@@ -204,7 +204,7 @@ export default function ContactPage() {
               onChange={handleChange}
               placeholder="Write your message..."
               rows={4}
-              className="w-full p-3 rounded-lg border border-slate-300"
+              className="w-full p-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder:text-gray-400"
             />
 
             <input
@@ -215,14 +215,14 @@ export default function ContactPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-indigo-600 text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-indigo-700 transition"
+              className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:shadow-emerald-500/40 transition"
             >
               {loading ? "Sending..." : <>Send Message <Send size={18}/></>}
             </button>
 
             {success &&(
 
-              <div className="text-green-600 text-sm flex items-center gap-2">
+              <div className="text-emerald-300 text-sm flex items-center gap-2">
                 <CheckCircle size={18}/>
                 Message sent successfully.
               </div>
@@ -246,20 +246,20 @@ export default function ContactPage() {
 
           {/* CONTACT INFO */}
 
-          <div className="bg-white/70 backdrop-blur border border-white/40 rounded-2xl p-6 shadow-lg">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg">
 
-            <h3 className="text-xl font-semibold text-slate-900 mb-4">
+            <h3 className="text-xl font-semibold text-white mb-4">
               Contact Information
             </h3>
 
-            <div className="space-y-4 text-slate-700">
+            <div className="space-y-4 text-gray-400">
 
               <p className="flex items-center gap-3">
-                <Mail className="text-indigo-600"/> support@carbooking.com
+                <Mail className="text-emerald-300"/> support@carbooking.com
               </p>
 
               <p className="flex items-center gap-3">
-                <MapPin className="text-indigo-600"/> India (All Cities)
+                <MapPin className="text-emerald-300"/> India (All Cities)
               </p>
 
             </div>
@@ -273,17 +273,17 @@ export default function ContactPage() {
 
             <a
               href="mailto:support@carbooking.com"
-              className="bg-white/70 backdrop-blur border rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
+              className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
             >
-              <Mail className="text-indigo-600"/> Email
+              <Mail className="text-emerald-300"/> Email
             </a>
 
             <a
               href="https://wa.me/919876543210"
               target="_blank"
-              className="bg-white/70 backdrop-blur border rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
+              className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
             >
-              <MessageCircle className="text-green-600"/> WhatsApp
+              <MessageCircle className="text-emerald-300"/> WhatsApp
             </a>
 
           </div>
@@ -293,10 +293,10 @@ export default function ContactPage() {
 
           <Link
             href="/supportmessages"
-            className="bg-white/70 backdrop-blur border border-white/40 rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
+            className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-xl p-5 flex items-center justify-center gap-2 shadow hover:shadow-lg"
           >
 
-            <MessageCircle className="text-indigo-600"/>
+            <MessageCircle className="text-emerald-300"/>
 
             View Your Support Messages
 

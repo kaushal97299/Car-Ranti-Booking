@@ -174,13 +174,13 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 text-slate-700">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
 
       {/* HERO SECTION WITH ANIMATION */}
       <section className="relative overflow-hidden py-20 px-6">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
         </div>
 
         <div className="relative max-w-6xl mx-auto text-center">
@@ -188,7 +188,7 @@ export default function BlogPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-8 shadow-lg"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-8 shadow-lg"
           >
             <Sparkles size={16} />
             <span>Insights & Guides</span>
@@ -198,7 +198,7 @@ export default function BlogPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent"
+            className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent"
           >
             Car Rental Blog
           </motion.h1>
@@ -207,7 +207,7 @@ export default function BlogPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-xl text-slate-600 max-w-2xl mx-auto"
+            className="text-xl text-gray-300 max-w-2xl mx-auto"
           >
             Location-based travel blogs, car tips and rental guides for smart travelers
           </motion.p>
@@ -225,7 +225,7 @@ export default function BlogPage() {
                 placeholder="Search blogs, topics, or locations..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white/80 backdrop-blur border border-indigo-200/50 pl-12 pr-4 py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full bg-white/10 backdrop-blur border border-white/10 border border-indigo-200/50 pl-12 pr-4 py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
           </motion.div>
@@ -235,11 +235,11 @@ export default function BlogPage() {
       {/* FEATURED BLOGS */}
       <section className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <TrendingUp className="text-indigo-600" size={24} />
+          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+            <TrendingUp className="text-emerald-300" size={24} />
             Featured Articles
           </h2>
-          <button className="text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+          <button className="text-emerald-300 hover:text-indigo-800 flex items-center gap-1">
             View all <ChevronRight size={16} />
           </button>
         </div>
@@ -263,7 +263,7 @@ export default function BlogPage() {
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
                 <div className="flex items-center gap-2 text-xs mb-2">
-                  <span className="bg-indigo-600 px-2 py-1 rounded-full">{blog.category}</span>
+                  <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 px-2 py-1 rounded-full">{blog.category}</span>
                   <span className="flex items-center gap-1"><Clock size={12} />{blog.readTime}</span>
                 </div>
                 <h3 className="text-xl font-bold mb-2">{blog.title}</h3>
@@ -276,10 +276,10 @@ export default function BlogPage() {
 
       {/* FILTERS SECTION */}
       <section className="max-w-6xl mx-auto px-6 mb-10">
-        <div className="bg-white/80 backdrop-blur-xl border border-indigo-200/50 rounded-2xl p-4 shadow-lg">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-lg">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 text-slate-700 md:hidden"
+            className="flex items-center gap-2 text-gray-300 md:hidden"
           >
             <Filter size={20} />
             <span>Filters</span>
@@ -294,7 +294,7 @@ export default function BlogPage() {
                   setState(e.target.value);
                   setDistrict("All");
                 }}
-                className="w-full bg-white/90 border border-indigo-200/50 pl-10 pr-4 py-3 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full bg-white/10 border border-white/10 text-white pl-10 pr-4 py-3 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
               >
                 <option>All States</option>
                 {Object.keys(statesData).map((s) => (
@@ -309,7 +309,7 @@ export default function BlogPage() {
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
                 disabled={state === "All"}
-                className="w-full bg-white/90 border border-indigo-200/50 pl-10 pr-4 py-3 rounded-xl appearance-none disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full bg-white/10 border border-white/10 text-white pl-10 pr-4 py-3 rounded-xl appearance-none disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               >
                 <option>All Districts</option>
                 {districts?.map((d) => (
@@ -323,7 +323,7 @@ export default function BlogPage() {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white/90 border border-indigo-200/50 pl-10 pr-4 py-3 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="w-full bg-white/10 border border-white/10 text-white pl-10 pr-4 py-3 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
               >
                 <option>All Categories</option>
                 {categories.map((c) => (
@@ -332,11 +332,11 @@ export default function BlogPage() {
               </select>
             </div>
 
-            <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all">
+            <button className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all">
               Apply Filters
             </button>
 
-            <button className="border border-indigo-200 text-slate-600 px-6 py-3 rounded-xl font-medium hover:bg-white/50 transition-all">
+            <button className="border border-indigo-200 text-gray-300 px-6 py-3 rounded-xl font-medium hover:bg-white/50 transition-all">
               Clear All
             </button>
           </div>
@@ -346,9 +346,9 @@ export default function BlogPage() {
       {/* BLOG STATS */}
       <section className="max-w-6xl mx-auto px-6 mb-8">
         <div className="flex items-center justify-between">
-          <p className="text-slate-600 flex items-center gap-2">
-            <BookOpen size={18} className="text-indigo-600" />
-            Showing <span className="font-bold text-indigo-600">{filteredBlogs.length}</span> articles
+          <p className="text-gray-300 flex items-center gap-2">
+            <BookOpen size={18} className="text-emerald-300" />
+            Showing <span className="font-bold text-emerald-300">{filteredBlogs.length}</span> articles
           </p>
           <p className="text-sm text-slate-500">Last updated: Today</p>
         </div>
@@ -364,7 +364,7 @@ export default function BlogPage() {
             transition={{ delay: index * 0.05 }}
             className="group"
           >
-            <div className="bg-white/80 backdrop-blur-xl border border-indigo-200/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
               
               {/* Blog Image */}
               <div className="relative h-48 overflow-hidden">
@@ -384,12 +384,12 @@ export default function BlogPage() {
                   >
                     <Bookmark 
                       size={16} 
-                      className={savedBlogs.includes(blog.id) ? "fill-indigo-600 text-indigo-600" : "text-slate-600"} 
+                      className={savedBlogs.includes(blog.id) ? "fill-indigo-600 text-emerald-300" : "text-gray-300"} 
                     />
                   </button>
                 </div>
                 <div className="absolute bottom-3 left-3">
-                  <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-1 rounded-full text-xs">
+                  <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-3 py-1 rounded-full text-xs">
                     {blog.category}
                   </span>
                 </div>
@@ -409,11 +409,11 @@ export default function BlogPage() {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-indigo-600 transition-colors">
+                <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-emerald-300 transition-colors">
                   {blog.title}
                 </h3>
 
-                <p className="text-sm text-slate-600 mb-4 line-clamp-2">
+                <p className="text-sm text-gray-300 mb-4 line-clamp-2">
                   {blog.excerpt}
                 </p>
 
@@ -427,7 +427,7 @@ export default function BlogPage() {
                     </span>
                   </div>
                   
-                  <button className="text-indigo-600 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                  <button className="text-emerald-300 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
                     Read More <ChevronRight size={14} />
                   </button>
                 </div>
@@ -442,17 +442,17 @@ export default function BlogPage() {
             animate={{ opacity: 1 }}
             className="col-span-full text-center py-20"
           >
-            <div className="bg-white/80 backdrop-blur rounded-2xl p-12 max-w-md mx-auto">
+            <div className="bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-12 max-w-md mx-auto">
               <Search size={48} className="mx-auto text-slate-400 mb-4" />
-              <h3 className="text-xl font-bold text-slate-900 mb-2">No blogs found</h3>
-              <p className="text-slate-600">Try adjusting your filters or search query</p>
+              <h3 className="text-xl font-bold text-white mb-2">No blogs found</h3>
+              <p className="text-gray-300">Try adjusting your filters or search query</p>
             </div>
           </motion.div>
         )}
       </section>
 
       {/* NEWSLETTER SECTION */}
-      <section className="bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-600 py-16">
+      <section className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 py-16">
         <div className="max-w-4xl mx-auto px-6 text-center text-white">
           <h2 className="text-3xl font-bold mb-4">Never Miss an Update</h2>
           <p className="text-white/80 mb-8">Subscribe to our newsletter for the latest travel tips and guides</p>
@@ -460,9 +460,9 @@ export default function BlogPage() {
             <input 
               type="email" 
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-l-xl text-slate-900 focus:outline-none"
+              className="flex-1 px-4 py-3 rounded-l-xl text-white focus:outline-none"
             />
-            <button className="bg-white text-indigo-600 px-6 py-3 rounded-r-xl font-medium hover:bg-indigo-50 transition-colors">
+            <button className="bg-white text-emerald-300 px-6 py-3 rounded-r-xl font-medium hover:bg-white/10 transition-colors">
               Subscribe
             </button>
           </div>
@@ -484,7 +484,7 @@ export default function BlogPage() {
               initial={{ scale: 0.9, y: 30 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 30 }}
-              className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+              className="bg-[#041f1e] border border-white/10 rounded-3xl text-white max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
             >
               {/* Blog Image */}
               <div className="relative h-64">
@@ -505,7 +505,7 @@ export default function BlogPage() {
 
                 <div className="absolute bottom-4 left-4 text-white">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="bg-indigo-600 px-3 py-1 rounded-full text-xs">{activeBlog.category}</span>
+                    <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 px-3 py-1 rounded-full text-xs">{activeBlog.category}</span>
                     <span className="flex items-center gap-1 text-sm"><Clock size={14} /> {activeBlog.readTime}</span>
                   </div>
                   <h3 className="text-2xl font-bold">{activeBlog.title}</h3>
@@ -517,39 +517,39 @@ export default function BlogPage() {
                 <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                      <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold">
                         {activeBlog.author[0]}
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900">{activeBlog.author}</p>
+                        <p className="font-semibold text-white">{activeBlog.author}</p>
                         <p className="text-xs text-slate-500">{activeBlog.date}</p>
                       </div>
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                    <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
                       <Heart size={18} className="text-red-500" />
                     </button>
-                    <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
-                      <Share2 size={18} className="text-slate-600" />
+                    <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                      <Share2 size={18} className="text-gray-300" />
                     </button>
-                    <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
-                      <Bookmark size={18} className="text-slate-600" />
+                    <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                      <Bookmark size={18} className="text-gray-300" />
                     </button>
                   </div>
                 </div>
 
                 {/* Blog Content */}
                 <div className="py-6">
-                  <p className="text-slate-700 leading-relaxed">
+                  <p className="text-gray-300 leading-relaxed">
                     {activeBlog.content}
                   </p>
                 </div>
 
                 {/* Location Tags */}
                 <div className="flex items-center gap-2 pt-4 border-t border-slate-200">
-                  <MapPin size={16} className="text-indigo-600" />
-                  <span className="text-sm text-slate-600">{activeBlog.state}, {activeBlog.district}</span>
+                  <MapPin size={16} className="text-emerald-300" />
+                  <span className="text-sm text-gray-300">{activeBlog.state}, {activeBlog.district}</span>
                 </div>
               </div>
             </motion.div>

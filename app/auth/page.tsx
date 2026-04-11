@@ -8,8 +8,17 @@ import { useRouter } from "next/navigation";
 import { Github } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import "./auth.css";
 
 const API = process.env.NEXT_PUBLIC_API_URL as string;
+
+const BUBBLES = Array.from({ length: 25 }).map((_, i) => ({
+  id: i,
+  left: `${(i * 4.1 + 3) % 100}%`,
+  size: 20 + (i * 7.3) % 60,
+  delay: `${(i * 0.23) % 5}s`,
+  duration: `${12 + (i * 0.43) % 10}s`,
+}));
 
 export default function SpaceAuth() {
 
@@ -39,7 +48,23 @@ useEffect(() => {
 if (checking) return null;
 
 return (
-<div className="min-h-screen w-full bg-gradient-to-br from-[#1a0638] via-[#2b0f55] to-[#3a1570]">
+<div className="relative min-h-screen overflow-hidden bg-[#020b0a]">
+  <div className="absolute inset-0 mesh-bg" />
+  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+  {BUBBLES.map((b) => (
+    <span
+      key={b.id}
+      className="bubble"
+      style={{
+        left: b.left,
+        width: `${b.size}px`,
+        height: `${b.size}px`,
+        animationDelay: b.delay,
+        animationDuration: b.duration,
+      }}
+    />
+  ))}
+</div>
 
   {/* DESKTOP */}
   <div className="hidden md:grid grid-cols-2 min-h-screen">
@@ -57,11 +82,11 @@ return (
 
     {/* Top Section */}
     <div className="relative pt-10 pb-6 px-5 text-center overflow-hidden">
-      <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-blue-500/30 blur-3xl animate-pulse" />
-      <div className="absolute top-8 right-0 w-32 h-32 rounded-full bg-purple-400/30 blur-2xl animate-pulse" />
+      <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-emerald-500/30 blur-3xl animate-pulse" />
+      <div className="absolute top-8 right-0 w-32 h-32 rounded-full bg-cyan-400/30 blur-2xl animate-pulse" />
 
       <div className="relative z-10 text-white">
-        <p className="text-purple-300 text-sm mb-1">
+        <p className="text-emerald-300 text-sm mb-1">
           {isLogin ? "Welcome Back" : "Create Your Account"}
         </p>
         <h1 className="text-2xl font-bold">
@@ -99,8 +124,8 @@ function DesktopLeft({ isLogin }: { isLogin: boolean }) {
 return (
 <div className="relative flex items-center justify-center overflow-hidden">
 
-  <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-blue-500/30 blur-3xl animate-pulse" />
-  <div className="absolute bottom-20 right-20 w-48 h-48 rounded-full bg-purple-400/30 blur-2xl animate-pulse" />
+  <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-emerald-500/30 blur-3xl animate-pulse" />
+  <div className="absolute bottom-20 right-20 w-48 h-48 rounded-full bg-cyan-400/30 blur-2xl animate-pulse" />
 
   <div className="relative z-10 px-16 text-white">
 
@@ -108,7 +133,7 @@ return (
       {isLogin ? "Start Your Next Journey" : "Create Your Account"}
     </h1>
 
-    <h2 className="text-5xl font-extrabold text-purple-300">
+    <h2 className="text-5xl font-extrabold text-emerald-300">
       {isLogin ? "With Confidence" : "Drive Smarter"}
     </h2>
 
@@ -376,8 +401,7 @@ try {
 };
 
 return (
-
-<div className={`w-full max-w-md mx-auto rounded-2xl text-white bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.45)] ${mobile ? "p-5" : "p-8"}`}>
+<div className={`mobile-glow-soft w-full max-w-md mx-auto rounded-2xl text-white bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.55)] animate-floatCard ${mobile ? "p-5" : "p-8"}`}>
 
   <h2 className="text-2xl font-bold mb-2">
     {isLogin ? "Sign In" : "Sign Up"}
@@ -417,7 +441,7 @@ return (
       <div className="w-full border-t border-white/20"></div>
     </div>
     <div className="relative flex justify-center text-xs">
-      <span className="bg-[#2b0f55] px-2 text-gray-300">or continue with email</span>
+      <span className="bg-[#0b1413] px-2 text-gray-300">or continue with email</span>
     </div>
   </div>
 
@@ -428,7 +452,7 @@ return (
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-emerald-400/50"
           placeholder="Full Name"
         />
         <p className="text-xs text-gray-400 mt-1">Min 2 characters, letters only</p>
@@ -439,7 +463,7 @@ return (
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+        className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-emerald-400/50"
         placeholder="Email"
         type="email"
       />
@@ -450,7 +474,7 @@ return (
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+        className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-emerald-400/50"
         placeholder="Password"
       />
       {!isLogin && (
@@ -466,7 +490,7 @@ return (
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full bg-white/10 px-3 py-2 text-sm rounded-md outline-none focus:ring-2 focus:ring-emerald-400/50"
           placeholder="Confirm Password"
         />
       </div>
@@ -477,7 +501,7 @@ return (
         <button
           type="button"
           onClick={() => setShowForgot(true)}
-          className="text-xs text-purple-300 hover:underline"
+          className="text-xs text-emerald-300 hover:underline"
         >
           Forgot password?
         </button>
@@ -487,7 +511,7 @@ return (
     <button
       type="submit"
       disabled={loading}
-      className="w-full py-2 rounded-md bg-gradient-to-r from-purple-600 to-blue-500 font-semibold shadow disabled:opacity-50 disabled:cursor-not-allowed"
+     className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-emerald-500 to-cyan-500 shadow-lg shadow-emerald-500/30 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {loading ? "Please wait..." : isLogin ? "Sign In" : "Sign Up"}
     </button>
@@ -497,7 +521,7 @@ return (
   {showForgot && (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
 
-      <div className="bg-[#2b0f55] p-6 rounded-xl w-full max-w-sm">
+      <div className="bg-[#0b1413] p-6 rounded-xl w-full max-w-sm">
 
         <h3 className="text-lg font-bold mb-3 text-white">
           Reset Password
@@ -508,7 +532,7 @@ return (
           value={forgotEmail}
           onChange={(e) => setForgotEmail(e.target.value)}
           placeholder="Enter your email"
-          className="w-full px-3 py-2 rounded-md bg-white/10 mb-3 outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full px-3 py-2 rounded-md bg-white/10 mb-3 outline-none focus:ring-2 focus:ring-emerald-400/50"
         />
 
         <div className="flex justify-end gap-2">
@@ -529,7 +553,7 @@ return (
             type="button"
             onClick={handleForgotPassword}
             disabled={loading}
-            className="px-3 py-1 text-sm bg-purple-600 rounded hover:bg-purple-700 disabled:opacity-50"
+            className="px-3 py-1 text-sm bg-emerald-500 rounded hover:bg-emerald-600 disabled:opacity-50"
           >
             {loading ? "Sending..." : "Send Reset Link"}
           </button>
@@ -556,7 +580,7 @@ return (
             setPassword("");
             setConfirmPassword("");
           }}
-          className="text-purple-300 font-semibold hover:underline"
+          className="text-emerald-300 font-semibold hover:underline"
         >
           Sign up
         </button>
@@ -573,7 +597,7 @@ return (
             setPassword("");
             setConfirmPassword("");
           }}
-          className="text-purple-300 font-semibold hover:underline"
+          className="text-emerald-300 font-semibold hover:underline"
         >
           Sign in
         </button>

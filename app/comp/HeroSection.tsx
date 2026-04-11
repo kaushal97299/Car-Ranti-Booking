@@ -13,6 +13,7 @@ export default function Hero() {
           "url(https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80)",
       }}
     >
+      <div className="relative z-10">
       <h1 className="text-3xl md:text-5xl font-bold text-white">
         Rent a car in Los Angeles
       </h1>
@@ -21,13 +22,14 @@ export default function Hero() {
         Book directly from local suppliers. No commission. No mark-up.
       </p>
 
-      <div className="mt-8 bg-white rounded-2xl shadow-xl p-4 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-3">
-        <input placeholder="Pickup location" className="border p-2 rounded" />
-        <input placeholder="Pickup date" className="border p-2 rounded" />
-        <input placeholder="Return date" className="border p-2 rounded" />
-        <button className="bg-red-500 text-white rounded px-4 py-2">
+      <div className="mt-8 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl p-4 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-3">
+        <input placeholder="Pickup location" className="bg-white/10 border border-white/10 text-white placeholder:text-gray-400 p-2 rounded-lg" />
+        <input placeholder="Pickup date" className="bg-white/10 border border-white/10 text-white placeholder:text-gray-400 p-2 rounded-lg" />
+        <input placeholder="Return date" className="bg-white/10 border border-white/10 text-white placeholder:text-gray-400 p-2 rounded-lg" />
+        <button className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-lg px-4 py-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition">
           Search
         </button>
+      </div>
       </div>
     </section>
   );

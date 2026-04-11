@@ -122,23 +122,23 @@ export default function Footer() {
     <footer className="w-full mt-20 relative overflow-hidden">
       
       {/* Premium Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200" />
-      <div className="absolute inset-0 bg-white/30 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-[#020b0a]" />
+      <div className="absolute inset-0 bg-transparent" />
       
       {/* Animated Background Orbs with Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl animate-float opacity-40" />
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl animate-float-delay opacity-40" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-3xl animate-float-slow opacity-30" />
-        <div className="absolute top-20 left-1/3 w-32 h-32 bg-indigo-400 rounded-full filter blur-2xl animate-pulse-slow opacity-20" />
-        <div className="absolute bottom-20 right-1/3 w-40 h-40 bg-purple-400 rounded-full filter blur-2xl animate-pulse-slower opacity-20" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl animate-float opacity-40" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl animate-float-delay opacity-40" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-float-slow opacity-30" />
+        <div className="absolute top-20 left-1/3 w-32 h-32 bg-cyan-400 rounded-full filter blur-2xl animate-pulse-slow opacity-20" />
+        <div className="absolute bottom-20 right-1/3 w-40 h-40 bg-teal-400 rounded-full filter blur-2xl animate-pulse-slower opacity-20" />
       </div>
 
       {/* Scroll to Top Button with Progress Ring */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-3 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 animate-bounce group"
+          className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white p-3 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 animate-bounce group"
         >
           <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
         </button>
@@ -147,17 +147,17 @@ export default function Footer() {
       <div className="relative z-10">
         
         {/* Premium Stats Bar */}
-        <div className="border-b border-indigo-200/50 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-fuchsia-500/10 backdrop-blur-sm">
+        <div className="border-b border-white/10 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-cyan-500/10 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {stats.map((stat, idx) => (
                 <div key={idx} className="flex items-center justify-center gap-3 group cursor-pointer">
-                  <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full shadow-lg group-hover:scale-110 transition-all duration-300 animate-pulse-light">
+                  <div className="p-2 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-full shadow-lg group-hover:scale-110 transition-all duration-300 animate-pulse-light">
                     <stat.icon className="w-4 h-4 text-white" />
                   </div>
                   <div className="text-center">
-                    <p className="text-gray-800 text-lg font-bold">{stat.value}</p>
-                    <p className="text-gray-600 text-xs">{stat.label}</p>
+                    <p className="text-white text-lg font-bold">{stat.value}</p>
+                    <p className="text-gray-400 text-xs">{stat.label}</p>
                   </div>
                 </div>
               ))}
@@ -172,42 +172,42 @@ export default function Footer() {
             {/* Brand Column with Greeting */}
             <div className="space-y-4">
               <div className="flex items-center justify-center sm:justify-start gap-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl animate-pulse-light">
+                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-xl animate-pulse-light">
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-800 to-purple-800 bg-clip-text text-transparent">
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-300 to-cyan-300 bg-clip-text text-transparent">
                     CarBooking
                   </h2>
-                  <p className="text-xs text-indigo-600">{getGreeting()}! 👋</p>
+                  <p className="text-xs text-emerald-300">{getGreeting()}! 👋</p>
                 </div>
               </div>
-              <p className="text-gray-700 text-sm leading-relaxed text-center sm:text-left">
+              <p className="text-gray-400 text-sm leading-relaxed text-center sm:text-left">
                 Experience luxury and comfort with our premium car rental service. Your journey, our responsibility.
               </p>
               
               {/* Premium Trust Badges */}
               <div className="flex flex-wrap justify-center sm:justify-start gap-3 pt-2">
-                <div className="flex items-center gap-1 px-2 py-1 bg-white/50 rounded-full">
+                <div className="flex items-center gap-1 px-2 py-1 bg-white/10 border border-white/10 backdrop-blur-sm rounded-full">
                   <Heart className="w-3 h-3 text-red-500 fill-red-500 animate-pulse" />
-                  <span className="text-xs text-gray-700">50K+ Happy</span>
+                  <span className="text-xs text-gray-400">50K+ Happy</span>
                 </div>
-                <div className="flex items-center gap-1 px-2 py-1 bg-white/50 rounded-full">
-                  <Shield className="w-3 h-3 text-indigo-600" />
-                  <span className="text-xs text-gray-700">100% Secure</span>
+                <div className="flex items-center gap-1 px-2 py-1 bg-white/10 border border-white/10 backdrop-blur-sm rounded-full">
+                  <Shield className="w-3 h-3 text-emerald-300" />
+                  <span className="text-xs text-gray-400">100% Secure</span>
                 </div>
-                <div className="flex items-center gap-1 px-2 py-1 bg-white/50 rounded-full">
+                <div className="flex items-center gap-1 px-2 py-1 bg-white/10 border border-white/10 backdrop-blur-sm rounded-full">
                   <Globe className="w-3 h-3 text-purple-600" />
-                  <span className="text-xs text-gray-700">Global Service</span>
+                  <span className="text-xs text-gray-400">Global Service</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Links - Company */}
             <div className="text-center sm:text-left">
-              <h3 className="text-indigo-900 font-bold mb-5 text-lg relative inline-block sm:inline-block group">
+              <h3 className="text-white font-bold mb-5 text-lg relative inline-block sm:inline-block group">
                 Company
-                <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full group-hover:w-full transition-all duration-300"></div>
+                <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full group-hover:w-full transition-all duration-300"></div>
               </h3>
               <ul className="space-y-3 mt-6">
                 {[
@@ -219,8 +219,8 @@ export default function Footer() {
                   <li key={idx}>
                     <button
                       onClick={() => handleNavigation(item.path, item.name)}
-                      className={`group flex items-center justify-center sm:justify-start gap-1 text-gray-700 hover:text-indigo-700 transition-all duration-300 ${
-                        activeLink === item.name ? 'translate-x-2 text-indigo-700' : ''
+                      className={`group flex items-center justify-center sm:justify-start gap-1 text-gray-400 hover:text-emerald-300 bg-white/10 border border-white/10 transition transition-all duration-300 ${
+                        activeLink === item.name ? 'translate-x-2 text-emerald-300' : ''
                       }`}
                     >
                       <item.icon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" />
@@ -233,9 +233,9 @@ export default function Footer() {
 
             {/* Support & Legal */}
             <div className="text-center sm:text-left">
-              <h3 className="text-indigo-900 font-bold mb-5 text-lg relative inline-block sm:inline-block group">
+              <h3 className="text-white font-bold mb-5 text-lg relative inline-block sm:inline-block group">
                 Support
-                <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full group-hover:w-full transition-all duration-300"></div>
+                <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full group-hover:w-full transition-all duration-300"></div>
               </h3>
               <ul className="space-y-3 mt-6">
                 {[
@@ -247,8 +247,8 @@ export default function Footer() {
                   <li key={idx}>
                     <button
                       onClick={() => handleNavigation(item.path, item.name)}
-                      className={`text-gray-700 hover:text-indigo-700 transition-all duration-300 hover:translate-x-1 ${
-                        activeLink === item.name ? 'translate-x-1 text-indigo-700' : ''
+                      className={`text-gray-400 hover:text-emerald-300 bg-white/10 border border-white/10 transition transition-all duration-300 hover:translate-x-1 ${
+                        activeLink === item.name ? 'translate-x-1 text-emerald-300' : ''
                       }`}
                     >
                       {item.name}
@@ -260,30 +260,30 @@ export default function Footer() {
 
             {/* Contact & Social with Premium Animation */}
             <div className="text-center sm:text-left">
-              <h3 className="text-indigo-900 font-bold mb-5 text-lg relative inline-block sm:inline-block group">
+              <h3 className="text-white font-bold mb-5 text-lg relative inline-block sm:inline-block group">
                 Connect
-                <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full group-hover:w-full transition-all duration-300"></div>
+                <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full group-hover:w-full transition-all duration-300"></div>
               </h3>
               
               {/* Contact Info with Icons */}
               <div className="space-y-3 mt-6">
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-700 text-sm group cursor-pointer">
-                  <div className="p-1 bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors">
-                    <Phone className="w-4 h-4 text-indigo-600" />
+                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer">
+                  <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
+                    <Phone className="w-4 h-4 text-emerald-300" />
                   </div>
-                  <span className="group-hover:text-indigo-700 transition">+1 (234) 567-8900</span>
+                  <span className="group-bg-white/10 border border-white/10 transition">+1 (234) 567-8900</span>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-700 text-sm group cursor-pointer">
-                  <div className="p-1 bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors">
-                    <Mail className="w-4 h-4 text-indigo-600" />
+                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer">
+                  <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
+                    <Mail className="w-4 h-4 text-emerald-300" />
                   </div>
-                  <span className="group-hover:text-indigo-700 transition">hello@carbooking.com</span>
+                  <span className="group-bg-white/10 border border-white/10 transition">hello@carbooking.com</span>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-700 text-sm group cursor-pointer">
-                  <div className="p-1 bg-indigo-100 rounded-full group-hover:bg-indigo-200 transition-colors">
-                    <MessageCircle className="w-4 h-4 text-indigo-600" />
+                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer">
+                  <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
+                    <MessageCircle className="w-4 h-4 text-emerald-300" />
                   </div>
-                  <span className="group-hover:text-indigo-700 transition">Live Chat 24/7</span>
+                  <span className="group-bg-white/10 border border-white/10 transition">Live Chat 24/7</span>
                 </div>
               </div>
 
@@ -302,11 +302,11 @@ export default function Footer() {
                     onClick={() => handleSocialClick(social.name, social.url)}
                     onMouseEnter={() => setIsHoveredSocial(idx)}
                     onMouseLeave={() => setIsHoveredSocial(null)}
-                    className={`w-10 h-10 bg-white/60 backdrop-blur-sm rounded-full flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 hover:shadow-xl border border-indigo-200 ${
+                    className={`w-10 h-10 bg-white/10 border border-white/10 backdrop-blur-sm rounded-full flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 hover:shadow-xl  ${
                       isHoveredSocial === idx ? 'scale-110 shadow-xl' : ''
                     }`}
                   >
-                    <social.icon className={`w-4 h-4 text-indigo-700 transition-all duration-300 ${
+                    <social.icon className={`w-4 h-4 text-emerald-300 transition-all duration-300 ${
                       isHoveredSocial === idx ? 'text-white scale-110' : ''
                     }`} />
                   </button>
@@ -317,15 +317,15 @@ export default function Footer() {
         </div>
 
         {/* Premium Newsletter Section with Animation */}
-        <div className="border-y border-indigo-200/50 bg-gradient-to-r from-indigo-100/50 via-purple-100/50 to-fuchsia-100/50 backdrop-blur-sm">
+        <div className="border-y border-white/10 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-cyan-500/10 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div className="text-center md:text-left">
                 <div className="flex items-center gap-2 justify-center md:justify-start">
-                  <Gift className="w-5 h-5 text-indigo-600 animate-bounce" />
-                  <h4 className="text-indigo-900 font-bold text-lg">Exclusive Offers</h4>
+                  <Gift className="w-5 h-5 text-emerald-300 animate-bounce" />
+                  <h4 className="text-white font-bold text-lg">Exclusive Offers</h4>
                 </div>
-                <p className="text-gray-600 text-sm mt-1">Get 20% off on first booking + weekly deals</p>
+                <p className="text-gray-400 text-sm mt-1">Get 20% off on first booking + weekly deals</p>
               </div>
               <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                 <div className="relative">
@@ -335,14 +335,14 @@ export default function Footer() {
                     placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 pr-4 py-2.5 bg-white/60 backdrop-blur-sm rounded-lg text-sm border border-indigo-200 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 w-full sm:w-80 transition-all"
+                    className="pl-10 pr-4 py-2.5 bg-white/10 border border-white/10 backdrop-blur-sm rounded-lg text-sm  focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30 w-full sm:w-80 transition-all"
                     disabled={isSubmitting}
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg text-sm font-semibold hover:shadow-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-lg text-sm font-semibold hover:shadow-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>⏳ Subscribing...</>
@@ -354,7 +354,7 @@ export default function Footer() {
             </div>
             {submitMessage && (
               <div className="text-center mt-3 text-sm animate-slideDown">
-                <p className={submitMessage.includes("✅") ? "text-green-600" : "text-red-600"}>
+                <p className={submitMessage.includes("✅") ? "text-emerald-300" : "text-red-400"}>
                   {submitMessage}
                 </p>
               </div>
@@ -363,22 +363,22 @@ export default function Footer() {
         </div>
 
         {/* Premium Copyright Bar with Dynamic Content */}
-        <div className="bg-gradient-to-r from-indigo-900/5 to-purple-900/5 backdrop-blur-sm">
+        <div className="bg-gradient-to-r from-emerald-500/5 to-cyan-500/5 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
-              <p className="text-gray-600 flex items-center gap-1">
+              <p className="text-gray-400 flex items-center gap-1">
                 © {currentYear} CarBooking. All rights reserved. 
                 <span className="hidden sm:inline">|</span>
-                <span className="text-indigo-600">v3.0.0</span>
+                <span className="text-emerald-300">v3.0.0</span>
               </p>
               <div className="flex gap-6">
-                <button className="text-gray-600 hover:text-indigo-700 transition flex items-center gap-1">
+                <button className="text-gray-400 hover:text-emerald-300 bg-white/10 border border-white/10 transition transition flex items-center gap-1">
                   <Shield className="w-3 h-3" /> Security
                 </button>
-                <button className="text-gray-600 hover:text-indigo-700 transition flex items-center gap-1">
+                <button className="text-gray-400 hover:text-emerald-300 bg-white/10 border border-white/10 transition transition flex items-center gap-1">
                   <Globe className="w-3 h-3" /> Sitemap
                 </button>
-                <button className="text-gray-600 hover:text-indigo-700 transition">Accessibility</button>
+                <button className="text-gray-400 hover:text-emerald-300 bg-white/10 border border-white/10 transition transition">Accessibility</button>
               </div>
               <p className="text-gray-500 flex items-center gap-1">
                 Made with <Heart className="w-3 h-3 text-red-500 fill-red-500 animate-pulse" /> for luxury travel

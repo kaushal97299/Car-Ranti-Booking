@@ -344,7 +344,7 @@ window.location.href = data.checkoutUrl;
   /* ================= LOADING ================= */
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-[#020b0a] text-white">
         Loading...
       </div>
     );
@@ -355,18 +355,18 @@ window.location.href = data.checkoutUrl;
   /* ================= UI ================= */
   return (
 
-    <div className="min-h-screen bg-gradient-to-br from-indigo-300 via-purple-300 to-fuchsia-300 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white p-4">
 
       {/* ERROR */}
       {errorPopup && (
         <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-6 rounded-xl text-white">
 
             <p>{errorPopup}</p>
 
             <button
               onClick={()=>setErrorPopup("")}
-              className="mt-3 w-full bg-indigo-600 text-white py-2 rounded"
+              className="mt-3 w-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white py-2 rounded"
             >
               OK
             </button>
@@ -375,13 +375,13 @@ window.location.href = data.checkoutUrl;
         </div>
       )}
 
-      <div className="max-w-6xl mx-auto bg-white/20 rounded-3xl p-5 grid lg:grid-cols-[1fr_320px] gap-6">
+      <div className="max-w-6xl mx-auto bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-5 grid lg:grid-cols-[1fr_320px] gap-6">
 
         {/* LEFT */}
         <div className="space-y-5">
 
           {/* PERSONAL */}
-          <div className="bg-white/40 p-5 rounded-xl">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-5 rounded-xl">
 
             <h3 className="font-bold mb-3">Personal Info</h3>
 
@@ -396,7 +396,7 @@ window.location.href = data.checkoutUrl;
           </div>
 
           {/* ADDRESS */}
-          <div className="bg-white/40 p-5 rounded-xl">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-5 rounded-xl">
 
             <h3 className="font-bold mb-3">Address</h3>
 
@@ -426,12 +426,12 @@ if(val.length===6){
               {villages.length > 0 && (
                 <div className="md:col-span-2">
 
-                  <label className="text-sm">Village / Town</label>
+                  <label className="text-sm text-gray-300">Village / Town</label>
 
                   <select
                     value={selectedVillage}
                     onChange={(e)=>setSelectedVillage(e.target.value)}
-                    className="w-full p-3 rounded border"
+                    className="w-full p-3 rounded bg-white/10 border border-white/10 text-white"
                   >
                     <option value="">Select</option>
                     {villages.map((v,i)=>(
@@ -447,7 +447,7 @@ if(val.length===6){
           </div>
 
           {/* LICENSE */}
-          <div className="bg-white/40 p-5 rounded-xl">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-5 rounded-xl">
 
             <h3 className="font-bold mb-3">License</h3>
 
@@ -464,7 +464,7 @@ if(val.length===6){
 
         {/* RIGHT CARD */}
         <div className="
-          bg-gradient-to-br from-indigo-700 via-purple-700 to-fuchsia-700
+          bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-500
           text-white rounded-[28px] p-6 h-fit shadow-2xl
         ">
 
@@ -503,7 +503,7 @@ if(val.length===6){
   excludeDateIntervals={blockedIntervals}
   minDate={new Date()}
   placeholderText="Pickup Date"
-  className="w-full px-3 py-2 text-xs rounded-xl bg-white/30"
+  className="w-full px-3 py-2 text-xs rounded-xl bg-white/10 border border-white/10 text-white"
 />
 
               <InputSmall label="Pickup Time" type="time" value={pickupTime}
@@ -516,7 +516,7 @@ if(val.length===6){
   excludeDateIntervals={blockedIntervals}
   minDate={pickupDate || new Date()}
   placeholderText="Drop Date"
-  className="w-full px-3 py-2 text-xs rounded-xl bg-white/30"
+  className="w-full px-3 py-2 text-xs rounded-xl bg-white/10 border border-white/10 text-white"
 />
 
               <InputSmall label="Drop Time" type="time" value={dropTime}
@@ -541,7 +541,7 @@ if(val.length===6){
           <button
             onClick={()=>setOpenPayment(true)}
             className="
-              w-full bg-white text-indigo-700 py-3 rounded-2xl
+              w-full bg-white/90 text-[#020b0a] py-3 rounded-2xl
               font-bold text-lg shadow-xl hover:scale-[1.02] transition
             "
           >
@@ -561,7 +561,7 @@ if(val.length===6){
 
           <button
             onClick={submitBooking}
-            className="w-full bg-green-600 text-white py-2 rounded"
+            className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white py-2 rounded"
           >
             Pay Now
           </button>
@@ -578,7 +578,7 @@ if(val.length===6){
 function Modal({ children }:{ children:React.ReactNode }) {
   return (
     <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-xl w-full max-w-md">
+      <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-6 rounded-xl w-full max-w-md text-white">
         {children}
       </div>
     </div>
@@ -588,8 +588,11 @@ function Modal({ children }:{ children:React.ReactNode }) {
 function Input({ label, full, ...props }:any) {
   return (
     <div className={full ? "md:col-span-2" : ""}>
-      <label className="text-sm">{label}</label>
-      <input {...props} className="w-full p-2 border rounded" />
+      <label className="text-sm text-gray-300">{label}</label>
+      <input
+  {...props}
+  className="w-full p-2 rounded bg-white/10 border border-white/10 text-white placeholder:text-gray-400"
+/>
     </div>
   );
 }

@@ -108,19 +108,19 @@ console.log(err);
 accepted:{
 label:"Accepted",
 icon:<CheckCircle size={14}/>,
-pill:"bg-green-100 text-green-600"
+pill:"bg-emerald-500/20 text-emerald-300"
 },
 
 rejected:{
 label:"Rejected",
 icon:<XCircle size={14}/>,
-pill:"bg-red-100 text-red-600"
+pill:"bg-gray-500/20 text-gray-300"
 },
 
 pending:{
 label:"Pending",
 icon:<Clock size={14}/>,
-pill:"bg-yellow-100 text-yellow-600"
+pill:"bg-yellow-500/20 text-yellow-300"
 },
 
 cancelled:{
@@ -134,10 +134,10 @@ pill:"bg-gray-200 text-gray-600"
   /* ================= LOADING ================= */
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-slate-600 text-sm font-medium">Loading bookings...</p>
+          <p className="text-white text-sm font-medium">Loading bookings...</p>
         </div>
       </div>
     );
@@ -153,26 +153,26 @@ pill:"bg-gray-200 text-gray-600"
   const paginated   = bookings.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 p-4 sm:p-6 pb-24 md:pb-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white p-4 sm:p-6 pb-24 md:pb-8">
 
       {/* ═══════════ HEADER ═══════════ */}
       <div className="mb-5">
-        <p className="text-xs text-indigo-500 font-semibold uppercase tracking-wider">Overview</p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 mt-0.5 flex items-center gap-2">
-          <CalendarCheck size={24} className="text-indigo-600" /> My Bookings
+        <p className="text-xs text-emerald-300 font-semibold uppercase tracking-wider">Overview</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mt-0.5 flex items-center gap-2">
+          <CalendarCheck size={24} className="text-emerald-400" /> My Bookings
         </h1>
       </div>
 
       {/* ═══════════ STATS ROW ═══════════ */}
       <div className="grid grid-cols-3 gap-3 mb-6">
         {[
-          { label: "Total",    value: total,    color: "from-indigo-500 to-purple-500"  },
+          { label: "Total",    value: total,    color: "from-emerald-500 to-cyan-500"  },
           { label: "Accepted", value: accepted, color: "from-emerald-500 to-teal-500"   },
           { label: "Pending",  value: pending,  color: "from-amber-400 to-orange-400"   },
         ].map((s) => (
           <div
             key={s.label}
-            className="bg-white/80 backdrop-blur-md rounded-2xl p-3 sm:p-4 shadow-md text-center"
+            className="text-emerald-300 rounded-2xl p-3 sm:p-4 shadow-md text-center"
           >
             <p className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${s.color} bg-clip-text text-transparent`}>
               {s.value}
@@ -184,10 +184,10 @@ pill:"bg-gray-200 text-gray-600"
 
       {/* ═══════════ EMPTY ═══════════ */}
       {bookings.length === 0 && (
-        <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-12 text-center">
+        <div className="text-emerald-300 rounded-3xl shadow-xl p-12 text-center">
           <Car size={48} className="text-indigo-300 mx-auto mb-4" />
-          <p className="text-slate-600 font-semibold text-lg">No bookings yet</p>
-          <p className="text-slate-400 text-sm mt-1">Your booking history will appear here.</p>
+          <p className="text-white font-semibold text-lg">No bookings yet</p>
+          <p className="text-gray-400 text-sm mt-1">Your booking history will appear here.</p>
         </div>
       )}
 
@@ -200,7 +200,7 @@ pill:"bg-gray-200 text-gray-600"
           return (
             <div
               key={b._id}
-              className="bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-lg transition-shadow overflow-hidden"
+              className="text-emerald-300 rounded-2xl shadow-md hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-shadow overflow-hidden"
             >
               {/* top colour bar */}
               <div className={`h-1 w-full ${
@@ -214,13 +214,13 @@ pill:"bg-gray-200 text-gray-600"
                 {/* row 1 — name + status */}
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
                       <Car size={16} className="text-white" />
                     </div>
                     <div className="min-w-0">
-                      <h2 className="font-bold text-slate-800 text-sm sm:text-base truncate">{b.name}</h2>
+                      <h2 className="font-bold text-white text-sm sm:text-base truncate">{b.name}</h2>
                       {b.paymentIntentId && (
-                        <p className="text-[10px] text-slate-400 truncate">ID: {b.paymentIntentId}</p>
+                        <p className="text-[10px] text-gray-400 truncate">ID: {b.paymentIntentId}</p>
                       )}
                       {b.bookingStatus==="cancelled" && b.cancelReason && (
 
@@ -257,8 +257,8 @@ Auto cancelled by system
                   <Detail label="Days"   value={`${b.days} days`} />
 
                   <div className="col-span-2 sm:col-span-1">
-                    <p className="text-[10px] text-slate-400 uppercase tracking-wide">Amount</p>
-                    <p className="text-sm font-bold text-indigo-600 flex items-center gap-0.5 mt-0.5">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-wide">Amount</p>
+                    <p className="text-sm font-bold text-emerald-400 flex items-center gap-0.5 mt-0.5">
                       <IndianRupee size={13} />{b.amount}
                     </p>
                   </div>
@@ -275,7 +275,7 @@ b.tripStatus === "upcoming" && (
 
 <button
 onClick={() => downloadInvoice(b._id)}
-className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md shadow-indigo-200 hover:shadow-indigo-300 transition"
+className="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md bg-white/80 backdrop-blur-md transition"
 >
 
 <Download size={15}/> Download Invoice
@@ -325,7 +325,7 @@ Cancel Booking
           <button
             onClick={() => setPage((p) => p - 1)}
             disabled={page === 1}
-            className="px-3 py-1.5 rounded-xl text-sm font-semibold bg-white/80 backdrop-blur-md shadow text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition"
+            className="px-3 py-1.5 rounded-xl text-sm font-semibold text-emerald-300 shadow text-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/20 transition"
           >
             ← Prev
           </button>
@@ -337,8 +337,8 @@ Cancel Booking
               onClick={() => setPage(i + 1)}
               className={`w-9 h-9 rounded-xl text-sm font-bold shadow transition ${
                 page === i + 1
-                  ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-indigo-200"
-                  : "bg-white/80 backdrop-blur-md text-slate-600 hover:bg-white"
+                  ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-indigo-200"
+                  : "text-emerald-300 text-white hover:bg-white/20"
               }`}
             >
               {i + 1}
@@ -349,7 +349,7 @@ Cancel Booking
           <button
             onClick={() => setPage((p) => p + 1)}
             disabled={page === totalPages}
-            className="px-3 py-1.5 rounded-xl text-sm font-semibold bg-white/80 backdrop-blur-md shadow text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white transition"
+            className="px-3 py-1.5 rounded-xl text-sm font-semibold text-emerald-300 shadow text-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/20 transition"
           >
             Next →
           </button>
@@ -363,7 +363,7 @@ Cancel Booking
 
 <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
 
-<div className="bg-white p-6 rounded-xl w-[350px]">
+<div className="bg-white/10 backdrop-blur-xl border border-white/10 p-6 rounded-xl text-white w-[350px]">
 
 <h3 className="font-bold mb-3">
 
@@ -379,7 +379,7 @@ value={cancelReason}
 
 onChange={(e)=>setCancelReason(e.target.value)}
 
-className="w-full border rounded p-2 mb-4"
+className="w-full bg-white/10 border border-white/10 rounded p-2 mb-4 text-white placeholder:text-gray-400"
 
 />
 
@@ -401,7 +401,7 @@ Submit
 
 onClick={()=>setShowCancelModal(false)}
 
-className="flex-1 bg-gray-300 py-2 rounded"
+className="flex-1 bg-white/10 border border-white/10 text-white py-2 rounded"
 
 >
 
@@ -424,7 +424,7 @@ Close
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-[10px] text-slate-400 uppercase tracking-wide">{label}</p>
+      <p className="text-[10px] text-gray-400 uppercase tracking-wide">{label}</p>
       <p className="text-sm font-medium text-slate-700 mt-0.5">{value}</p>
     </div>
   );

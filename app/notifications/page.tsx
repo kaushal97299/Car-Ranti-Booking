@@ -43,7 +43,7 @@ export default function NotificationBell() {
     fetchNotifications();
   }, []);
 
-  const markAsRead = async (id:string) => {
+  const markAsRead = async (id: string) => {
 
     const token =
       typeof window !== "undefined"
@@ -69,42 +69,63 @@ export default function NotificationBell() {
 
       <button
         onClick={() => setOpen(!open)}
-        className="text-xl relative"
+        className="text-xl relative text-white hover:text-emerald-300 transition"
       >
         🔔
+
         {notifications.length > 0 && (
-          <span className="absolute -top-2 -right-2 text-xs bg-red-600 text-white px-2 rounded-full">
+          <span className="absolute -top-2 -right-2 text-xs bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-2 rounded-full">
             {notifications.length}
           </span>
         )}
+
       </button>
 
-      {open && notifications.length > 0 && (
+      {open && (
 
-        <div className="absolute right-0 mt-2 w-72 bg-white shadow rounded p-3 z-50">
+        <div className="absolute right-0 mt-2 w-80 bg-white/10 backdrop-blur-xl border border-white/10 shadow-xl rounded-xl p-3 z-50">
 
-          {notifications.map(n => (
+          {notifications.length === 0 ? (
 
-            <div key={n._id} className="border-b py-2 text-sm">
+            <p className="text-gray-400 text-sm text-center py-2">
+              No new notifications
+            </p>
 
-              <p className="font-semibold">{n.title}</p>
-              <p className="text-gray-600">{n.message}</p>
+          ) : (
 
-              <button
-                onClick={() => markAsRead(n._id)}
-                className="block text-blue-600 text-xs mt-1"
+            notifications.map(n => (
+
+              <div
+                key={n._id}
+                className="border-b border-white/10 py-2 text-sm"
               >
-                Mark as read
-              </button>
 
-            </div>
+                <p className="font-semibold text-white">
+                  {n.title}
+                </p>
 
-          ))}
+                <p className="text-gray-400">
+                  {n.message}
+                </p>
+
+                <button
+                  onClick={() => markAsRead(n._id)}
+                  className="block text-emerald-300 hover:text-cyan-300 text-xs mt-1 transition"
+                >
+                  Mark as read
+                </button>
+
+              </div>
+
+            ))
+
+          )}
 
         </div>
 
       )}
 
     </div>
+
   );
 }

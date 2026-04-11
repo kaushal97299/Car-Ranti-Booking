@@ -50,9 +50,9 @@ export default function SupportMessagesPage() {
 
     return(
 
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
 
-        <div className="text-lg font-semibold text-gray-700">
+        <div className="text-lg font-semibold text-gray-300">
           Loading your messages...
         </div>
 
@@ -65,7 +65,7 @@ export default function SupportMessagesPage() {
 
   return(
 
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 py-12 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white py-12 px-6">
 
       <div className="max-w-5xl mx-auto">
 
@@ -75,15 +75,15 @@ export default function SupportMessagesPage() {
 
           <div className="flex items-center gap-3">
 
-            <div className="bg-indigo-600 p-3 rounded-xl text-white shadow-lg">
+            <div className="bg-gradient-to-r from-emerald-500 to-cyan-500 p-3 rounded-xl text-white shadow-lg">
               <MessageCircle size={22}/>
             </div>
 
             <div>
-              <h1 className="text-3xl font-bold text-slate-800">
+              <h1 className="text-3xl font-bold text-white">
                 Support Messages
               </h1>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-400">
                 View your conversation with support team
               </p>
             </div>
@@ -92,7 +92,7 @@ export default function SupportMessagesPage() {
 
           <Link
             href="/contact"
-            className="flex items-center gap-2 text-indigo-600 font-medium hover:underline"
+            className="flex items-center gap-2 text-emerald-300 font-medium hover:underline"
           >
             <ArrowLeft size={18}/> Back
           </Link>
@@ -105,15 +105,15 @@ export default function SupportMessagesPage() {
 
         {messages.length===0 && (
 
-          <div className="bg-white/70 backdrop-blur border border-white/40 rounded-2xl shadow-xl p-10 text-center">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl p-10 text-center">
 
-            <MessageCircle size={40} className="mx-auto text-indigo-500 mb-4"/>
+            <MessageCircle size={40} className="mx-auto text-emerald-300 mb-4"/>
 
-            <h3 className="text-xl font-semibold text-slate-800">
+            <h3 className="text-xl font-semibold text-white">
               No Messages Yet
             </h3>
 
-            <p className="text-slate-500 mt-2">
+            <p className="text-slate-400 mt-2">
               You haven contacted support yet.
             </p>
 
@@ -131,7 +131,7 @@ export default function SupportMessagesPage() {
 
             <div
               key={msg._id}
-              className="bg-white/70 backdrop-blur border border-white/40 rounded-2xl shadow-lg p-6 hover:shadow-xl transition"
+              className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg p-6 hover:shadow-xl transition"
             >
 
               {/* TOP */}
@@ -140,11 +140,11 @@ export default function SupportMessagesPage() {
 
                 <div>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-400">
                     {new Date(msg.createdAt).toLocaleDateString()}
                   </p>
 
-                  <p className="text-xs text-indigo-600 font-medium mt-1">
+                  <p className="text-xs text-emerald-300 font-medium mt-1">
                     Category: {msg.category}
                   </p>
 
@@ -153,10 +153,10 @@ export default function SupportMessagesPage() {
                 <span
                   className={`px-3 py-1 rounded-full text-xs font-semibold ${
                     msg.status === "closed"
-                      ? "bg-green-100 text-green-700"
+                      ? "bg-emerald-500/20 text-emerald-300"
                       : msg.status === "pending"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-indigo-100 text-indigo-700"
+                      ? "bg-yellow-500/20 text-yellow-300"
+                      : "bg-cyan-500/20 text-cyan-300"
                   }`}
                 >
                   {msg.status}
@@ -168,7 +168,7 @@ export default function SupportMessagesPage() {
 
               {/* MESSAGE */}
 
-              <p className="mt-4 text-slate-700 leading-relaxed">
+              <p className="mt-4 text-gray-300 leading-relaxed">
                 {msg.message}
               </p>
 
@@ -185,7 +185,7 @@ export default function SupportMessagesPage() {
         : `${process.env.NEXT_PUBLIC_API_URL}/uploads/contact/${msg.attachment}`
     }
     target="_blank"
-    className="inline-flex items-center gap-2 mt-3 text-sm text-indigo-600 hover:underline"
+    className="inline-flex items-center gap-2 mt-3 text-sm text-emerald-300 hover:underline"
   >
     <Paperclip size={16}/>
     View Attachment
@@ -199,13 +199,13 @@ export default function SupportMessagesPage() {
 
               {msg.adminReply && (
 
-                <div className="mt-5 bg-indigo-50 border border-indigo-100 p-4 rounded-xl">
+                <div className="mt-5 bg-white/10 border border-white/10 p-4 rounded-xl">
 
-                  <p className="text-sm font-semibold text-indigo-700 mb-1">
+                  <p className="text-sm font-semibold text-emerald-300 mb-1">
                     Support Reply
                   </p>
 
-                  <p className="text-sm text-slate-700">
+                  <p className="text-sm text-gray-300">
                     {msg.adminReply}
                   </p>
 

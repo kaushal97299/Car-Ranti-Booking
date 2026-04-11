@@ -180,7 +180,7 @@ export default function CarDetailPage() {
   /* ================= LOADING ================= */
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-xl bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100">
+      <div className="min-h-screen flex items-center justify-center text-xl bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
         Loading car...
       </div>
     );
@@ -191,15 +191,13 @@ export default function CarDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white p-6">
 
       {/* ✅ SINGLE MAIN CONTAINER */}
       <div
         className="
         max-w-6xl mx-auto
-        bg-gradient-to-br from-indigo-100/70 via-purple-100/70 to-fuchsia-100/70
-        backdrop-blur-xl
-        border border-white/40
+      bg-white/10 backdrop-blur-xl border border-white/10
         rounded-2xl shadow-xl
         p-6 md:p-10
       "
@@ -222,11 +220,11 @@ export default function CarDetailPage() {
           {/* DETAILS */}
           <div>
 
-            <h1 className="text-4xl font-bold text-indigo-900">
+            <h1 className="text-4xl font-bold text-white">
               {car.name}
             </h1>
 
-            <p className="text-purple-700 mt-1">
+            <p className="text-gray-400 mt-1">
               {car.brand} • {car.model}
             </p>
 
@@ -237,17 +235,17 @@ export default function CarDetailPage() {
                 Math.round(Number(car.rating) || 0)
               )}
 
-              <span className="text-sm font-semibold text-indigo-800">
+              <span className="text-sm font-semibold text-emerald-300">
                 {Number(car.rating || 0).toFixed(1)}
               </span>
 
-              <span className="text-purple-700 text-sm">
+              <span className="text-gray-400 text-sm">
                 ({reviews.length} reviews)
               </span>
 
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-indigo-900">
+            <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-white">
 
               <p><b>Fuel:</b> {car.fuel}</p>
               <p><b>Gear:</b> {car.gear}</p>
@@ -264,7 +262,7 @@ export default function CarDetailPage() {
 
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="mt-4 md:hidden text-purple-700 underline"
+              className="mt-4 md:hidden text-gray-400 underline"
             >
               {showDetails ? "Hide details" : "See all details"}
             </button>
@@ -275,16 +273,16 @@ export default function CarDetailPage() {
         {/* ================= ABOUT + FEATURES ================= */}
         <div className={`mt-10 ${showDetails ? "block" : "hidden"} md:block`}>
 
-          <h2 className="text-2xl font-bold mb-3 text-indigo-900">
+          <h2 className="text-2xl font-bold mb-3 text-white">
             About this car
           </h2>
 
-          <p className="text-purple-900 leading-relaxed mb-6">
+          <p className="text-gray-300 leading-relaxed mb-6">
             {car.about ||
               `${car.name} is a premium and comfortable car.`}
           </p>
 
-          <h3 className="text-lg font-semibold mb-3 text-indigo-900">
+          <h3 className="text-lg font-semibold mb-3 text-white">
             Key Features
           </h3>
 
@@ -306,8 +304,8 @@ export default function CarDetailPage() {
 
               <div
                 key={f}
-                className="bg-gradient-to-r from-indigo-100 to-purple-100
-                text-indigo-800 px-4 py-2 rounded-xl text-sm font-medium shadow"
+                className="bg-white/10 border border-white/10 text-gray-300
+                text-emerald-300 px-4 py-2 rounded-xl text-sm font-medium shadow"
               >
                 ✔ {f}
               </div>
@@ -320,12 +318,12 @@ export default function CarDetailPage() {
         {/* ================= REVIEWS ================= */}
         <div className="mt-12">
 
-          <h2 className="text-2xl font-bold mb-4 text-indigo-900">
+          <h2 className="text-2xl font-bold mb-4 text-white">
             Customer Reviews
           </h2>
 
           {/* ADD REVIEW */}
-          <div className="bg-white/50 backdrop-blur p-4 rounded-xl mb-6 border border-white/40">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-4 rounded-xl mb-6 ">
 
             <h3 className="font-semibold mb-2 text-purple-800">
               Write Review
@@ -352,14 +350,14 @@ export default function CarDetailPage() {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Write your review..."
-              className="w-full bg-white/60 border border-white/40 rounded p-2 mb-2"
+              className="w-full bg-white/10 border border-white/10 text-white placeholder:text-gray-400 rounded p-2 mb-2"
               rows={3}
             />
 
             <button
               onClick={submitReview}
               disabled={reviewLoading}
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded shadow"
+              className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-2 rounded shadow"
             >
               {reviewLoading ? "Posting..." : "Submit Review"}
             </button>
@@ -370,7 +368,7 @@ export default function CarDetailPage() {
           <div className="space-y-4">
 
             {reviews.length === 0 && (
-              <p className="text-purple-700">
+              <p className="text-gray-400">
                 No reviews yet
               </p>
             )}
@@ -379,12 +377,12 @@ export default function CarDetailPage() {
 
               <div
                 key={r._id}
-                className="border rounded-xl p-4 bg-white/60 backdrop-blur shadow-sm"
+                className="border rounded-xl p-4 bg-white/10 backdrop-blur-xl border border-white/10 shadow-sm"
               >
 
                 <div className="flex justify-between mb-1">
 
-                  <b className="text-indigo-900">
+                  <b className="text-white">
                     {r.user?.name || "User"}
                   </b>
 
@@ -394,11 +392,11 @@ export default function CarDetailPage() {
 
                 </div>
 
-                <p className="text-purple-900 text-sm">
+                <p className="text-gray-300 text-sm">
                   {r.comment}
                 </p>
 
-                <p className="text-xs text-indigo-500 mt-1">
+                <p className="text-xs text-gray-500 mt-1">
                   {new Date(r.createdAt).toLocaleDateString()}
                 </p>
 
@@ -420,7 +418,7 @@ export default function CarDetailPage() {
             ${
               added
                 ? "bg-green-600 text-white cursor-not-allowed"
-                : "bg-gradient-to-r from-indigo-700 to-purple-700 text-white"
+                : "bg-gradient-to-r from-emerald-500 to-cyan-500 text-white"
             }`}
           >
             {added ? "Added to Cart ✓" : "Add to Cart"}
@@ -428,7 +426,7 @@ export default function CarDetailPage() {
 
           <button
             onClick={() => router.push(`/dashboard/${car._id}/book`)}
-            className="bg-gradient-to-r from-purple-700 to-fuchsia-700
+            className="bg-gradient-to-r from-emerald-600 to-cyan-500
             text-white px-10 py-3 rounded-2xl font-semibold shadow-lg w-full md:w-auto"
           >
             Book this car

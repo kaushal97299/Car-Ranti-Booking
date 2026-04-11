@@ -204,21 +204,21 @@ export default function CarsPage() {
   );
 
   return (
-    <div className="min-h-screen p-4 md:p-6 bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200">
+    <div className="min-h-screen p-4 md:p-6 bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
 
       {/* ================= SEARCH ================= */}
       <input
         placeholder="Search car, brand or model..."
-        className="w-full mb-4 p-3 rounded-xl bg-white/80 backdrop-blur shadow"
+        className="w-full mb-4 p-3 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 text-white placeholder:text-gray-400"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
       {/* ================= FILTER BAR ================= */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl p-4 rounded-2xl shadow-lg flex flex-wrap gap-3 mb-6">
+      <div className="sticky top-0 z-30 bg-white/10 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-lg flex flex-wrap gap-3 mb-6">
 
         <select
-          className="p-2 rounded-lg border"
+          className="p-2 rounded-lg bg-white/10 border border-white/10 text-white"
           value={gear}
           onChange={(e) => setGear(e.target.value)}
         >
@@ -228,7 +228,7 @@ export default function CarsPage() {
         </select>
 
         <select
-          className="p-2 rounded-lg border"
+          className="p-2 rounded-lg bg-white/10 border border-white/10 text-white"
           value={fuel}
           onChange={(e) => setFuel(e.target.value)}
         >
@@ -238,7 +238,7 @@ export default function CarsPage() {
         </select>
 
         <select
-          className="p-2 rounded-lg border"
+          className="p-2 rounded-lg bg-white/10 border border-white/10 text-white"
           value={brand}
           onChange={(e) => {
             setBrand(e.target.value);
@@ -255,7 +255,7 @@ export default function CarsPage() {
         </select>
 
         <select
-          className="p-2 rounded-lg border"
+          className="p-2 rounded-lg bg-white/10 border border-white/10 text-white"
           value={model}
           onChange={(e) => setModel(e.target.value)}
           disabled={!brand}
@@ -270,7 +270,7 @@ export default function CarsPage() {
         <input
           type="number"
           placeholder="Min ₹"
-          className="p-2 w-24 rounded-lg border"
+          className="p-2 w-24 rounded-lg bg-white/10 border border-white/10 text-white"
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
         />
@@ -278,7 +278,7 @@ export default function CarsPage() {
         <input
           type="number"
           placeholder="Max ₹"
-          className="p-2 w-24 rounded-lg border"
+          className="p-2 w-24 rounded-lg bg-white/10 border border-white/10 text-white"
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
         />
@@ -292,9 +292,9 @@ export default function CarsPage() {
           <div
             key={car._id}
             className="
-              bg-white/80 backdrop-blur rounded-2xl shadow
+              bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow
               transition-all duration-300
-              hover:bg-white
+              hover:bg-white/10
               hover:shadow-xl
               border border-white/60
             "
@@ -313,7 +313,7 @@ export default function CarsPage() {
               {/* ❤️ Wishlist */}
               <button
                 onClick={() => toggleWishlist(car._id)}
-                className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow"
+                className="absolute top-2 right-2 bg-white/20 backdrop-blur rounded-full p-1 shadow"
               >
                 {wishlist.some(w => w.carId === car._id)
                   ? "❤️"
@@ -324,9 +324,9 @@ export default function CarsPage() {
 
             <div className="p-4">
 
-              <h3 className="font-semibold">{car.name}</h3>
+              <h3 className="font-semibold text-white">{car.name}</h3>
 
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-400">
                 {car.brand} • {car.model}
               </p>
 
@@ -336,7 +336,7 @@ export default function CarsPage() {
 
               <div className="flex justify-between items-center mt-3">
 
-                <span className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="text-lg font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
                   ₹{car.price}/day
                 </span>
 
@@ -344,7 +344,7 @@ export default function CarsPage() {
                   onClick={() =>
                     router.push(`/dashboard/${car._id}`)
                   }
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-1.5 rounded-lg text-sm shadow"
+                  className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-1.5 rounded-lg text-sm shadow"
                 >
                   Book
                 </button>
@@ -370,8 +370,8 @@ export default function CarsPage() {
                 onClick={() => setCurrentPage(i + 1)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
                   currentPage === i + 1
-                    ? "bg-indigo-600 text-white shadow"
-                    : "bg-white/80 hover:bg-white shadow"
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow"
+                    : "bg-white/10 hover:bg-white/20 border border-white/10/10 shadow"
                 }`}
               >
                 {i + 1}

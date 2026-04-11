@@ -87,7 +87,7 @@ export default function CartPage() {
   /* ================= LOADING ================= */
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-lg">
+      <div className="min-h-screen flex items-center justify-center text-lg bg-[#020b0a] text-white">
         Loading cart...
       </div>
     );
@@ -97,7 +97,7 @@ export default function CartPage() {
   /* ================= EMPTY CART ================= */
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#020b0a] text-white">
         <p className="text-lg mb-4">Your cart is empty</p>
 
         <button
@@ -112,17 +112,17 @@ export default function CartPage() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white p-6">
 
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow p-6">
+      <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow p-6">
 
-        <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
+        <h1 className="text-2xl font-bold mb-6 text-white">Your Cart</h1>
 
         {cart.map((item) => (
 
           <div
             key={item._id}
-            className="flex items-center justify-between border-b py-4"
+            className="flex items-center justify-between border-b border-white/10 py-4"
           >
 
             <div className="flex items-center gap-4">
@@ -135,7 +135,7 @@ export default function CartPage() {
               <div>
                 <p className="font-semibold">{item.car.name}</p>
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-400">
                   ₹{item.car.price}/day
                 </p>
               </div>
@@ -149,7 +149,7 @@ export default function CartPage() {
                 onClick={() =>
                   router.push(`/dashboard/${item.car._id}/book`)
                 }
-                className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm"
+                className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-2 rounded-lg text-sm shadow-lg shadow-emerald-500/20"
               >
                 Book
               </button>
@@ -157,7 +157,7 @@ export default function CartPage() {
               {/* REMOVE */}
               <button
                 onClick={() => removeItem(item._id)}
-                className="text-red-600 text-sm"
+                className="text-red-400 hover:text-red-300 text-sm transition"
               >
                 Remove
               </button>

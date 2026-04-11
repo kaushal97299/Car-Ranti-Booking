@@ -13,7 +13,7 @@
 
 .animate-gradient {
   background-size: 200% auto;
-  animation: gradient 3s linear infinite;
+  animation: gradient 6s linear infinite;
 }
 
 /* Smooth scroll behavior */
@@ -32,10 +32,14 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.5);
+  background: rgba(16, 185, 129, 0.5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.8);
+  background: rgba(16, 185, 129, 0.8);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16,185,129,0.6) rgba(255,255,255,0.06);
 }

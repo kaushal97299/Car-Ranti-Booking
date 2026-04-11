@@ -156,16 +156,16 @@ export default function MyProfile() {
   const avatarSrc = preview || user.avatar || "/avatar.png";
 
   /* ── shared field classes ── */
-  const fieldBase =
-    "w-full bg-white/60 border border-indigo-100 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:opacity-60 disabled:cursor-not-allowed";
+ const fieldBase =
+"w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-400 backdrop-blur outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:opacity-60 disabled:cursor-not-allowed";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 p-4 sm:p-6 pb-24 md:pb-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white p-4 sm:p-6 pb-24 md:pb-8">
 
       <div className="max-w-4xl mx-auto space-y-5">
 
         {/* ═══════════ PROFILE CARD ═══════════ */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl overflow-hidden">
 
           {/* banner */}
           <div className="h-24 bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500" />
@@ -184,7 +184,7 @@ export default function MyProfile() {
                   className="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-lg"
                 />
                 {editing && (
-                  <label className="absolute -bottom-1 -right-1 bg-indigo-600 hover:bg-indigo-700 p-1.5 rounded-xl cursor-pointer text-white shadow transition">
+                  <label className="absolute -bottom-1 -right-1 bg-emerald-500 hover:bg-emerald-600 p-1.5 rounded-xl cursor-pointer text-white shadow transition">
                     <Camera size={14} />
                     <input type="file" hidden accept="image/*" onChange={handleImage} />
                   </label>
@@ -193,8 +193,8 @@ export default function MyProfile() {
 
               {/* name + email */}
               <div className="flex-1 sm:pb-1">
-                <h1 className="text-xl font-bold text-slate-800">{user.name}</h1>
-                <p className="text-sm text-slate-500 flex items-center gap-1.5 mt-0.5">
+                <h1 className="text-xl font-bold text-white">{user.name}</h1>
+                <p className="text-sm text-gray-400 flex items-center gap-1.5 mt-0.5">
                   <Mail size={13} /> {user.email}
                 </p>
               </div>
@@ -205,7 +205,7 @@ export default function MyProfile() {
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shadow transition sm:self-end ${
                   editing
                     ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-emerald-200"
-                    : "bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-indigo-200"
+                    : "bg-gradient-to-r from-emerald-500 to-cyan-500 text-white hover:shadow-indigo-200"
                 }`}
               >
                 {editing ? <Save size={15} /> : <Edit size={15} />}
@@ -218,9 +218,9 @@ export default function MyProfile() {
         </div>
 
         {/* ═══════════ PERSONAL INFO ═══════════ */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-5 sm:p-7">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl p-5 sm:p-7">
 
-          <h2 className="text-sm font-bold text-indigo-600 uppercase tracking-wider mb-5 flex items-center gap-2">
+          <h2 className="text-sm font-bold bg-emerald-500/20 text-emerald-300 uppercase tracking-wider mb-5 flex items-center gap-2">
             <User size={14} /> Personal Information
           </h2>
 
@@ -303,9 +303,9 @@ export default function MyProfile() {
         </div>
 
         {/* ═══════════ ADDRESS INFO ═══════════ */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-5 sm:p-7">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl p-5 sm:p-7">
 
-          <h2 className="text-sm font-bold text-indigo-600 uppercase tracking-wider mb-5 flex items-center gap-2">
+          <h2 className="text-sm font-bold bg-emerald-500/20 text-emerald-300 uppercase tracking-wider mb-5 flex items-center gap-2">
             <MapPin size={14} /> Address Information
           </h2>
 
@@ -332,7 +332,7 @@ export default function MyProfile() {
                 className={fieldBase} placeholder="6-digit pincode"
               />
               {loadingPin && (
-                <p className="text-xs text-indigo-500 mt-1">Fetching location...</p>
+                <p className="text-xs bg-emerald-500/20 text-emerald-300 mt-1">Fetching location...</p>
               )}
             </Field>
 
@@ -384,9 +384,9 @@ export default function MyProfile() {
         </div>
 
         {/* ═══════════ KYC STATUS ═══════════ */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-5 sm:p-7">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl p-5 sm:p-7">
 
-          <h2 className="text-sm font-bold text-indigo-600 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <h2 className="text-sm font-bold bg-emerald-500/20 text-emerald-300 uppercase tracking-wider mb-4 flex items-center gap-2">
             <ShieldCheck size={14} /> KYC Status
           </h2>
 
@@ -400,7 +400,7 @@ export default function MyProfile() {
             }`}>
               {(user.kycStatus || "pending").toUpperCase()}
             </span>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-gray-400">
               {user.kycStatus === "verified"
                 ? "Your identity has been verified."
                 : user.kycStatus === "rejected"
@@ -415,7 +415,7 @@ export default function MyProfile() {
         {editing && (
           <button
             onClick={handleSave}
-            className="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:shadow-indigo-300 transition text-sm"
+            className="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:shadow-indigo-300 transition text-sm"
           >
             <Save size={15} className="inline mr-2" />
             Save All Changes
@@ -436,7 +436,7 @@ function Field({ label, icon, locked, children }: {
 }) {
   return (
     <div>
-      <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+      <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
         {icon}
         {label}
         {locked && <Lock size={11} className="text-slate-400 ml-auto" />}

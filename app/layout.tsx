@@ -46,14 +46,14 @@ export default function RootLayout({
   if (checking) {
     return (
       <html lang="en">
-        <body className="bg-gray-50"></body>
+        <body className="bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white overflow-x-hidden"></body>
       </html>
     );
   }
 
   return (
     <html lang="en">
-      <body className="bg-gray-50">
+      <body className="bg-[#020b0a]">
 
         <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
 

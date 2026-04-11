@@ -114,7 +114,7 @@ export default function HomePage() {
 
   /* ── stat cards ── */
   const stats = [
-    { label: "Total Cars",   value: allCars.length,  icon: <Car          size={18}/>, color: "from-indigo-500 to-purple-500", path: "/dashboard"  },
+    { label: "Total Cars",   value: allCars.length,  icon: <Car          size={18}/>, color: "from-emerald-500 to-cyan-500", path: "/dashboard"  },
     { label: "My Bookings",  value: totalBookings,   icon: <CalendarCheck size={18}/>, color: "from-purple-500 to-fuchsia-500", path: "/my-booking" },
     { label: "Wishlist",     value: wishlistCount,   icon: <Heart        size={18}/>, color: "from-pink-500 to-rose-500",    path: "/wishlist"   },
   ];
@@ -127,7 +127,7 @@ export default function HomePage() {
         <div
           key={car._id}
           onClick={() => router.push(`/dashboard/${car._id}`)}
-          className="bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group"
+          className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group"
         >
           <div className="relative">
             <img
@@ -147,18 +147,18 @@ export default function HomePage() {
             </button>
           </div>
           <div className="p-3">
-            <p className="font-semibold text-sm text-slate-800 truncate">{car.name}</p>
-            <p className="text-[11px] text-slate-500 mt-0.5">{car.brand} · {car.model}</p>
+            <p className="font-semibold text-sm text-white truncate">{car.name}</p>
+            <p className="text-[11px] text-gray-400 mt-0.5">{car.brand} · {car.model}</p>
             <div className="flex items-center gap-1 mt-1.5">
               <Star size={11} className="text-amber-400 fill-amber-400" />
               <span className="text-[11px] text-slate-600 font-medium">{car.rating || "4.5"}</span>
               <span className="text-[10px] text-slate-400">({car.reviews || 0})</span>
             </div>
             <div className="flex items-center justify-between mt-2">
-              <p className="text-sm font-bold text-indigo-600">₹{car.price}<span className="text-[10px] font-normal text-slate-400">/day</span></p>
+              <p className="text-sm font-bold text-emerald-300">₹{car.price}<span className="text-[10px] font-normal text-slate-400">/day</span></p>
               <button
                 onClick={(e) => { e.stopPropagation(); router.push(`/dashboard/${car._id}`); }}
-                className="text-[11px] bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-2.5 py-1 rounded-lg font-medium"
+                className="text-[11px] bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-2.5 py-1 rounded-lg font-medium"
               >
                 Book
               </button>
@@ -170,19 +170,19 @@ export default function HomePage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 pb-24 md:pb-10">
+   <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
 
       {/* ═══════════════ HEADER ═══════════════ */}
       <div className="px-4 sm:px-6 pt-5 pb-3 flex justify-between items-center">
         <div>
-          <p className="text-xs text-indigo-500 font-medium uppercase tracking-wider">Dashboard</p>
-          <h1 className="text-xl sm:text-2xl font-bold text-slate-800 mt-0.5">
+          <p className="text-xs text-emerald-300 font-medium uppercase tracking-wider">Dashboard</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-white mt-0.5">
             Hey, {user?.name?.split(" ")[0] || "there"} 👋
           </h1>
         </div>
         <button
           onClick={() => router.push("/dashboard")}
-          className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg shadow-indigo-200 hover:shadow-indigo-300 transition"
+          className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition"
         >
           Browse Cars
         </button>
@@ -194,14 +194,14 @@ export default function HomePage() {
           <button
             key={s.label}
             onClick={() => router.push(s.path)}
-            className="bg-white/80 backdrop-blur-md rounded-2xl p-3 sm:p-4 shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-2 hover:shadow-lg transition text-left"
+            className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-3 sm:p-4 shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-2 hover:shadow-lg transition text-left"
           >
             <div className={`p-2 rounded-xl bg-gradient-to-br ${s.color} text-white flex-shrink-0`}>
               {s.icon}
             </div>
             <div className="text-center sm:text-left">
-              <p className="text-[10px] sm:text-xs text-slate-500">{s.label}</p>
-              <p className="text-lg font-bold text-slate-800">{s.value || "—"}</p>
+              <p className="text-[10px] sm:text-xs text-gray-400">{s.label}</p>
+              <p className="text-lg font-bold text-white">{s.value || "—"}</p>
             </div>
           </button>
         ))}
@@ -234,7 +234,7 @@ export default function HomePage() {
                       <p className="text-white font-bold text-base">₹{car.price}<span className="text-xs font-normal">/day</span></p>
                       <button
                         onClick={() => router.push(`/dashboard/${car._id}`)}
-                        className="mt-1.5 bg-white text-slate-900 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-indigo-50 transition"
+                        className="mt-1.5 bg-white/90 text-[#020b0a] px-3 py-1.5 rounded-full text-xs font-bold hover:bg-indigo-50 transition"
                       >
                         Book Now
                       </button>
@@ -276,10 +276,10 @@ export default function HomePage() {
       {topRated.length > 0 && (
         <div className="px-4 sm:px-6 mt-7">
           <div className="flex justify-between items-center mb-3">
-            <h2 className="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base">
+            <h2 className="font-bold text-white flex items-center gap-2 text-sm sm:text-base">
               <Star size={15} className="text-amber-500 fill-amber-500" /> Top Rated
             </h2>
-            <button onClick={() => router.push("/dashboard")} className="text-xs text-indigo-600 font-semibold hover:underline">
+            <button onClick={() => router.push("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
               See all →
             </button>
           </div>
@@ -292,10 +292,10 @@ export default function HomePage() {
       {trendingCars.length > 0 && (
         <div className="px-4 sm:px-6 mt-7">
           <div className="flex justify-between items-center mb-3">
-            <h2 className="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base">
+            <h2 className="font-bold text-white flex items-center gap-2 text-sm sm:text-base">
               <Flame size={15} className="text-orange-500" /> Trending
             </h2>
-            <button onClick={() => router.push("/dashboard")} className="text-xs text-indigo-600 font-semibold hover:underline">
+            <button onClick={() => router.push("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
               See all →
             </button>
           </div>
@@ -307,10 +307,10 @@ export default function HomePage() {
       {luxuryCars.length > 0 && (
         <div className="px-4 sm:px-6 mt-7">
           <div className="flex justify-between items-center mb-3">
-            <h2 className="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base">
+            <h2 className="font-bold text-white flex items-center gap-2 text-sm sm:text-base">
               <Crown size={15} className="text-purple-600" /> Luxury Picks
             </h2>
-            <button onClick={() => router.push("/dashboard")} className="text-xs text-indigo-600 font-semibold hover:underline">
+            <button onClick={() => router.push("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
               See all →
             </button>
           </div>
@@ -320,8 +320,8 @@ export default function HomePage() {
 
       {/* ═══════════════ QUICK ACTIONS ═══════════════ */}
       <div className="px-4 sm:px-6 mt-8">
-        <h2 className="font-bold text-slate-700 mb-3 text-sm sm:text-base flex items-center gap-2">
-          <TrendingUp size={15} className="text-indigo-500" /> Quick Actions
+        <h2 className="font-bold text-white mb-3 text-sm sm:text-base flex items-center gap-2">
+          <TrendingUp size={15} className="text-emerald-300" /> Quick Actions
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[

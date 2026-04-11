@@ -351,7 +351,7 @@ export default function TermsPage() {
       />
       
       {/* Gradient Overlay - Your specified colors */}
-      <div className="fixed inset-0 bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 opacity-70 -z-5" />
+      <div className="fixed inset-0 bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] opacity-70 -z-5" />
       
       {/* Hero Section */}
       <motion.div
@@ -364,7 +364,7 @@ export default function TermsPage() {
           transition={{ duration: 0.5 }}
           className="inline-block mb-4"
         >
-          <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium shadow-md">
+          <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white text-sm font-medium shadow-md">
             <Car size={14} className="inline mr-1.5" />
             Legal Agreement
           </span>
@@ -374,7 +374,7 @@ export default function TermsPage() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-indigo-800 via-purple-800 to-fuchsia-800 bg-clip-text text-transparent"
+          className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent"
         >
           Terms & Conditions
         </motion.h1>
@@ -383,7 +383,7 @@ export default function TermsPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-700 text-base mt-3 max-w-2xl mx-auto"
+          className="text-gray-300 text-base mt-3 max-w-2xl mx-auto"
         >
           Your guide to safe and secure car rentals — read carefully before booking
         </motion.p>
@@ -394,12 +394,12 @@ export default function TermsPage() {
           transition={{ delay: 0.3 }}
           className="flex justify-center gap-3 mt-5 text-sm text-gray-500 flex-wrap"
         >
-          <div className="flex items-center gap-1.5 bg-white/50 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-white/30">
-            <Calendar size={14} className="text-purple-600" />
+          <div className="flex items-center gap-1.5 bg-white/10 border border-white/10 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-white/30">
+            <Calendar size={14} className="text-emerald-300" />
             <span>Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-white/50 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-white/30">
-            <Shield size={14} className="text-purple-600" />
+          <div className="flex items-center gap-1.5 bg-white/10 border border-white/10 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-white/30">
+            <Shield size={14} className="text-emerald-300" />
             <span>Secure Booking Guarantee</span>
           </div>
         </motion.div>
@@ -427,12 +427,12 @@ export default function TermsPage() {
                       <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${section.gradient} flex items-center justify-center shadow-md`}>
                         <IconComponent size={18} className="text-white" />
                       </div>
-                      <h2 className="text-lg md:text-xl font-bold text-gray-800">
+                      <h2 className="text-lg md:text-xl font-bold text-white">
                         {section.title}
                       </h2>
                     </div>
                     
-                    <div className="text-gray-700 text-sm leading-relaxed">
+                    <div className="text-gray-300 text-sm leading-relaxed">
                       <p>{section.content}</p>
                       
                       {section.listItems && (
@@ -445,25 +445,25 @@ export default function TermsPage() {
                               transition={{ delay: i * 0.05 }}
                               className="flex items-start gap-2"
                             >
-                              <CheckCircle size={14} className="text-purple-600 mt-0.5 flex-shrink-0" />
-                              <span className="text-gray-700 text-sm">{item}</span>
+                              <CheckCircle size={14} className="text-emerald-300 mt-0.5 flex-shrink-0" />
+                              <span className="text-gray-300 text-sm">{item}</span>
                             </motion.li>
                           ))}
                         </ul>
                       )}
                       
                       {section.contactInfo && (
-                        <div className="mt-4 p-3 bg-white/40 backdrop-blur-sm rounded-xl border border-white/40">
-                          <div className="flex items-center gap-2 text-gray-700 text-sm">
-                            <Mail size={14} className="text-purple-600" />
+                        <div className="mt-4 p-3 bg-white/10 border border-white/10 backdrop-blur-sm rounded-xl border border-white/40">
+                          <div className="flex items-center gap-2 text-gray-300 text-sm">
+                            <Mail size={14} className="text-emerald-300" />
                             <span>{section.contactInfo.email}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-700 text-sm mt-1.5">
-                            <Phone size={14} className="text-purple-600" />
+                          <div className="flex items-center gap-2 text-gray-300 text-sm mt-1.5">
+                            <Phone size={14} className="text-emerald-300" />
                             <span>{section.contactInfo.phone}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-700 text-sm mt-1.5">
-                            <MapPin size={14} className="text-purple-600" />
+                          <div className="flex items-center gap-2 text-gray-300 text-sm mt-1.5">
+                            <MapPin size={14} className="text-emerald-300" />
                             <span>{section.contactInfo.address}</span>
                           </div>
                         </div>
@@ -472,13 +472,13 @@ export default function TermsPage() {
                     
                     <motion.button
                       whileHover={{ x: 3 }}
-                      className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-purple-700 hover:text-purple-800 transition"
+                      className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-emerald-300 hover:text-cyan-300 transition"
                     >
                       Learn more <ArrowRight size={12} />
                     </motion.button>
                   </div>
                   
-                  <div className="md:w-64 relative overflow-hidden bg-white/20 backdrop-blur-sm flex items-center justify-center p-4 md:p-5 rounded-r-2xl">
+                  <div className="md:w-64 relative overflow-hidden bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center p-4 md:p-5 rounded-r-2xl">
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -506,11 +506,11 @@ export default function TermsPage() {
           transition={{ delay: 0.2 }}
           className="mt-12 text-center pt-6 border-t border-white/30"
         >
-          <div className="flex items-center justify-center gap-2 text-gray-700 mb-2">
-            <Car size={14} className="text-purple-600" />
+          <div className="flex items-center justify-center gap-2 text-gray-300 mb-2">
+            <Car size={14} className="text-emerald-300" />
             <span className="text-xs font-medium">CarBooking — Drive with Confidence</span>
           </div>
-          <p className="text-gray-600 text-xs">
+          <p className="text-gray-400 text-xs">
             © {new Date().getFullYear()} Car Rental Platform. All rights reserved.
           </p>
         </motion.div>
@@ -529,7 +529,7 @@ export default function TermsPage() {
         }}
         className="fixed bottom-6 right-6 z-20"
       >
-        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg">
+        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center shadow-lg">
           <Car size={20} className="text-white" />
         </div>
       </motion.div>

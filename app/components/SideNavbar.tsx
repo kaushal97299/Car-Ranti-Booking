@@ -211,7 +211,7 @@ const handleLogout = () => {
       badge: wishlistCount > 0 ? wishlistCount : null
     },
     { path: "/notifications", label: "Notifications", icon: <Bell size={18} />, mobileIcon: <Bell size={20} /> },
-    { path: "/profile", label: "Profile", icon: <User size={18} />, mobileIcon: <User size={20} /> },
+    
   ];
 
   // Items for bottom navbar (without wishlist)
@@ -230,7 +230,8 @@ const handleLogout = () => {
 )}
 
       {/* ================= MOBILE BOTTOM NAVBAR ================= */}
-      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 shadow-lg z-50 border-t border-white/40">
+      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gradient-to-b from-[#020b0a] via-[#062c28] to-[#020b0a]
+text-gray-300 border-r border-white/10 shadow-2xl shadow-lg z-50 border-t border-white/10">
         <nav className="flex justify-around items-center px-2 py-1">
           {bottomNavItems.map((item) => (
             <MobileNavItem
@@ -246,9 +247,9 @@ const handleLogout = () => {
           
           <button
             onClick={() => setOpen(true)}
-            className="flex flex-col items-center text-xs text-slate-800 hover:text-indigo-900 transition course-pointer"
+            className="flex flex-col items-center text-xs text-gray-300 hover:text-emerald-300 transition course-pointer"
           >
-            <Menu size={20} className="text-indigo-700" />
+            <Menu size={20} className="text-emerald-300" />
             <span>More</span>
           </button>
         </nav>
@@ -261,16 +262,17 @@ const handleLogout = () => {
           onClick={() => setOpen(false)}
         >
           <div
-            className="w-full bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200 rounded-t-xl shadow-2xl max-h-[70vh] overflow-y-auto"
+            className="w-full bg-gradient-to-b from-[#020b0a] via-[#062c28] to-[#020b0a]
+text-gray-300 border-r border-white/10 shadow-2xl rounded-t-xl shadow-2xl max-h-[70vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-4 border-b border-white/40">
-              <div className="text-lg font-bold text-slate-900">
+            <div className="flex items-center justify-between p-4 border-b border-white/10">
+              <div className="text-lg font-bold text-white">
                 More Options
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="p-1 hover:bg-white/30 rounded"
+                className="p-1 hover:bg-white/10 rounded"
               >
                 <X size={20} />
               </button>
@@ -282,10 +284,10 @@ const handleLogout = () => {
                   router.push("/userprofile");
                   setOpen(false);
                 }}
-                className="px-4 py-3 border-b border-white/40 cursor-pointer hover:bg-white/30 cursor-pointer"
+                className="px-4 py-3 border-b border-white/10 cursor-pointer hover:bg-white/10 cursor-pointer"
               >
-                <p className="font-semibold text-slate-900">{user.name}</p>
-                <p className="text-xs text-slate-600 truncate">{user.email}</p>
+                <p className="font-semibold text-white">{user.name}</p>
+                <p className="text-xs text-gray-400 truncate">{user.email}</p>
               </div>
             )}
 
@@ -319,7 +321,7 @@ const handleLogout = () => {
                     handleLogout();
                     setOpen(false);
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-100/50 transition cursor-pointer"
+                  className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition cursor-pointer"
                 >
                   <LogOut size={18} />
                   Logout
@@ -334,15 +336,16 @@ const handleLogout = () => {
       <aside
         className="
           fixed top-0 left-0 h-screen w-50
-          bg-gradient-to-br from-indigo-200 via-purple-200 to-fuchsia-200
-          border-r border-white/40
-          text-slate-800 hidden md:block 
+          bg-gradient-to-b from-[#020b0a] via-[#062c28] to-[#020b0a]
+text-gray-300 border-r border-white/10 shadow-2xl
+          border-r border-white/10
+          text-gray-300 hidden md:block 
         "
       >
         <div
           onClick={() => router.push("/")}
-          className="px-6 py-4 text-lg font-bold border-b border-white/40 text-slate-900
-          flex items-center gap-2 cursor-pointer hover:bg-white/30"
+          className="px-6 py-4 text-lg font-bold border-b border-white/10 text-white
+          flex items-center gap-2 cursor-pointer hover:bg-white/10"
         >
           🚗 Car Booking
         </div>
@@ -350,12 +353,12 @@ const handleLogout = () => {
         {user && (
           <div
             onClick={() => router.push("/userprofile")}
-            className="px-5 py-3 border-b border-white/40 cursor-pointer hover:bg-white/30"
+            className="px-5 py-3 border-b border-white/10 cursor-pointer hover:bg-white/10"
           >
-            <p className="font-semibold text-slate-900">
+            <p className="font-semibold text-white">
               {user.name}
             </p>
-            <p className="text-xs text-slate-600 truncate">
+            <p className="text-xs text-gray-400 truncate">
               {user.email}
             </p>
           </div>
@@ -384,7 +387,7 @@ const handleLogout = () => {
           ) : (
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-100/50 transition"
+              className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition"
             >
               <LogOut size={18} />
               Logout
@@ -423,11 +426,11 @@ function NavItem({
       className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition-all duration-200
       ${
         active
-          ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
-          : "text-slate-800 hover:bg-white/30 hover:text-indigo-900"
+          ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg"
+          : "text-gray-300 hover:bg-white/10 hover:text-emerald-300"
       }`}
     >
-      <span className={active ? "text-yellow-300" : "text-indigo-700"}>
+      <span className={active ? "text-yellow-300" : "text-emerald-300"}>
         {icon}
       </span>
       {label}
@@ -454,10 +457,10 @@ function MobileNavItem({
     <button
       onClick={() => router.push(path)}
       className={`flex flex-col items-center text-xs relative py-1 px-2 rounded-lg transition
-      ${active ? "text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg" : "text-slate-800 hover:text-indigo-900"}`}
+      ${active ? "text-white bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-lg" : "text-gray-300 hover:text-emerald-300"}`}
     >
       <div className="relative">
-        <span className={active ? "text-yellow-300" : "text-indigo-700"}>
+        <span className={active ? "text-yellow-300" : "text-emerald-300"}>
           {icon}
         </span>
         {badge && badge > 0 && (
@@ -466,7 +469,7 @@ function MobileNavItem({
           </span>
         )}
       </div>
-      <span className="text-[10px] mt-0.5 text-slate-800">{label}</span>
+      <span className="text-[10px] mt-0.5 text-gray-300">{label}</span>
     </button>
   );
 }

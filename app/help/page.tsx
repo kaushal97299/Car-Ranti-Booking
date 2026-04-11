@@ -158,14 +158,14 @@ setLoading(false);
 
 return(
 
-<div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-fuchsia-100 p-10">
+<div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white p-10">
 
 <div className="max-w-6xl mx-auto">
 
 
 {/* TITLE */}
 
-<h1 className="text-4xl font-bold text-center mb-10">
+<h1 className="text-4xl font-bold text-center mb-10 text-white ">
 
 Help Center
 
@@ -174,15 +174,15 @@ Help Center
 
 {/* SEARCH */}
 
-<div className="bg-white/70 backdrop-blur p-4 rounded-xl shadow flex items-center">
+<div className="bg-white/10 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow flex items-center">
 
-<Search className="text-slate-400"/>
+<Search className="text-gray-400"/>
 
 <input
 placeholder="Describe your problem..."
 value={query}
 onChange={(e)=>setQuery(e.target.value)}
-className="ml-3 flex-1 outline-none bg-transparent"
+className="ml-3 flex-1 outline-none bg-transparent text-white placeholder:text-gray-400"
 />
 
 </div>
@@ -195,7 +195,7 @@ className="ml-3 flex-1 outline-none bg-transparent"
 
 <div className="mt-8">
 
-<h3 className="font-semibold mb-4">
+<h3 className="font-semibold mb-4 text-emerald-300">
 
 Suggested Solutions
 
@@ -205,7 +205,7 @@ Suggested Solutions
 
 {filteredSolutions.map((s,i)=>(
 
-<div key={i} className="bg-white p-4 rounded-xl shadow">
+<div key={i} className="bg-white/10 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow">
 
 <h4 className="font-semibold">
 
@@ -213,7 +213,7 @@ Suggested Solutions
 
 </h4>
 
-<p className="text-gray-500 text-sm">
+<p className="text-gray-400 text-sm">
 
 {s.desc}
 
@@ -243,11 +243,11 @@ Common Questions
 
 <div className="space-y-3">
 
-<div className="bg-white p-4 rounded-lg shadow">
+<div className="bg-white/10 backdrop-blur-xl border border-white/10 p-4 rounded-lg shadow">
 
 <b>How to book car?</b>
 
-<p className="text-sm text-gray-500">
+<p className="text-sm text-gray-400">
 
 Choose car → select dates → pay online.
 
@@ -255,11 +255,11 @@ Choose car → select dates → pay online.
 
 </div>
 
-<div className="bg-white p-4 rounded-lg shadow">
+<div className="bg-white/10 backdrop-blur-xl border border-white/10 p-4 rounded-lg shadow">
 
 <b>Refund policy?</b>
 
-<p className="text-sm text-gray-500">
+<p className="text-sm text-gray-400">
 
 Refund processed in 5-7 days.
 
@@ -275,9 +275,9 @@ Refund processed in 5-7 days.
 
 {/* CREATE SUPPORT TICKET */}
 
-<div className="bg-white/70 backdrop-blur p-6 rounded-xl shadow mt-12">
+<div className="bg-white/10 backdrop-blur-xl border border-white/10 p-6 rounded-xl shadow mt-12">
 
-<h3 className="font-semibold mb-4">
+<h3 className="font-semibold mb-4 text-emerald-300">
 
 Still need help? Create support ticket
 
@@ -288,7 +288,7 @@ Still need help? Create support ticket
 name="category"
 value={form.category}
 onChange={handleChange}
-className="border p-2 rounded w-full mb-3"
+className="bg-white/10 border border-white/10 text-white p-2 rounded w-full mb-3"
 >
 
 <option value="booking">Booking Issue</option>
@@ -303,7 +303,7 @@ className="border p-2 rounded w-full mb-3"
 name="priority"
 value={form.priority}
 onChange={handleChange}
-className="border p-2 rounded w-full mb-3"
+className="bg-white/10 border border-white/10 text-white p-2 rounded w-full mb-3"
 >
 
 <option value="low">Low</option>
@@ -319,14 +319,14 @@ name="message"
 value={form.message}
 onChange={handleChange}
 placeholder="Describe your problem..."
-className="w-full border rounded-lg p-3"
+className="w-full bg-white/10 border border-white/10 rounded-lg p-3 text-white placeholder:text-gray-400"
 />
 
 
 <button
 onClick={createTicket}
 disabled={loading}
-className="bg-indigo-600 text-white px-5 py-2 rounded mt-3 flex items-center gap-2"
+className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-5 py-2 rounded mt-3 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition"
 >
 
 {loading ? "Sending..." : <>Submit Ticket <Send size={16}/></>}
@@ -336,7 +336,7 @@ className="bg-indigo-600 text-white px-5 py-2 rounded mt-3 flex items-center gap
 
 {success &&(
 
-<div className="text-green-600 text-sm flex items-center gap-2 mt-3">
+<div className="text-emerald-300 text-sm flex items-center gap-2 mt-3">
 
 <CheckCircle size={18}/>
 
@@ -368,10 +368,10 @@ Ticket created successfully
 
 <div
 key={t._id}
-className="bg-white p-4 rounded-lg shadow"
+className="bg-white/10 backdrop-blur-xl border border-white/10 p-4 rounded-lg shadow"
 >
 
-<p className="text-xs text-gray-500">
+<p className="text-xs text-gray-400">
 
 {new Date(t.createdAt).toLocaleDateString()}
 
@@ -383,7 +383,7 @@ className="bg-white p-4 rounded-lg shadow"
 
 </p>
 
-<span className="text-xs text-indigo-600">
+<span className="text-xs text-emerald-300">
 
 Status: {t.status}
 
@@ -391,7 +391,7 @@ Status: {t.status}
 
 {t.adminReply &&(
 
-<div className="bg-indigo-50 p-2 rounded mt-2 text-sm">
+<div className="bg-white/10 border border-white/10 p-2 rounded mt-2 text-sm">
 
 <b>Admin:</b> {t.adminReply}
 

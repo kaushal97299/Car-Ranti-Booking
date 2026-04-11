@@ -67,16 +67,16 @@ export default function ResetPassword() {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a0638] via-[#2b0f55] to-[#3a1570]">
+    <div className="min-h-screen flex items-center justify-center mesh-bg relative overflow-hidden">
 
-      <div className="bg-white/10 backdrop-blur-xl p-8 rounded-xl text-white w-[350px]">
+      <div className="bg-white/10 backdrop-blur-xl border border-white/10 p-8 rounded-2xl shadow-xl text-white w-[350px]">
 
-        <h2 className="text-2xl font-bold mb-4">
+        <h2 className="text-2xl font-bold mb-4 text-white">
           Reset Password
         </h2>
 
         {msg && (
-          <p className="mb-3 text-yellow-300">
+          <p className="mb-3 text-emerald-300">
             {msg}
           </p>
         )}
@@ -86,7 +86,7 @@ export default function ResetPassword() {
           <input
             type="password"
             placeholder="New Password"
-            className="w-full p-2 rounded bg-white/20"
+            className="w-full p-2 rounded bg-white/10 border border-white/10 text-white placeholder:text-gray-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -94,7 +94,7 @@ export default function ResetPassword() {
 
           <button
             disabled={loading}
-            className="w-full bg-purple-600 py-2 rounded"
+            className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition py-2 rounded"
           >
             {loading ? "Resetting..." : "Reset Password"}
           </button>
