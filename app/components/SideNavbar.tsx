@@ -3,14 +3,13 @@
 import { useState, ReactNode, useEffect } from "react";
 import { isTokenExpired, logoutUser } from "../utils/auth";
 import { useRouter, usePathname } from "next/navigation";
+import NotificationBell from "./NotificationBell";
 import {
   Home,
   Car,
   ShoppingCart,
   CalendarCheck,
   Heart,
-  Bell,
-  User,
   LogIn,
   LogOut,
   Menu,
@@ -210,7 +209,6 @@ const handleLogout = () => {
       mobileIcon: <Heart size={20} />,
       badge: wishlistCount > 0 ? wishlistCount : null
     },
-    { path: "/notifications", label: "Notifications", icon: <Bell size={18} />, mobileIcon: <Bell size={20} /> },
     
   ];
 
@@ -291,57 +289,56 @@ text-gray-300 border-r border-white/10 shadow-2xl rounded-t-xl shadow-2xl max-h-
               </div>
             )}
 
-            <nav className="px-3 py-4 space-y-1">
-              {/* Sirf wohi items jo bottom navbar mein nahi hain */}
-              {navItems.filter(item => !bottomNavItems.includes(item)).map((item) => (
-                <NavItem
-                  key={item.path}
-                  router={router}
-                  path={item.path}
-                  label={item.label}
-                  icon={item.icon}
-                  close={() => setOpen(false)}
-                  active={pathname === item.path}
-                  
-                />
-              ))}
+           <nav className="px-3 py-4 space-y-1">
 
-              {!user ? (
-                <NavItem
-                  router={router}
-                  path="/auth"
-                  label="Login"
-                  icon={<LogIn size={18} />}
-                  close={() => setOpen(false)}
-                  active={pathname === "/auth"}
-                />
-              ) : (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition cursor-pointer"
-                >
-                  <LogOut size={18} />
-                  Logout
-                </button>
-              )}
-            </nav>
+  {navItems.map((item) => (
+    <NavItem
+      key={item.path}
+      router={router}
+      path={item.path}
+      label={item.label}
+      icon={item.icon}
+      active={pathname === item.path}
+    />
+  ))}
+
+  {/* Notification dropdown */}
+  <NotificationBell />
+
+  {!user ? (
+    <NavItem
+      router={router}
+      path="/auth"
+      label="Login"
+      icon={<LogIn size={18} />}
+      active={pathname === "/auth"}
+    />
+  ) : (
+    <button
+      onClick={handleLogout}
+      className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition"
+    >
+      <LogOut size={18} />
+      Logout
+    </button>
+  )}
+
+</nav>
           </div>
         </div>
       )}
 
       {/* ================= DESKTOP SIDEBAR ================= */}
       <aside
-        className="
-          fixed top-0 left-0 h-screen w-50
-          bg-gradient-to-b from-[#020b0a] via-[#062c28] to-[#020b0a]
-text-gray-300 border-r border-white/10 shadow-2xl
-          border-r border-white/10
-          text-gray-300 hidden md:block 
-        "
-      >
+  className="
+    fixed top-0 left-0 h-screen w-[200px]
+    bg-gradient-to-b from-[#020b0a] via-[#062c28] to-[#020b0a]
+    text-gray-300 border-r border-white/10 shadow-2xl
+    hidden md:block
+    overflow-visible
+    z-[60]
+  "
+>
         <div
           onClick={() => router.push("/")}
           className="px-6 py-4 text-lg font-bold border-b border-white/10 text-white
@@ -364,36 +361,41 @@ text-gray-300 border-r border-white/10 shadow-2xl
           </div>
         )}
 
-        <nav className="px-3 py-4 space-y-1">
-          {navItems.map((item) => (
-            <NavItem
-              key={item.path}
-              router={router}
-              path={item.path}
-              label={item.label}
-              icon={item.icon}
-              active={pathname === item.path}
-            />
-          ))}
+       <nav className="px-3 py-4 space-y-1">
 
-          {!user ? (
-            <NavItem
-              router={router}
-              path="/auth"
-              label="Login"
-              icon={<LogIn size={18} />}
-              active={pathname === "/auth"}
-            />
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition"
-            >
-              <LogOut size={18} />
-              Logout
-            </button>
-          )}
-        </nav>
+  {navItems.map((item) => (
+    <NavItem
+      key={item.path}
+      router={router}
+      path={item.path}
+      label={item.label}
+      icon={item.icon}
+      active={pathname === item.path}
+    />
+  ))}
+
+  {/* Notification dropdown */}
+  <NotificationBell />
+
+  {!user ? (
+    <NavItem
+      router={router}
+      path="/auth"
+      label="Login"
+      icon={<LogIn size={18} />}
+      active={pathname === "/auth"}
+    />
+  ) : (
+    <button
+      onClick={handleLogout}
+      className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition"
+    >
+      <LogOut size={18} />
+      Logout
+    </button>
+  )}
+
+</nav>
       </aside>
     </>
   );
