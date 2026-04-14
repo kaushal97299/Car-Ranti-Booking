@@ -265,37 +265,63 @@ export default function Footer() {
                 <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full group-hover:w-full transition-all duration-300"></div>
               </h3>
               
-              {/* Contact Info with Icons */}
-              <div className="space-y-3 mt-6">
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer">
-                  <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
-                    <Phone className="w-4 h-4 text-emerald-300" />
-                  </div>
-                  <span className="group-bg-white/10 border border-white/10 transition">+1 (234) 567-8900</span>
-                </div>
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer">
-                  <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
-                    <Mail className="w-4 h-4 text-emerald-300" />
-                  </div>
-                  <span className="group-bg-white/10 border border-white/10 transition">hello@carbooking.com</span>
-                </div>
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer">
-                  <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
-                    <MessageCircle className="w-4 h-4 text-emerald-300" />
-                  </div>
-                  <span className="group-bg-white/10 border border-white/10 transition">Live Chat 24/7</span>
-                </div>
-              </div>
+             <div className="space-y-3 mt-6">
+
+  {/* PHONE */}
+  <a
+    href="tel:+918929935892"
+    className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer"
+  >
+    <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
+      <Phone className="w-4 h-4 text-emerald-300" />
+    </div>
+
+    <span className="group-hover:text-white transition">
+      +91 8929935892
+    </span>
+  </a>
+
+
+  {/* EMAIL */}
+  <a
+    href="mailto:kaushalsharma97299@gmail.com"
+    className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer"
+  >
+    <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
+      <Mail className="w-4 h-4 text-emerald-300" />
+    </div>
+
+    <span className="group-hover:text-white transition">
+      kaushalsharma97299@gmail.com
+    </span>
+  </a>
+
+
+  {/* LIVE CHAT */}
+  <div
+    onClick={() => router.push("/supportmessages")}
+    className="flex items-center justify-center sm:justify-start gap-3 text-gray-400 text-sm group cursor-pointer"
+  >
+    <div className="p-1 bg-white/10 border border-white/10 rounded-full group-hover:bg-indigo-200 transition-colors">
+      <MessageCircle className="w-4 h-4 text-emerald-300" />
+    </div>
+
+    <span className="group-hover:text-white transition">
+      Live Chat 24/7
+    </span>
+  </div>
+
+</div>
 
               {/* Premium Social Icons with Hover Effects */}
               <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-6">
                 {[
-                  { icon: Facebook, name: "Facebook", url: "https://facebook.com", color: "hover:bg-blue-600", bg: "from-blue-500 to-blue-700" },
+                  { icon: Facebook, name: "Facebook", url: "https://www.facebook.com/share/1CYiX7fZfj/", color: "hover:bg-blue-600", bg: "from-blue-500 to-blue-700" },
                   { icon: Twitter, name: "Twitter", url: "https://twitter.com", color: "hover:bg-sky-500", bg: "from-sky-500 to-sky-700" },
-                  { icon: Instagram, name: "Instagram", url: "https://instagram.com", color: "hover:bg-pink-600", bg: "from-pink-500 to-pink-700" },
-                  { icon: Linkedin, name: "LinkedIn", url: "https://linkedin.com", color: "hover:bg-blue-700", bg: "from-blue-600 to-blue-800" },
-                  { icon: Youtube, name: "YouTube", url: "https://youtube.com", color: "hover:bg-red-600", bg: "from-red-500 to-red-700" },
-                  { icon: Github, name: "GitHub", url: "https://github.com", color: "hover:bg-gray-800", bg: "from-gray-700 to-gray-900" }
+                  { icon: Instagram, name: "Instagram", url: "https://www.instagram.com/kaushalgauttam?igsh=MXF1Zzk5cXhuY2pjZg==", color: "hover:bg-pink-600", bg: "from-pink-500 to-pink-700" },
+                  { icon: Linkedin, name: "LinkedIn", url: "https://www.linkedin.com/in/kaushal-gauttam-839963275", color: "hover:bg-blue-700", bg: "from-blue-600 to-blue-800" },
+                  { icon: Youtube, name: "YouTube", url: "https://youtube.com/@kaushalsharma7400?si=SoHY8e4vGdktMShu", color: "hover:bg-red-600", bg: "from-red-500 to-red-700" },
+                  { icon: Github, name: "GitHub", url: "https://github.com/kaushal97299", color: "hover:bg-gray-800", bg: "from-gray-700 to-gray-900" }
                 ].map((social, idx) => (
                   <button
                     key={idx}
