@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://car-ranti-booking-n1mz.vercel.app";
+  const baseUrl = "https://car-ranti-booking.vercel.app";
 
   return [
     {

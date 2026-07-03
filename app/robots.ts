@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://car-ranti-booking-n1mz.vercel.app/sitemap.xml",
+    sitemap: "https://car-ranti-booking.vercel.app/sitemap.xml",
   };
 }
