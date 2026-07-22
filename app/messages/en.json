@@ -1,0 +1,91 @@
+{
+  "navbar": {
+    "dashboard": "Dashboard",
+   "browseCars": "Browse Cars",
+    "cars": "Browse Cars",
+    "cart": "Cart",
+    "bookings": "Bookings",
+    "wishlist": "Wishlist",
+    "notifications": "Notifications",
+    "login": "Login",
+    "logout": "Logout",
+    "carBooking": "Car Booking",
+    "more": "More"
+  },
+  "home": {
+    "title": "Find Your Perfect Car",
+    "subtitle": "Book premium cars at the best price."
+  },
+  
+  "auth": {
+    "welcomeBack": "Welcome Back",
+    "createAccount": "Create Your Account",
+    "signInContinue": "Sign In to Continue",
+    "driveSmarter": "Drive Smarter",
+
+    "cars": "Cars",
+    "users": "Users",
+    "support": "Support",
+
+    "heroText": "Luxury cars, instant booking, transparent pricing, and 24/7 support — all in one premium platform.",
+
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+
+    "createAccountText": "Create your account to get started",
+
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+
+    "forgotPassword": "Forgot Password?",
+    "pleaseWait": "Please wait...",
+
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+
+    "orContinue": "or continue with email",
+
+    "resetPassword": "Reset Password",
+    "enterEmail": "Enter your email",
+    "cancel": "Cancel",
+    "sendResetLink": "Send Reset Link",
+    "sending": "Sending..."
+  },
+  "blog": {
+    "insights": "Insights & Guides",
+    "title": "Car Rental Blog",
+    "subtitle": "Location-based travel blogs, car tips and rental guides for smart travelers.",
+
+    "searchPlaceholder": "Search blogs, topics, or locations...",
+
+    "featuredArticles": "Featured Articles",
+    "viewAll": "View All",
+
+    "filters": "Filters",
+    "allStates": "All States",
+    "allDistricts": "All Districts",
+    "allCategories": "All Categories",
+
+    "applyFilters": "Apply Filters",
+    "clearAll": "Clear All",
+
+    "showing": "Showing",
+    "articles": "Articles",
+    "lastUpdated": "Last Updated",
+    "today": "Today",
+
+    "readMore": "Read More",
+
+    "noBlogs": "No Blogs Found",
+    "tryAgain": "Try adjusting your filters or search query.",
+
+    "newsletterTitle": "Never Miss an Update",
+    "newsletterSubtitle": "Subscribe to our newsletter for the latest travel tips and guides.",
+
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe"
+  }
+
+}

@@ -4,6 +4,10 @@ import { useState, ReactNode, useEffect } from "react";
 import { isTokenExpired, logoutUser } from "../utils/auth";
 import { useRouter, usePathname } from "next/navigation";
 import NotificationBell from "./NotificationBell";
+import { useLanguage } from "../context/LanguageContext";
+import { useTranslation } from "../context/useTranslation";
+
+
 import {
   Home,
   Car,
@@ -18,7 +22,9 @@ import {
 
 export default function UserSidebar() {
   const [open, setOpen] = useState(false);
-
+  
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
@@ -187,30 +193,44 @@ const handleLogout = () => {
   setWishlistCount(0);
   setCartCount(0);
 
-  router.push("/auth");
+  router.push("/");
 };
 
   // Navigation items
-  const navItems = [
-    { path: "/", label: "Dashboard", icon: <Home size={18} />, mobileIcon: <Home size={20} /> },
-    { path: "/dashboard", label: "Browse Cars", icon: <Car size={18} />, mobileIcon: <Car size={20} /> },
-    { 
-      path: "/cart", 
-      label: `Cart ${cartCount > 0 ? `(${cartCount})` : ""}`, 
-      icon: <ShoppingCart size={18} />, 
-      mobileIcon: <ShoppingCart size={20} />,
-      badge: cartCount > 0 ? cartCount : null
-    },
-    { path: "/my-booking", label: "Bookings", icon: <CalendarCheck size={18} />, mobileIcon: <CalendarCheck size={20} /> },
-    { 
-      path: "/wishlist", 
-      label: `Wishlist ${wishlistCount > 0 ? `(${wishlistCount})` : ""}`, 
-      icon: <Heart size={18} />, 
-      mobileIcon: <Heart size={20} />,
-      badge: wishlistCount > 0 ? wishlistCount : null
-    },
-    
-  ];
+ const navItems = [
+  {
+    path: "/",
+    label: t("navbar.dashboard"),
+    icon: <Home size={18} />,
+    mobileIcon: <Home size={20} />,
+  },
+  {
+    path: "/dashboard",
+    label: t("navbar.browseCars"),
+    icon: <Car size={18} />,
+    mobileIcon: <Car size={20} />,
+  },
+  {
+    path: "/cart",
+    label: `${t("navbar.cart")} ${cartCount > 0 ? `(${cartCount})` : ""}`,
+    icon: <ShoppingCart size={18} />,
+    mobileIcon: <ShoppingCart size={20} />,
+    badge: cartCount > 0 ? cartCount : null,
+  },
+  {
+    path: "/my-booking",
+    label: t("navbar.bookings"),
+    icon: <CalendarCheck size={18} />,
+    mobileIcon: <CalendarCheck size={20} />,
+  },
+  {
+    path: "/wishlist",
+    label: `${t("navbar.wishlist")} ${wishlistCount > 0 ? `(${wishlistCount})` : ""}`,
+    icon: <Heart size={18} />,
+    mobileIcon: <Heart size={20} />,
+    badge: wishlistCount > 0 ? wishlistCount : null,
+  },
+];
 
   // Items for bottom navbar (without wishlist)
   const bottomNavItems = navItems.filter(item => item.path !== "/wishlist").slice(0, 4);
@@ -248,7 +268,7 @@ text-gray-300 border-r border-white/10 shadow-2xl shadow-lg z-50 border-t border
             className="flex flex-col items-center text-xs text-gray-300 hover:text-emerald-300 transition course-pointer"
           >
             <Menu size={20} className="text-emerald-300" />
-            <span>More</span>
+            <span>{t("navbar.more")}</span>
           </button>
         </nav>
       </div>
@@ -265,9 +285,9 @@ text-gray-300 border-r border-white/10 shadow-2xl rounded-t-xl shadow-2xl max-h-
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 border-b border-white/10">
-              <div className="text-lg font-bold text-white">
-                More Options
-              </div>
+             <div className="text-lg font-bold text-white">
+  {t("navbar.moreOptions")}
+</div>
               <button
                 onClick={() => setOpen(false)}
                 className="p-1 hover:bg-white/10 rounded"
@@ -309,7 +329,7 @@ text-gray-300 border-r border-white/10 shadow-2xl rounded-t-xl shadow-2xl max-h-
     <NavItem
       router={router}
       path="/auth"
-      label="Login"
+      label={t("navbar.login")}
       icon={<LogIn size={18} />}
       active={pathname === "/auth"}
     />
@@ -344,9 +364,22 @@ text-gray-300 border-r border-white/10 shadow-2xl rounded-t-xl shadow-2xl max-h-
           className="px-6 py-4 text-lg font-bold border-b border-white/10 text-white
           flex items-center gap-2 cursor-pointer hover:bg-white/10"
         >
-          🚗 Car Booking
+          🚗 {t("navbar.carBooking")}
         </div>
 
+<div className="px-4 py-3 border-b border-white/10">
+  <select
+    value={language}
+    onChange={(e) =>
+      setLanguage(e.target.value as "en" | "hi" | "pa")
+    }
+    className="w-full bg-[#0d2b28] text-white rounded-lg p-2 outline-none"
+  >
+    <option value="en">🇬🇧 English</option>
+    <option value="hi">🇮🇳 हिन्दी</option>
+    <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+  </select>
+</div>
         {user && (
           <div
             onClick={() => router.push("/userprofile")}
@@ -381,7 +414,7 @@ text-gray-300 border-r border-white/10 shadow-2xl rounded-t-xl shadow-2xl max-h-
     <NavItem
       router={router}
       path="/auth"
-      label="Login"
+      label={t("navbar.login")}
       icon={<LogIn size={18} />}
       active={pathname === "/auth"}
     />
@@ -391,7 +424,7 @@ text-gray-300 border-r border-white/10 shadow-2xl rounded-t-xl shadow-2xl max-h-
       className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition"
     >
       <LogOut size={18} />
-      Logout
+      {t("navbar.logout")}
     </button>
   )}
 

@@ -1,0 +1,91 @@
+{
+  "navbar": {
+    "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+    "cars": "ਕਾਰਾਂ",
+    "cart": "ਕਾਰਟ",
+    "bookings": "ਬੁਕਿੰਗ",
+    "wishlist": "ਵਿਸ਼ਲਿਸਟ",
+    "login": "ਲਾਗਇਨ",
+    "logout": "ਲਾਗਆਉਟ",
+    "more": "ਹੋਰ",
+    "browseCars": "ਕਾਰਾਂ ਨੂੰ ਦੇਖੋ",
+    "notifications": "ਸੂਚਨਾਵਾਂ",
+    "carBooking": "ਕਾਰ ਬੁਕਿੰਗ"
+  },
+  "home": {
+    "title": "ਆਪਣੀ ਮਨਪਸੰਦ ਕਾਰ ਚੁਣੋ",
+    "subtitle": "ਵਧੀਆ ਕੀਮਤ 'ਤੇ ਪ੍ਰੀਮੀਅਮ ਕਾਰ ਬੁੱਕ ਕਰੋ।"
+  },
+  "auth": {
+    "welcomeBack": "ਤੁਹਾਡਾ ਮੁੜ ਸਵਾਗਤ ਹੈ",
+    "createAccount": "ਆਪਣਾ ਖਾਤਾ ਬਣਾਓ",
+    "signInContinue": "ਜਾਰੀ ਰੱਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ",
+    "driveSmarter": "ਹੋਰ ਸਮਝਦਾਰੀ ਨਾਲ ਡਰਾਈਵ ਕਰੋ",
+
+    "cars": "ਕਾਰਾਂ",
+    "users": "ਯੂਜ਼ਰ",
+    "support": "ਸਹਾਇਤਾ",
+
+    "heroText": "ਲਗਜ਼ਰੀ ਕਾਰਾਂ, ਤੁਰੰਤ ਬੁਕਿੰਗ, ਪਾਰਦਰਸ਼ੀ ਕੀਮਤਾਂ ਅਤੇ 24/7 ਸਹਾਇਤਾ — ਇਹ ਸਭ ਇੱਕ ਹੀ ਪ੍ਰੀਮੀਅਮ ਪਲੇਟਫਾਰਮ 'ਤੇ।",
+
+    "signIn": "ਸਾਈਨ ਇਨ",
+    "signUp": "ਸਾਈਨ ਅਪ",
+
+    "createAccountText": "ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਆਪਣਾ ਖਾਤਾ ਬਣਾਓ",
+
+    "fullName": "ਪੂਰਾ ਨਾਮ",
+    "email": "ਈਮੇਲ",
+    "password": "ਪਾਸਵਰਡ",
+    "confirmPassword": "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+
+    "forgotPassword": "ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ?",
+    "pleaseWait": "ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ...",
+
+    "dontHaveAccount": "ਕੀ ਤੁਹਾਡਾ ਖਾਤਾ ਨਹੀਂ ਹੈ?",
+    "alreadyHaveAccount": "ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਪਹਿਲਾਂ ਹੀ ਖਾਤਾ ਹੈ?",
+
+    "orContinue": "ਜਾਂ ਈਮੇਲ ਨਾਲ ਜਾਰੀ ਰੱਖੋ",
+
+    "resetPassword": "ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰੋ",
+    "enterEmail": "ਆਪਣਾ ਈਮੇਲ ਦਰਜ ਕਰੋ",
+    "cancel": "ਰੱਦ ਕਰੋ",
+    "sendResetLink": "ਰੀਸੈਟ ਲਿੰਕ ਭੇਜੋ",
+    "sending": "ਭੇਜਿਆ ਜਾ ਰਿਹਾ ਹੈ..."
+  },
+  
+  "blog": {
+    "insights": "ਜਾਣਕਾਰੀ ਅਤੇ ਗਾਈਡ",
+    "title": "ਕਾਰ ਰੈਂਟਲ ਬਲੌਗ",
+    "subtitle": "ਸਮਾਰਟ ਯਾਤਰੀਆਂ ਲਈ ਸਥਾਨ ਅਧਾਰਿਤ ਯਾਤਰਾ ਬਲੌਗ, ਕਾਰ ਸੁਝਾਅ ਅਤੇ ਰੈਂਟਲ ਗਾਈਡ",
+
+    "searchPlaceholder": "ਬਲੌਗ, ਵਿਸ਼ੇ ਜਾਂ ਥਾਂ ਖੋਜੋ...",
+
+    "featuredArticles": "ਖ਼ਾਸ ਲੇਖ",
+    "viewAll": "ਸਾਰੇ ਵੇਖੋ",
+
+    "filters": "ਫਿਲਟਰ",
+    "allStates": "ਸਾਰੇ ਰਾਜ",
+    "allDistricts": "ਸਾਰੇ ਜ਼ਿਲ੍ਹੇ",
+    "allCategories": "ਸਾਰੀਆਂ ਸ਼੍ਰੇਣੀਆਂ",
+
+    "applyFilters": "ਫਿਲਟਰ ਲਾਗੂ ਕਰੋ",
+    "clearAll": "ਸਭ ਸਾਫ਼ ਕਰੋ",
+
+    "showing": "ਦਿਖਾਏ ਜਾ ਰਹੇ ਹਨ",
+    "articles": "ਲੇਖ",
+    "lastUpdated": "ਆਖਰੀ ਅੱਪਡੇਟ",
+    "today": "ਅੱਜ",
+
+    "readMore": "ਹੋਰ ਪੜ੍ਹੋ",
+
+    "noBlogs": "ਕੋਈ ਬਲੌਗ ਨਹੀਂ ਮਿਲਿਆ",
+    "tryAgain": "ਆਪਣੇ ਫਿਲਟਰ ਜਾਂ ਖੋਜ ਨੂੰ ਬਦਲ ਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+
+    "newsletterTitle": "ਕੋਈ ਵੀ ਅੱਪਡੇਟ ਨਾ ਗਵਾਓ",
+    "newsletterSubtitle": "ਨਵੀਆਂ ਯਾਤਰਾ ਟਿੱਪਸ ਅਤੇ ਗਾਈਡ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਸਾਡੇ ਨਿਊਜ਼ਲੈਟਰ ਦੀ ਮੈਂਬਰਸ਼ਿਪ ਲਵੋ",
+
+    "emailPlaceholder": "ਆਪਣਾ ਈਮੇਲ ਦਰਜ ਕਰੋ",
+    "subscribe": "ਮੈਂਬਰ ਬਣੋ"
+  }
+
+}

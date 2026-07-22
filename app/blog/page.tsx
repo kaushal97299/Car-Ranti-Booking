@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "../context/useTranslation";
 import {
   Search,
   X,
@@ -144,6 +145,7 @@ const featuredBlogs = blogs.slice(0, 3);
 /* ================= PAGE ================= */
 
 export default function BlogPage() {
+  const { t } = useTranslation();
   const [state, setState] = useState("All");
   const [district, setDistrict] = useState("All");
   const [category, setCategory] = useState("All");
@@ -191,7 +193,7 @@ export default function BlogPage() {
             className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-8 shadow-lg"
           >
             <Sparkles size={16} />
-            <span>Insights & Guides</span>
+            <span>{t("blog.insights")}</span>
           </motion.div>
 
           <motion.h1
@@ -200,7 +202,7 @@ export default function BlogPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent"
           >
-            Car Rental Blog
+           {t("blog.title")}
           </motion.h1>
 
           <motion.p
@@ -209,7 +211,7 @@ export default function BlogPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-xl text-gray-300 max-w-2xl mx-auto"
           >
-            Location-based travel blogs, car tips and rental guides for smart travelers
+            {t("blog.subtitle")}
           </motion.p>
 
           {/* SEARCH BAR */}
@@ -222,7 +224,7 @@ export default function BlogPage() {
             <div className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
               <input
-                placeholder="Search blogs, topics, or locations..."
+               placeholder={t("blog.searchPlaceholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full bg-white/10 backdrop-blur border border-white/10 border border-indigo-200/50 pl-12 pr-4 py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
@@ -237,10 +239,10 @@ export default function BlogPage() {
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-white flex items-center gap-2">
             <TrendingUp className="text-emerald-300" size={24} />
-            Featured Articles
+            {t("blog.featuredArticles")}
           </h2>
           <button className="text-emerald-300 hover:text-indigo-800 flex items-center gap-1">
-            View all <ChevronRight size={16} />
+            {t("blog.viewAll")} <ChevronRight size={16} />
           </button>
         </div>
 
@@ -282,7 +284,7 @@ export default function BlogPage() {
             className="flex items-center gap-2 text-gray-300 md:hidden"
           >
             <Filter size={20} />
-            <span>Filters</span>
+            <span>{t("blog.filters")}</span>
           </button>
 
           <div className={`${showFilters ? 'block' : 'hidden'} md:grid md:grid-cols-5 gap-4 mt-4 md:mt-0`}>
@@ -296,7 +298,7 @@ export default function BlogPage() {
                 }}
                 className="w-full bg-white/10 border border-white/10 text-white pl-10 pr-4 py-3 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
               >
-                <option>All States</option>
+                <option>{t("blog.allStates")}</option>
                 {Object.keys(statesData).map((s) => (
                   <option key={s}>{s}</option>
                 ))}
@@ -311,7 +313,7 @@ export default function BlogPage() {
                 disabled={state === "All"}
                 className="w-full bg-white/10 border border-white/10 text-white pl-10 pr-4 py-3 rounded-xl appearance-none disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               >
-                <option>All Districts</option>
+                <option>{t("blog.allDistricts")}</option>
                 {districts?.map((d) => (
                   <option key={d}>{d}</option>
                 ))}
@@ -325,7 +327,7 @@ export default function BlogPage() {
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full bg-white/10 border border-white/10 text-white pl-10 pr-4 py-3 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
               >
-                <option>All Categories</option>
+                <option>{t("blog.allCategories")}</option>
                 {categories.map((c) => (
                   <option key={c}>{c}</option>
                 ))}
@@ -333,11 +335,11 @@ export default function BlogPage() {
             </div>
 
             <button className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all">
-              Apply Filters
+              {t("blog.applyFilters")}
             </button>
 
             <button className="border border-indigo-200 text-gray-300 px-6 py-3 rounded-xl font-medium hover:bg-white/50 transition-all">
-              Clear All
+              {t("blog.clearAll")}
             </button>
           </div>
         </div>
@@ -428,7 +430,7 @@ export default function BlogPage() {
                   </div>
                   
                   <button className="text-emerald-300 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-                    Read More <ChevronRight size={14} />
+                    {t("blog.readMore")} <ChevronRight size={14} />
                   </button>
                 </div>
               </div>
@@ -444,8 +446,8 @@ export default function BlogPage() {
           >
             <div className="bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-12 max-w-md mx-auto">
               <Search size={48} className="mx-auto text-slate-400 mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">No blogs found</h3>
-              <p className="text-gray-300">Try adjusting your filters or search query</p>
+              <h3 className="text-xl font-bold text-white mb-2">{t("blog.noBlogs")}</h3>
+              <p className="text-gray-300">{t("blog.tryAgain")}</p>
             </div>
           </motion.div>
         )}
@@ -454,16 +456,16 @@ export default function BlogPage() {
       {/* NEWSLETTER SECTION */}
       <section className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 py-16">
         <div className="max-w-4xl mx-auto px-6 text-center text-white">
-          <h2 className="text-3xl font-bold mb-4">Never Miss an Update</h2>
-          <p className="text-white/80 mb-8">Subscribe to our newsletter for the latest travel tips and guides</p>
+          <h2 className="text-3xl font-bold mb-4">{t("blog.newsletterTitle")}</h2>
+          <p className="text-white/80 mb-8">{t("blog.newsletterSubtitle")}</p>
           <div className="flex max-w-md mx-auto">
             <input 
               type="email" 
-              placeholder="Enter your email"
+              placeholder={t("blog.emailPlaceholder")}
               className="flex-1 px-4 py-3 rounded-l-xl text-white focus:outline-none"
             />
             <button className="bg-white text-emerald-300 px-6 py-3 rounded-r-xl font-medium hover:bg-white/10 transition-colors">
-              Subscribe
+              {t("blog.subscribe")}
             </button>
           </div>
         </div>

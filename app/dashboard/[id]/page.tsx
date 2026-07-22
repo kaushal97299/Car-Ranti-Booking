@@ -177,6 +177,17 @@ export default function CarDetailPage() {
     ));
   };
 
+  const handleBookNow = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    router.push("/auth");
+    return;
+  }
+
+  router.push(`/dashboard/${car._id}/book`);
+};
+
   /* ================= LOADING ================= */
   if (loading) {
     return (
@@ -424,14 +435,13 @@ export default function CarDetailPage() {
             {added ? "Added to Cart ✓" : "Add to Cart"}
           </button>
 
-          <button
-            onClick={() => router.push(`/dashboard/${car._id}/book`)}
-            className="bg-gradient-to-r from-emerald-600 to-cyan-500
-            text-white px-10 py-3 rounded-2xl font-semibold shadow-lg w-full md:w-auto"
-          >
-            Book this car
-          </button>
-
+         <button
+  onClick={handleBookNow}
+  className="bg-gradient-to-r from-emerald-600 to-cyan-500
+  text-white px-10 py-3 rounded-2xl font-semibold shadow-lg w-full md:w-auto"
+>
+  Book this car
+</button>
         </div>
 
       </div>

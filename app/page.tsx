@@ -29,7 +29,7 @@ export default function HomePage() {
   const [heroIdx,       setHeroIdx]       = useState(0);
 
   /* ── auth ── */
-  useEffect(() => { if (!token) router.push("/auth"); }, [router, token]);
+
 
   /* ── fetch cars ── */
   const fetchCars = useCallback(async () => {
@@ -72,7 +72,10 @@ export default function HomePage() {
 
   /* ── toggle wishlist ── */
   const toggleWishlist = async (carId: string) => {
-    if (!token) { alert("Please login first"); return; }
+if (!token) {
+  router.push("/auth");
+  return;
+}
     const exist = wishlist.find((w) => w.carId === carId);
     if (exist) {
       await fetch(`${API}/api/wishlist/${exist.wishlistId}`, {
@@ -98,6 +101,28 @@ export default function HomePage() {
     car.image?.startsWith("http") ? car.image : `${API}${car.image}`;
 
   const isWishlisted = (id: string) => wishlist.some((w) => w.carId === id);
+
+  const handleBookNow = (carId: string) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    router.push("/auth");
+    return;
+  }
+
+  router.push(`/dashboard/${carId}`);
+};
+
+const handleProtectedRoute = (path: string) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    router.push("/auth");
+    return;
+  }
+
+  router.push(path);
+};
 
   /* ── derived lists (max 4 each) ── */
   const heroCars     = [...allCars].sort((a, b) => (b.rating  || 0) - (a.rating  || 0)).slice(0, 5);
@@ -126,7 +151,7 @@ export default function HomePage() {
       {cars.map((car) => (
         <div
           key={car._id}
-          onClick={() => router.push(`/dashboard/${car._id}`)}
+       onClick={() => router.push(`/dashboard/${car._id}`)}
           className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group"
         >
           <div className="relative">
@@ -140,7 +165,10 @@ export default function HomePage() {
             </span>
             {/* wishlist */}
             <button
-              onClick={(e) => { e.stopPropagation(); toggleWishlist(car._id); }}
+ onClick={(e) => {
+    e.stopPropagation();
+    toggleWishlist(car._id);
+  }}
               className="absolute top-2 right-2 w-7 h-7 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow text-sm hover:scale-110 transition"
             >
               {isWishlisted(car._id) ? "❤️" : "🤍"}
@@ -157,7 +185,11 @@ export default function HomePage() {
             <div className="flex items-center justify-between mt-2">
               <p className="text-sm font-bold text-emerald-300">₹{car.price}<span className="text-[10px] font-normal text-slate-400">/day</span></p>
               <button
-                onClick={(e) => { e.stopPropagation(); router.push(`/dashboard/${car._id}`); }}
+  onClick={(e) => {
+    e.stopPropagation();
+    handleBookNow(car._id);
+  }}
+
                 className="text-[11px] bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-2.5 py-1 rounded-lg font-medium"
               >
                 Book
@@ -168,6 +200,8 @@ export default function HomePage() {
       ))}
     </div>
   );
+
+  console.log("✅ Home Page Loaded");
 
   return (
    <div className="min-h-screen bg-gradient-to-br from-[#020b0a] via-[#041f1e] to-[#020b0a] text-white">
@@ -181,7 +215,8 @@ export default function HomePage() {
           </h1>
         </div>
         <button
-          onClick={() => router.push("/dashboard")}
+  onClick={() => handleProtectedRoute("/dashboard")}
+
           className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition"
         >
           Browse Cars
@@ -233,8 +268,12 @@ export default function HomePage() {
                     <div className="text-right flex-shrink-0 ml-3">
                       <p className="text-white font-bold text-base">₹{car.price}<span className="text-xs font-normal">/day</span></p>
                       <button
-                        onClick={() => router.push(`/dashboard/${car._id}`)}
-                        className="mt-1.5 bg-white/90 text-[#020b0a] px-3 py-1.5 rounded-full text-xs font-bold hover:bg-indigo-50 transition"
+  onClick={(e) => {
+    e.stopPropagation();
+    handleBookNow(car._id);
+  }}
+
+                    className="mt-1.5 bg-white/90 text-[#020b0a] px-3 py-1.5 rounded-full text-xs font-bold hover:bg-indigo-50 transition"
                       >
                         Book Now
                       </button>
@@ -279,7 +318,7 @@ export default function HomePage() {
             <h2 className="font-bold text-white flex items-center gap-2 text-sm sm:text-base">
               <Star size={15} className="text-amber-500 fill-amber-500" /> Top Rated
             </h2>
-            <button onClick={() => router.push("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
+            <button onClick={() => handleProtectedRoute("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
               See all →
             </button>
           </div>
@@ -295,7 +334,7 @@ export default function HomePage() {
             <h2 className="font-bold text-white flex items-center gap-2 text-sm sm:text-base">
               <Flame size={15} className="text-orange-500" /> Trending
             </h2>
-            <button onClick={() => router.push("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
+            <button onClick={() => handleProtectedRoute("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
               See all →
             </button>
           </div>
@@ -310,7 +349,7 @@ export default function HomePage() {
             <h2 className="font-bold text-white flex items-center gap-2 text-sm sm:text-base">
               <Crown size={15} className="text-purple-600" /> Luxury Picks
             </h2>
-            <button onClick={() => router.push("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
+            <button onClick={() => handleProtectedRoute("/dashboard")} className="text-xs text-emerald-300 font-semibold hover:underline">
               See all →
             </button>
           </div>
@@ -332,7 +371,7 @@ export default function HomePage() {
           ].map((a) => (
             <button
               key={a.path}
-              onClick={() => router.push(a.path)}
+             onClick={() => handleProtectedRoute(a.path)}
               className={`bg-gradient-to-br ${a.from} ${a.to} text-white p-4 rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200 text-left`}
             >
               <span className="text-2xl">{a.emoji}</span>
